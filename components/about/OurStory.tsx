@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, type Variants } from 'framer-motion'
+import { BookOpen, Heart, TrendingUp, Globe } from 'lucide-react'
 
 const milestones = [
   { year: 2005, title: 'Foundation', description: 'School established with 120 students and a vision to redefine education.' },
@@ -9,6 +10,13 @@ const milestones = [
   { year: 2020, title: 'Digital Transformation', description: 'Smart classrooms and blended learning models adopted across all grades.' },
   { year: 2024, title: 'National Recognition', description: 'Ranked among top schools nationally for academic excellence and innovation.' },
   { year: 2026, title: 'Global Reach', description: 'International collaborations, exchange programs, and global curriculum integration.' },
+] as const
+
+const journeyHighlights = [
+  { icon: BookOpen, label: 'Why We Started', detail: 'Founded to bridge the gap between traditional education and 21st-century learning needs.' },
+  { icon: Heart, label: 'Our Mission', detail: 'To nurture confident, compassionate, and capable leaders who contribute meaningfully to society.' },
+  { icon: TrendingUp, label: 'Our Growth', detail: 'From 120 students to 2,500+ learners, our campus has expanded sevenfold since inception.' },
+  { icon: Globe, label: 'Where We Stand', detail: 'Recognised as one of the top schools nationally, with 100% board results and global partnerships.' },
 ] as const
 
 const containerVariants: Variants = {
@@ -33,7 +41,27 @@ export default function OurStory() {
       <div className="absolute -right-40 top-0 h-80 w-80 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
+        <motion.div
+          className="mx-auto max-w-2xl text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
+            The School Story
+          </span>
+          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
+            From Vision to{' '}
+            <span className="text-blue-600">Reality</span>
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+            What began as a bold vision to transform education has grown into one of
+            the most respected learning institutions in the region.
+          </p>
+        </motion.div>
+
+        <div className="mt-16 grid gap-8 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: -30 }}
@@ -41,24 +69,23 @@ export default function OurStory() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            <div className="sticky top-24">
-              <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-                Our Story
-              </span>
-              <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-                A Journey of{' '}
-                <span className="text-blue-600">Excellence</span> and Growth
-              </h2>
-              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-                What began as a small institution with a big dream has grown into one
-                of the most respected educational destinations. Our story is written
-                by the countless bright minds we&apos;ve nurtured and the futures
-                we&apos;ve helped shape.
-              </p>
-
-              <div className="mt-8 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 via-white to-blue-50 shadow-lg shadow-blue-100/50 ring-1 ring-black/[0.02]">
-                <div className="aspect-[16/10] w-full bg-gradient-to-br from-blue-500/10 via-transparent to-primary/5" />
-              </div>
+            <div className="space-y-6">
+              {journeyHighlights.map((item, index) => (
+                <div
+                  key={item.label}
+                  className="group flex gap-4 rounded-2xl border border-border/60 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50">
+                    <item.icon className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-primary">{item.label}</h3>
+                    <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
+                      {item.detail}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -69,8 +96,8 @@ export default function OurStory() {
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
           >
-            <div className="space-y-12">
-              {milestones.map((milestone, index) => (
+            <div className="space-y-10">
+              {milestones.map((milestone) => (
                 <motion.div
                   key={milestone.year}
                   variants={itemVariants}

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, type Variants } from 'framer-motion'
-import { ArrowRight, Building2, Library, FlaskConical, Dumbbell, Mic, Monitor } from 'lucide-react'
+import { ArrowRight, Building2, Library, FlaskConical, Dumbbell, Monitor, Bus } from 'lucide-react'
 import Link from 'next/link'
 
 const facilities = [
@@ -38,18 +38,18 @@ const facilities = [
     bg: 'bg-amber-50',
   },
   {
-    icon: Mic,
-    title: 'Auditorium',
-    description: 'A state-of-the-art auditorium with professional acoustics, lighting, and seating for 1000+ people for events and performances.',
-    features: ['1000+ seating capacity', 'Professional acoustics', 'Stage with lighting rig', 'Green room facilities'],
+    icon: Monitor,
+    title: 'Computer Laboratories',
+    description: 'Modern computer labs equipped with the latest hardware and software to prepare students for a technology-driven world.',
+    features: ['80+ workstations', 'High-performance systems', 'Coding & robotics kits', '3D printing lab'],
     color: 'text-rose-600',
     bg: 'bg-rose-50',
   },
   {
-    icon: Monitor,
-    title: 'Digital Classrooms',
-    description: 'Every classroom is equipped with smart boards, projectors, and high-speed internet, enabling interactive and engaging lessons.',
-    features: ['Interactive smart boards', 'Projector & audio systems', 'High-speed internet', 'E-learning platforms'],
+    icon: Bus,
+    title: 'Transport',
+    description: 'A reliable fleet of GPS-tracked buses with trained drivers and attendants ensuring safe and comfortable daily commutes.',
+    features: ['GPS-tracked buses', 'Female attendants on every route', 'Regular safety inspections', 'Doorstep pickup & drop'],
     color: 'text-cyan-600',
     bg: 'bg-cyan-50',
   },

@@ -2,13 +2,19 @@
 
 import { motion, type Variants } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, MapPin } from 'lucide-react'
+import { ArrowRight, MapPin, Calendar, Clock, CheckCircle } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+
+const quickFacts = [
+  { icon: CheckCircle, label: 'Admission Open', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  { icon: Clock, label: 'Limited Seats', color: 'text-amber-600', bg: 'bg-amber-50' },
+  { icon: Calendar, label: 'Apply Online', color: 'text-blue-600', bg: 'bg-blue-50' },
+] as const
 
 const heroStats = [
   { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'Students' },
   { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'Teachers' },
-  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years' },
+  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years of Excellence' },
   { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Results' },
 ] as const
 
@@ -28,7 +34,7 @@ const itemVariants: Variants = {
   },
 }
 
-export default function AboutHero() {
+export default function AdmissionsHero() {
   return (
     <section className="relative min-h-[85vh] overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-white">
       <div className="absolute -top-48 right-0 h-[600px] w-[600px] rounded-full bg-blue-500/5 blur-3xl" />
@@ -43,9 +49,12 @@ export default function AboutHero() {
             initial="hidden"
             animate="visible"
           >
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="flex justify-center gap-3">
               <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-                About Our School
+                Admissions Open
+              </span>
+              <span className="inline-block rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-700">
+                Session {schoolConfig.admission.session}
               </span>
             </motion.div>
 
@@ -53,19 +62,17 @@ export default function AboutHero() {
               className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-primary sm:text-5xl lg:text-6xl xl:text-7xl"
               variants={itemVariants}
             >
-              Empowering Minds.{' '}
-              <span className="text-blue-600">Inspiring Futures.</span>
+              Begin Your Child&apos;s Journey{' '}
+              <span className="text-blue-600">Towards Excellence</span>
             </motion.h1>
 
             <motion.p
               className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
               variants={itemVariants}
             >
-              {schoolConfig.name} is a premier CBSE-affiliated institution dedicated
-              to academic excellence, character development, and holistic growth.
-              Since {schoolConfig.establishedYear}, we have nurtured young minds
-              with a perfect blend of rigorous academics, innovative pedagogy, and
-              values-based education.
+              Give your child the gift of a world-class education at{' '}
+              {schoolConfig.name}. Where every student is nurtured to discover
+              their unique potential and build a foundation for lifelong success.
             </motion.p>
 
             <motion.div
@@ -73,21 +80,34 @@ export default function AboutHero() {
               variants={itemVariants}
             >
               <Link
-                href="/facilities"
+                href="#apply"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                aria-label="Explore our campus"
               >
-                Explore Campus
+                Apply Now
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/admissions"
+                href="#campus-visit"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-7 py-3 text-sm font-semibold text-primary shadow-sm transition-all duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                aria-label="Admissions"
               >
                 <MapPin className="h-4 w-4" />
-                Admissions
+                Schedule Campus Visit
               </Link>
+            </motion.div>
+
+            <motion.div
+              className="mt-12 flex flex-wrap items-center justify-center gap-6"
+              variants={itemVariants}
+            >
+              {quickFacts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="flex items-center gap-2 rounded-full border border-border/60 bg-white px-5 py-2 shadow-sm"
+                >
+                  <fact.icon className={`h-4 w-4 ${fact.color}`} />
+                  <span className="text-sm font-semibold text-primary">{fact.label}</span>
+                </div>
+              ))}
             </motion.div>
 
             <motion.div

@@ -1,15 +1,15 @@
 'use client'
 
 import { motion, type Variants } from 'framer-motion'
-import { GraduationCap, ShieldCheck, Award, Building2, HeartHandshake, Monitor } from 'lucide-react'
+import { GraduationCap, ShieldCheck, Award, Monitor, Building2, Sparkles } from 'lucide-react'
 
-const trustReasons = [
-  { icon: ShieldCheck, title: 'Student Safety', description: '24×7 CCTV surveillance, security personnel, and strict safety protocols ensure a secure campus environment at all times.' },
-  { icon: Monitor, title: 'Digital Campus', description: 'Smart classrooms with interactive boards, blended learning platforms, and high-speed connectivity across the campus.' },
-  { icon: Award, title: 'Academic Excellence', description: 'Consistent 100% board exam results with top rankings in academic and co-curricular competitions year after year.' },
-  { icon: Building2, title: 'Modern Infrastructure', description: 'State-of-the-art labs, library, sports complex, and learning spaces designed for 21st-century education.' },
+const reasons = [
   { icon: GraduationCap, title: 'Experienced Faculty', description: 'Highly qualified educators with years of teaching expertise and a passion for nurturing young minds.' },
-  { icon: HeartHandshake, title: 'Personal Attention', description: 'Small class sizes ensure every student receives individualized guidance and mentorship from dedicated teachers.' },
+  { icon: ShieldCheck, title: 'Safe Campus', description: '24×7 CCTV surveillance, security personnel, and strict safety protocols ensure a secure environment.' },
+  { icon: Award, title: 'Excellent Results', description: 'Consistent 100% board exam results and top rankings in academic and co-curricular competitions.' },
+  { icon: Monitor, title: 'Smart Learning', description: 'Interactive smart boards, digital platforms, and AI-powered tools for personalized learning experiences.' },
+  { icon: Building2, title: 'Modern Infrastructure', description: 'State-of-the-art classrooms, labs, sports complex, and libraries designed for 21st-century education.' },
+  { icon: Sparkles, title: 'Character Development', description: 'A strong emphasis on values, ethics, and holistic growth to build well-rounded individuals.' },
 ] as const
 
 const containerVariants: Variants = {
@@ -28,7 +28,7 @@ const cardVariants: Variants = {
   },
 }
 
-export default function TrustSection() {
+export default function WhyChooseUs() {
   return (
     <section className="relative overflow-hidden py-24 lg:py-32">
       <div className="absolute -left-40 top-0 h-72 w-72 rounded-full bg-blue-500/[0.02] blur-3xl" />
@@ -43,14 +43,15 @@ export default function TrustSection() {
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
           <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Why Parents Trust Us
+            Why Choose Us
           </span>
           <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Built on Trust, Proven by Results
+            What Makes Us{' '}
+            <span className="text-blue-600">the Right Choice</span>
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Generations of families have chosen us because we deliver on our
-            promise of holistic, high-quality education.
+            Every decision we make is guided by our commitment to providing the
+            best possible education and environment for your child.
           </p>
         </motion.div>
 
@@ -61,7 +62,7 @@ export default function TrustSection() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
         >
-          {trustReasons.map((reason) => (
+          {reasons.map((reason) => (
             <motion.div
               key={reason.title}
               variants={cardVariants}
@@ -70,9 +71,7 @@ export default function TrustSection() {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50">
                 <reason.icon className="h-6 w-6 text-blue-600" />
               </div>
-              <h3 className="mt-5 text-lg font-bold text-primary">
-                {reason.title}
-              </h3>
+              <h3 className="mt-5 text-lg font-bold text-primary">{reason.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {reason.description}
               </p>

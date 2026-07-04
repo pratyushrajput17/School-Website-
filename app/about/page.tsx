@@ -7,7 +7,6 @@ import { schoolConfig } from "@/lib/school-config"
 const OurStory = dynamic(() => import("@/components/about/OurStory"))
 const VisionMission = dynamic(() => import("@/components/about/VisionMission"))
 const CoreValues = dynamic(() => import("@/components/about/CoreValues"))
-const JourneyTimeline = dynamic(() => import("@/components/about/JourneyTimeline"))
 const Leadership = dynamic(() => import("@/components/about/Leadership"))
 const Achievements = dynamic(() => import("@/components/about/Achievements"))
 const Infrastructure = dynamic(() => import("@/components/about/Infrastructure"))
@@ -61,7 +60,6 @@ export default function AboutPage() {
       <OurStory />
       <VisionMission />
       <CoreValues />
-      <JourneyTimeline />
       <Leadership />
       <Achievements />
       <Infrastructure />

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, GraduationCap, MapPin } from 'lucide-react'
+import { ArrowRight, Phone } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 export default function FinalCTA() {
@@ -21,37 +21,34 @@ export default function FinalCTA() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 shadow-lg backdrop-blur-sm">
-            <GraduationCap className="h-8 w-8 text-white" />
+            <ArrowRight className="h-8 w-8 text-white" />
           </div>
 
           <h2 className="mt-8 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Become a Part of Our
-            <br />
-            School Family
+            Admissions Are{' '}
+            <span className="text-blue-300">Now Open</span>
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-white/70">
-            Join {schoolConfig.name} and give your child access to a world-class
-            education, exceptional faculty, and a nurturing environment that
-            inspires excellence.
+            Take the first step towards securing your child&apos;s future at{' '}
+            {schoolConfig.name}. Apply today and become a part of our
+            inspiring learning community.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/contact"
+              href="#apply"
               className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-primary shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
-              aria-label="Schedule a campus visit"
             >
-              <MapPin className="h-4 w-4" />
-              Schedule Campus Visit
+              Apply Online
+              <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/admissions"
+              href="tel:+919876543210"
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-8 py-3.5 text-sm font-semibold text-white shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
-              aria-label="Apply now"
             >
-              Apply Now
-              <ArrowRight className="h-4 w-4" />
+              <Phone className="h-4 w-4" />
+              Call Admissions Office
             </Link>
           </div>
 
@@ -63,15 +60,12 @@ export default function FinalCTA() {
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
           >
             {[
-              'Limited Seats Available',
+              'No Hidden Fees',
               'Merit-Based Scholarships',
-              'Global Curriculum Standards',
+              'Individual Attention',
               'Holistic Development',
             ].map((item) => (
-              <div
-                key={item}
-                className="flex items-center gap-2"
-              >
+              <div key={item} className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
                 <span className="text-sm text-white/80">{item}</span>
               </div>
