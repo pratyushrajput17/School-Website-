@@ -1,9 +1,10 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, MapPin } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import { staggerContainer, fadeUp } from '@/lib/animations'
 
 const heroStats = [
   { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'Students' },
@@ -11,22 +12,6 @@ const heroStats = [
   { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years' },
   { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Results' },
 ] as const
-
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-}
 
 export default function AboutHero() {
   return (
@@ -39,19 +24,17 @@ export default function AboutHero() {
         <div className="flex min-h-[85vh] flex-col items-center justify-center py-20 text-center lg:py-32">
           <motion.div
             className="w-full max-w-4xl"
-            variants={containerVariants}
+            variants={staggerContainer(0.15)}
             initial="hidden"
             animate="visible"
           >
-            <motion.div variants={itemVariants}>
-              <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-                About Our School
-              </span>
+            <motion.div variants={fadeUp}>
+              <span className="badge-pill">About Our School</span>
             </motion.div>
 
             <motion.h1
-              className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-primary sm:text-5xl lg:text-6xl xl:text-7xl"
-              variants={itemVariants}
+              className="mt-6 heading-xl text-4xl sm:text-5xl lg:text-6xl xl:text-7xl"
+              variants={fadeUp}
             >
               Empowering Minds.{' '}
               <span className="text-blue-600">Inspiring Futures.</span>
@@ -59,7 +42,7 @@ export default function AboutHero() {
 
             <motion.p
               className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               {schoolConfig.name} is a premier CBSE-affiliated institution dedicated
               to academic excellence, character development, and holistic growth.
@@ -70,12 +53,11 @@ export default function AboutHero() {
 
             <motion.div
               className="mt-8 flex flex-wrap items-center justify-center gap-4"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <Link
                 href="/facilities"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                aria-label="Explore our campus"
               >
                 Explore Campus
                 <ArrowRight className="h-4 w-4" />
@@ -83,7 +65,6 @@ export default function AboutHero() {
               <Link
                 href="/admissions"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-7 py-3 text-sm font-semibold text-primary shadow-sm transition-all duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                aria-label="Admissions"
               >
                 <MapPin className="h-4 w-4" />
                 Admissions
@@ -92,7 +73,7 @@ export default function AboutHero() {
 
             <motion.div
               className="mt-16 grid grid-cols-2 gap-8 border-t pt-12 sm:grid-cols-4"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               {heroStats.map((stat) => (
                 <div key={stat.label}>

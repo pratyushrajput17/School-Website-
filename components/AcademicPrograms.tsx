@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant, fadeUp } from '@/lib/animations'
 import {
   Puzzle,
   BookOpen,
@@ -70,64 +72,19 @@ const features = [
   { label: 'Value-Based Education', icon: Heart },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function AcademicPrograms() {
   return (
     <section className="bg-slate-50 py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-              Academics
-            </span>
-          </motion.div>
-
-          <motion.h2
-            className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          >
-            Learning Path for Every Stage
-          </motion.h2>
-
-          <motion.p
-            className="mt-4 text-lg leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-          >
-            From foundational learning to higher secondary education, our
-            balanced curriculum nurtures students at every stage of their
-            academic journey.
-          </motion.p>
-        </div>
+        <SectionHeader
+          badge="Academics"
+          title="Learning Path for Every Stage"
+          description="From foundational learning to higher secondary education, our balanced curriculum nurtures students at every stage of their academic journey."
+        />
 
         <motion.div
           className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-          variants={containerVariants}
+          variants={staggerContainer(0.1)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -135,7 +92,7 @@ export default function AcademicPrograms() {
           {programs.map((program) => (
             <motion.div
               key={program.title}
-              variants={cardVariants}
+              variants={cardVariant}
               className="group relative rounded-3xl border border-border/50 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <div
@@ -174,10 +131,10 @@ export default function AcademicPrograms() {
 
         <motion.div
           className="mt-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
         >
           <div className="rounded-2xl border border-border/40 bg-white py-6 shadow-sm">
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 px-6">

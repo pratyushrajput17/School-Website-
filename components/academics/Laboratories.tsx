@@ -1,9 +1,11 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Monitor, FlaskConical, Languages, Bot } from 'lucide-react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const labs = [
   {
@@ -40,22 +42,6 @@ const labs = [
   },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-}
-
 export default function Laboratories() {
   return (
     <section className="relative overflow-hidden bg-slate-50 py-24 lg:py-32">
@@ -63,28 +49,15 @@ export default function Laboratories() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Laboratories
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Where Theory Meets Practice
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Our state-of-the-art laboratories provide students with the tools and
-            space to explore, experiment, and innovate.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Laboratories"
+          title="Where Theory Meets Practice"
+          description="Our state-of-the-art laboratories provide students with the tools and space to explore, experiment, and innovate."
+        />
 
         <motion.div
           className="mt-16 space-y-16 lg:space-y-24"
-          variants={containerVariants}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -92,7 +65,7 @@ export default function Laboratories() {
           {labs.map((lab, index) => (
             <motion.div
               key={lab.title}
-              variants={itemVariants}
+              variants={cardVariant}
               className={`grid items-center gap-8 lg:gap-16 ${
                 index % 2 === 0 ? 'lg:grid-cols-[1.2fr_1fr]' : 'lg:grid-cols-[1fr_1.2fr]'
               }`}

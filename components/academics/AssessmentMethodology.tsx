@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ClipboardList, FolderGit2, Beaker, FileText, Target } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const stages = [
   {
@@ -41,22 +43,6 @@ const stages = [
   },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function AssessmentMethodology() {
   return (
     <section className="relative overflow-hidden bg-slate-50 py-24 lg:py-32">
@@ -64,31 +50,18 @@ export default function AssessmentMethodology() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Assessment Methodology
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Measuring Growth, Not Just Grades
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Our assessment framework evaluates students holistically, combining
-            traditional exams with modern evaluation methods.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Assessment Methodology"
+          title="Measuring Growth, Not Just Grades"
+          description="Our assessment framework evaluates students holistically, combining traditional exams with modern evaluation methods."
+        />
 
         <div className="relative mt-16">
           <div className="absolute bottom-0 left-[27px] top-0 hidden w-px bg-gradient-to-b from-blue-200 via-blue-200 to-transparent md:block" />
 
           <motion.div
             className="space-y-12 md:space-y-0"
-            variants={containerVariants}
+            variants={staggerContainer(0.1)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
@@ -96,7 +69,7 @@ export default function AssessmentMethodology() {
             {stages.map((stage, index) => (
               <motion.div
                 key={stage.title}
-                variants={itemVariants}
+                variants={cardVariant}
                 className="relative md:flex md:items-start md:gap-12"
               >
                 <div className="relative z-10 flex w-14 shrink-0 items-center gap-4 md:flex-col md:items-center">

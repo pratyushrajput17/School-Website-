@@ -1,8 +1,10 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Quote, Award, BookOpen, Star } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const managementTeam = [
   { name: 'Mr. Rajesh Verma', role: 'Vice Principal', department: 'Administration', initials: 'RV' },
@@ -19,22 +21,6 @@ const chairman = {
   quote: 'Our mission is to create an environment where every child discovers their unique potential and develops the confidence to pursue their dreams.',
 } as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function Leadership() {
   return (
     <section className="relative overflow-hidden py-24 lg:py-32">
@@ -42,30 +28,17 @@ export default function Leadership() {
       <div className="absolute -left-40 bottom-0 h-80 w-80 rounded-full bg-blue-500/[0.02] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Leadership
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Meet Our Leaders
-          </h2>
-        </motion.div>
+        <SectionHeader badge="Leadership" title="Meet Our Leaders" />
 
         <motion.div
           className="mt-16"
-          variants={containerVariants}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
         >
           <motion.div
-            variants={itemVariants}
+            variants={cardVariant}
             className="group relative overflow-hidden rounded-2xl border border-white/50 bg-gradient-to-br from-white to-blue-50/50 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md lg:p-12"
           >
             <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-blue-500/5 blur-3xl" />
@@ -114,7 +87,7 @@ export default function Leadership() {
           </motion.div>
 
           <motion.div
-            variants={itemVariants}
+            variants={cardVariant}
             className="group relative overflow-hidden rounded-2xl border border-white/50 bg-gradient-to-br from-white to-blue-50/50 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md lg:p-12"
           >
             <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-blue-500/5 blur-3xl" />
@@ -166,7 +139,7 @@ export default function Leadership() {
             {managementTeam.map((member) => (
               <motion.div
                 key={member.name}
-                variants={itemVariants}
+                variants={cardVariant}
                 className="group rounded-2xl border border-border/60 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-md"
               >
                 <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-blue-50">

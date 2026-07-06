@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Baby, Backpack, BookOpen, GraduationCap } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const levels = [
   {
@@ -46,22 +48,6 @@ const levels = [
   },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function Eligibility() {
   return (
     <section className="relative overflow-hidden bg-slate-50 py-24 lg:py-32">
@@ -69,29 +55,16 @@ export default function Eligibility() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Eligibility
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Find the Right{' '}
-            <span className="text-blue-600">Grade for Your Child</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Age-appropriate admission criteria designed to ensure every child
-            thrives in their learning journey.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Eligibility"
+          title="Find the Right"
+          highlight="Grade for Your Child"
+          description="Age-appropriate admission criteria designed to ensure every child thrives in their learning journey."
+        />
 
         <motion.div
           className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-          variants={containerVariants}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -99,7 +72,7 @@ export default function Eligibility() {
           {levels.map((level) => (
             <motion.div
               key={level.title}
-              variants={itemVariants}
+              variants={cardVariant}
               className={`group rounded-2xl border ${level.border} bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md`}
             >
               <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${level.bg}`}>

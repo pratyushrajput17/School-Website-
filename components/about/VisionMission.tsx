@@ -1,16 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Eye, Target } from 'lucide-react'
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-}
+import SectionHeader from '@/components/ui/section-header'
+import { cardVariant } from '@/lib/animations'
 
 export default function VisionMission() {
   return (
@@ -19,24 +12,11 @@ export default function VisionMission() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Our Purpose
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            What Drives Us Forward
-          </h2>
-        </motion.div>
+        <SectionHeader badge="Our Purpose" title="What Drives Us Forward" />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
           <motion.div
-            variants={cardVariants}
+            variants={cardVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -69,7 +49,7 @@ export default function VisionMission() {
           </motion.div>
 
           <motion.div
-            variants={cardVariants}
+            variants={cardVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

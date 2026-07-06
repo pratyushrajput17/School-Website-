@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { FileText, Search, Users, ClipboardCheck, GraduationCap } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, fadeUp } from '@/lib/animations'
 
 const steps = [
   { icon: FileText, title: 'Submit Enquiry', description: 'Fill out the online enquiry form or visit our campus to express your interest.' },
@@ -11,22 +13,6 @@ const steps = [
   { icon: GraduationCap, title: 'Admission Confirmation', description: 'Welcome to the family! Receive the admission confirmation and join our community.' },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.2 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function AdmissionJourney() {
   return (
     <section className="relative overflow-hidden py-24 lg:py-32">
@@ -34,29 +20,16 @@ export default function AdmissionJourney() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.02] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Admission Process
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Your Journey to{' '}
-            <span className="text-blue-600">Joining Our School</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            A simple, transparent, and supportive admission process designed to
-            make your family&apos;s transition seamless.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Admission Process"
+          title="Your Journey to"
+          highlight="Joining Our School"
+          description="A simple, transparent, and supportive admission process designed to make your family's transition seamless."
+        />
 
         <motion.div
           className="mt-16"
-          variants={containerVariants}
+          variants={staggerContainer(0.2)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -68,7 +41,7 @@ export default function AdmissionJourney() {
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
-                variants={itemVariants}
+                variants={fadeUp}
                 className="group relative flex w-full flex-col items-center text-center lg:w-1/5"
               >
                 <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-black/[0.04] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">

@@ -1,8 +1,10 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Puzzle, BookOpen, Lightbulb, GraduationCap } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const programs = [
   {
@@ -47,22 +49,6 @@ const programs = [
   },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-}
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function AcademicPrograms() {
   return (
     <section id="programs" className="relative overflow-hidden bg-slate-50 py-24 lg:py-32">
@@ -70,28 +56,15 @@ export default function AcademicPrograms() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Academic Programs
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            A Program for Every Stage
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            From early childhood to higher secondary, our programs are designed to
-            meet the developmental needs of every learner.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Academic Programs"
+          title="A Program for Every Stage"
+          description="From early childhood to higher secondary, our programs are designed to meet the developmental needs of every learner."
+        />
 
         <motion.div
           className="mt-16 grid gap-8 md:grid-cols-2"
-          variants={containerVariants}
+          variants={staggerContainer(0.15)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -99,7 +72,7 @@ export default function AcademicPrograms() {
           {programs.map((program) => (
             <motion.div
               key={program.title}
-              variants={cardVariants}
+              variants={cardVariant}
               className="group relative overflow-hidden rounded-2xl border border-white/40 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:shadow-md lg:p-10"
             >
               <div className={`absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br ${program.gradient} opacity-5 transition-all duration-500 group-hover:scale-150 group-hover:opacity-10`} />

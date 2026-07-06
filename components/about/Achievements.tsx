@@ -1,6 +1,8 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 import { Award, Trophy, Medal, Star, Target, TrendingUp } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
@@ -13,22 +15,6 @@ const achievements = [
   { icon: TrendingUp, label: 'Overall Growth', value: '500%', description: 'Enrollment growth since inception', color: 'text-cyan-600', bg: 'bg-cyan-50' },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function Achievements() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/30 to-white py-24 lg:py-32">
@@ -36,28 +22,15 @@ export default function Achievements() {
       <div className="absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Our Achievements
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Excellence That Speaks for Itself
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Every award, every result, and every milestone reflects our unwavering
-            commitment to the highest standards of education.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Our Achievements"
+          title="Excellence That Speaks for Itself"
+          description="Every award, every result, and every milestone reflects our unwavering commitment to the highest standards of education."
+        />
 
         <motion.div
           className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          variants={containerVariants}
+          variants={staggerContainer(0.1)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -65,7 +38,7 @@ export default function Achievements() {
           {achievements.map((item) => (
             <motion.div
               key={item.label}
-              variants={cardVariants}
+              variants={cardVariant}
               className="group rounded-2xl border border-white/40 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:shadow-md"
             >
               <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${item.bg}`}>

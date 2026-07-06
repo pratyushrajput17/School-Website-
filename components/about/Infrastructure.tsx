@@ -1,6 +1,8 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, fadeUp } from '@/lib/animations'
 import { ArrowRight, Building2, Library, FlaskConical, Dumbbell, Monitor, Bus } from 'lucide-react'
 import Link from 'next/link'
 
@@ -55,22 +57,6 @@ const facilities = [
   },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-}
-
 export default function Infrastructure() {
   return (
     <section className="relative overflow-hidden bg-slate-50 py-24 lg:py-32">
@@ -78,28 +64,15 @@ export default function Infrastructure() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Infrastructure
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            World-Class Facilities
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Our campus is designed to inspire learning, creativity, and holistic
-            growth at every turn.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Infrastructure"
+          title="World-Class Facilities"
+          description="Our campus is designed to inspire learning, creativity, and holistic growth at every turn."
+        />
 
         <motion.div
           className="mt-16 space-y-16 lg:space-y-24"
-          variants={containerVariants}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -107,7 +80,7 @@ export default function Infrastructure() {
           {facilities.map((facility, index) => (
             <motion.div
               key={facility.title}
-              variants={itemVariants}
+              variants={fadeUp}
               className={`grid items-center gap-8 lg:gap-16 ${
                 index % 2 === 0 ? 'lg:grid-cols-[1fr_1.2fr]' : 'lg:grid-cols-[1.2fr_1fr]'
               }`}

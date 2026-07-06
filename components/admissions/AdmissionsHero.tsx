@@ -1,9 +1,10 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, MapPin, Calendar, Clock, CheckCircle } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import { staggerContainer, fadeUp } from '@/lib/animations'
 
 const quickFacts = [
   { icon: CheckCircle, label: 'Admission Open', color: 'text-emerald-600', bg: 'bg-emerald-50' },
@@ -18,22 +19,6 @@ const heroStats = [
   { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Results' },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-}
-
 export default function AdmissionsHero() {
   return (
     <section className="relative min-h-[85vh] overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-white">
@@ -45,14 +30,12 @@ export default function AdmissionsHero() {
         <div className="flex min-h-[85vh] flex-col items-center justify-center py-20 text-center lg:py-32">
           <motion.div
             className="w-full max-w-4xl"
-            variants={containerVariants}
+            variants={staggerContainer(0.15)}
             initial="hidden"
             animate="visible"
           >
-            <motion.div variants={itemVariants} className="flex justify-center gap-3">
-              <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-                Admissions Open
-              </span>
+            <motion.div variants={fadeUp} className="flex justify-center gap-3">
+              <span className="badge-pill">Admissions Open</span>
               <span className="inline-block rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-700">
                 Session {schoolConfig.admission.session}
               </span>
@@ -60,7 +43,7 @@ export default function AdmissionsHero() {
 
             <motion.h1
               className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-primary sm:text-5xl lg:text-6xl xl:text-7xl"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               Begin Your Child&apos;s Journey{' '}
               <span className="text-blue-600">Towards Excellence</span>
@@ -68,7 +51,7 @@ export default function AdmissionsHero() {
 
             <motion.p
               className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               Give your child the gift of a world-class education at{' '}
               {schoolConfig.name}. Where every student is nurtured to discover
@@ -77,7 +60,7 @@ export default function AdmissionsHero() {
 
             <motion.div
               className="mt-8 flex flex-wrap items-center justify-center gap-4"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <Link
                 href="#apply"
@@ -95,10 +78,7 @@ export default function AdmissionsHero() {
               </Link>
             </motion.div>
 
-            <motion.div
-              className="mt-12 flex flex-wrap items-center justify-center gap-6"
-              variants={itemVariants}
-            >
+            <motion.div className="mt-12 flex flex-wrap items-center justify-center gap-6" variants={fadeUp}>
               {quickFacts.map((fact) => (
                 <div
                   key={fact.label}
@@ -112,16 +92,12 @@ export default function AdmissionsHero() {
 
             <motion.div
               className="mt-16 grid grid-cols-2 gap-8 border-t pt-12 sm:grid-cols-4"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               {heroStats.map((stat) => (
                 <div key={stat.label}>
-                  <p className="text-3xl font-bold tracking-tight text-blue-600 sm:text-4xl">
-                    {stat.value}
-                  </p>
-                  <p className="mt-1 text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                    {stat.label}
-                  </p>
+                  <p className="text-3xl font-bold tracking-tight text-blue-600 sm:text-4xl">{stat.value}</p>
+                  <p className="mt-1 text-sm font-medium uppercase tracking-wider text-muted-foreground">{stat.label}</p>
                 </div>
               ))}
             </motion.div>

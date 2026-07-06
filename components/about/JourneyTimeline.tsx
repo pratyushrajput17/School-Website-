@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Building2, Expand, Map, Monitor, Trophy, Orbit } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const timeline = [
   { year: 2005, title: 'Founding Year', icon: Building2, description: 'School established with a bold vision for quality education.' },
@@ -12,22 +14,6 @@ const timeline = [
   { year: 2026, title: 'Future Vision', icon: Orbit, description: 'Global partnerships and innovation lab launch.' },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function JourneyTimeline() {
   return (
     <section className="relative overflow-hidden bg-slate-50 py-24 lg:py-32">
@@ -35,27 +21,14 @@ export default function JourneyTimeline() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Our Journey
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Milestones That Define Us
-          </h2>
-        </motion.div>
+        <SectionHeader badge="Our Journey" title="Milestones That Define Us" />
 
         <div className="relative mt-16">
           <div className="absolute left-8 right-8 top-12 hidden h-0.5 bg-blue-200 lg:block" />
 
           <motion.div
             className="grid gap-8 sm:grid-cols-2 lg:grid-cols-6"
-            variants={containerVariants}
+            variants={staggerContainer(0.15)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
@@ -63,7 +36,7 @@ export default function JourneyTimeline() {
             {timeline.map((item, index) => (
               <motion.div
                 key={item.year}
-                variants={itemVariants}
+                variants={cardVariant}
                 className="relative flex flex-col items-center text-center"
               >
                 <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/60 bg-white shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">

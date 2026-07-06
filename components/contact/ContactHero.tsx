@@ -1,25 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react'
-import { schoolConfig } from '@/lib/school-config'
-
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-}
+import { Phone, Mail, MapPin } from 'lucide-react'
+import { staggerContainer, fadeUp } from '@/lib/animations'
 
 export default function ContactHero() {
   return (
@@ -32,19 +16,17 @@ export default function ContactHero() {
         <div className="flex min-h-[80vh] flex-col items-center justify-center py-20 text-center lg:py-32">
           <motion.div
             className="w-full max-w-4xl"
-            variants={containerVariants}
+            variants={staggerContainer(0.15)}
             initial="hidden"
             animate="visible"
           >
-            <motion.div variants={itemVariants}>
-              <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-                Contact Us
-              </span>
+            <motion.div variants={fadeUp}>
+              <span className="badge-pill">Contact Us</span>
             </motion.div>
 
             <motion.h1
               className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-primary sm:text-5xl lg:text-6xl xl:text-7xl"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               We&apos;d Love to{' '}
               <span className="text-blue-600">Hear From You</span>
@@ -52,7 +34,7 @@ export default function ContactHero() {
 
             <motion.p
               className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               Whether you have a question about admissions, academics, or campus
               life — our team is here to help. Reach out and let&apos;s start a
@@ -61,7 +43,7 @@ export default function ContactHero() {
 
             <motion.div
               className="mt-10 flex flex-wrap items-center justify-center gap-4"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <Link
                 href="tel:+919876543210"
@@ -88,7 +70,7 @@ export default function ContactHero() {
 
             <motion.div
               className="mt-16 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 via-white to-blue-50 shadow-lg shadow-blue-100/50 ring-1 ring-black/[0.02]"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <div className="aspect-[21/9] w-full bg-gradient-to-br from-blue-500/10 via-transparent to-primary/5" />
             </motion.div>

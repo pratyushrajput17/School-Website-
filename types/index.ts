@@ -1,7 +1,8 @@
 import { type Variants } from 'framer-motion'
-import {
-  type LucideIcon,
-} from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+
+export type { LucideIcon }
+export type { Variants }
 
 export interface NavLink {
   href: string
@@ -53,6 +54,8 @@ export interface AnimationVariants {
   item: Variants
 }
 
+export { fadeUp, fadeIn, scaleIn, staggerContainer, cardVariant } from '@/lib/animations'
+
 export const fadeUpVariants: AnimationVariants = {
   container: {
     hidden: {},
@@ -76,12 +79,3 @@ export const staggerVariants = (stagger = 0.08): Variants => ({
     transition: { staggerChildren: stagger },
   },
 })
-
-export const cardVariant: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
