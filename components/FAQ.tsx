@@ -1,25 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ChevronDown, Search } from 'lucide-react'
 import { faqs } from '@/constants'
-
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.06 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-}
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, itemVariants } from '@/lib/animations'
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -40,37 +26,7 @@ export default function FAQ() {
   return (
     <section className="bg-slate-50 py-24 lg:py-32">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <span className="badge-pill">FAQ</span>
-          </motion.div>
-
-          <motion.h2
-            className="heading-xl mt-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          >
-            Frequently Asked Questions
-          </motion.h2>
-
-          <motion.p
-            className="mt-4 text-lg leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-          >
-            Find answers to common questions about our school, admissions,
-            academics, and more.
-          </motion.p>
-        </div>
+        <SectionHeader badge="FAQ" title="Frequently Asked Questions" description="Find answers to common questions about our school, admissions, academics, and more." />
 
         <motion.div
           className="relative mt-10"
@@ -95,7 +51,7 @@ export default function FAQ() {
 
         <motion.div
           className="mt-8 space-y-3"
-          variants={containerVariants}
+          variants={staggerContainer(0.06)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}

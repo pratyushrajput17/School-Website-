@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
-import { ShieldAlert, HeartPulse, Shield, Phone, Ambulance as AmbulanceIcon, AlertTriangle } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { HeartPulse, Shield, Phone, Ambulance as AmbulanceIcon, AlertTriangle } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, itemVariants } from '@/lib/animations'
 
 const emergencyContacts = [
   { icon: HeartPulse, title: 'Medical Room', phone: '+91 98765 43215', location: 'Ground Floor, Main Building', color: 'text-rose-600', bg: 'bg-rose-50' },
@@ -18,22 +20,6 @@ const importantNumbers = [
   { label: 'Women Helpline', number: '181' },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-}
-
 export default function EmergencyInfo() {
   return (
     <section className="relative overflow-hidden py-24 lg:py-32">
@@ -41,30 +27,17 @@ export default function EmergencyInfo() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-rose-500/[0.02] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-rose-200 bg-rose-50 px-4 py-1.5 text-sm font-medium text-rose-700">
-            Emergency Information
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Safety &{' '}
-            <span className="text-blue-600">Emergency Contacts</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Your child&apos;s safety is our highest priority. These contacts are
-            available around the clock for any emergency.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Emergency Information"
+          title={<>Safety & <span className="text-blue-600">Emergency Contacts</span></>}
+          description="Your child's safety is our highest priority. These contacts are available around the clock for any emergency."
+          badgeClassName="border-rose-200 bg-rose-50 text-rose-700"
+        />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-3">
           <motion.div
             className="lg:col-span-2"
-            variants={containerVariants}
+            variants={staggerContainer(0.1)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}

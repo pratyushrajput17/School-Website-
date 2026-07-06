@@ -238,7 +238,7 @@ variants={cardVariant}
 
           <motion.div
             className="space-y-10 lg:col-span-5"
-            variants={containerVariants}
+            variants={staggerContainer(0.15)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
