@@ -44,7 +44,7 @@ export default function Testimonials() {
 
         <motion.div
           className="mt-16 grid gap-6 md:grid-cols-3"
-          variants={containerVariants}
+          variants={staggerContainer(0.15)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -52,7 +52,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial) => (
             <motion.div
               key={testimonial.name}
-              variants={itemVariants}
+              variants={cardVariant}
               className="group relative rounded-2xl border border-border/60 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
               <Quote className="absolute right-6 top-6 h-10 w-10 text-blue-100" />

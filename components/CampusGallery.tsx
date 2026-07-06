@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   Building2,
   Monitor,
@@ -12,6 +12,8 @@ import {
   Smile,
 } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const galleryItems = [
   {
@@ -95,63 +97,19 @@ const featureBadges = [
   { label: 'Technology', icon: Monitor },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08 },
-  },
-}
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function CampusGallery() {
   return (
     <section className="bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-              Campus Life
-            </span>
-          </motion.div>
-
-          <motion.h2
-            className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          >
-            Experience Life at Our School
-          </motion.h2>
-
-          <motion.p
-            className="mt-4 text-lg leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-          >
-            A vibrant learning environment where academics, creativity, sports,
-            and personal growth come together.
-          </motion.p>
-        </div>
+        <SectionHeader
+          badge="Campus Life"
+          title="Experience Life at Our School"
+          description="A vibrant learning environment where academics, creativity, sports, and personal growth come together."
+        />
 
         <motion.div
           className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          variants={containerVariants}
+          variants={staggerContainer(0.15)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -159,7 +117,7 @@ export default function CampusGallery() {
           {galleryItems.map((item) => (
             <motion.div
               key={item.title}
-              variants={cardVariants}
+variants={cardVariant}
               className={`group relative overflow-hidden rounded-3xl ${
                 item.cols === 2 ? 'sm:col-span-2' : ''
               }`}
@@ -194,7 +152,7 @@ export default function CampusGallery() {
           ))}
 
           <motion.div
-            variants={cardVariants}
+            variants={cardVariant}
             className="flex flex-col gap-5 sm:col-span-2 lg:col-span-1"
           >
             <div className="flex flex-1 items-center gap-5 rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-blue-50/50 p-6 shadow-sm">

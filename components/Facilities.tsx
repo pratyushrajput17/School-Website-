@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
   Monitor,
@@ -9,6 +9,8 @@ import {
   Trophy,
   ArrowRight,
 } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { cardVariant } from '@/lib/animations'
 
 const facilities = [
   {
@@ -68,15 +70,6 @@ const facilities = [
     ],
   },
 ] as const
-
-const rowVariants: Variants = {
-  hidden: { opacity: 0, y: 60 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-}
 
 function FacilityImage({
   icon: Icon,
@@ -161,46 +154,18 @@ export default function Facilities() {
   return (
     <section className="bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-              Our Facilities
-            </span>
-          </motion.div>
-
-          <motion.h2
-            className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          >
-            Designed for Learning, Innovation & Growth
-          </motion.h2>
-
-          <motion.p
-            className="mt-4 text-lg leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-          >
-            Our campus provides a modern, safe, and inspiring environment
-            where students can explore, learn, and grow.
-          </motion.p>
-        </div>
+        <SectionHeader
+          badge="Our Facilities"
+          title="Designed for Learning, Innovation & Growth"
+          description="Our campus provides a modern, safe, and inspiring environment where students can explore, learn, and grow."
+        />
 
         <div className="mt-20 space-y-24 lg:space-y-32">
           {facilities.map((facility, index) => (
             <motion.div
               key={facility.title}
               className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20"
-              variants={rowVariants}
+              variants={cardVariant}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-100px' }}

@@ -21,12 +21,12 @@ export default function CampusVisit() {
 
         <motion.div
           className="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-16"
-          variants={containerVariants}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
         >
-          <motion.div variants={itemVariants} className="order-2 lg:order-1">
+          <motion.div variants={cardVariant} className="order-2 lg:order-1">
             <div className="overflow-hidden rounded-2xl shadow-lg shadow-blue-100/50 ring-1 ring-black/[0.02]">
               <div className="aspect-[4/3] w-full bg-gradient-to-br from-blue-500/10 via-transparent to-primary/5" />
             </div>
@@ -45,7 +45,7 @@ export default function CampusVisit() {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="order-1 lg:order-2">
+          <motion.div variants={cardVariant} className="order-1 lg:order-2">
             <div className="rounded-2xl border border-border/60 bg-white p-8 shadow-sm">
               <h3 className="text-xl font-bold text-primary">Book Your Visit</h3>
               <p className="mt-1 text-sm text-muted-foreground">

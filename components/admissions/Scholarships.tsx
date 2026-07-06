@@ -57,7 +57,7 @@ export default function Scholarships() {
 
         <motion.div
           className="mt-16 grid gap-8 lg:grid-cols-3"
-          variants={containerVariants}
+          variants={staggerContainer(0.15)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -65,7 +65,7 @@ export default function Scholarships() {
           {scholarships.map((scholarship) => (
             <motion.div
               key={scholarship.title}
-              variants={itemVariants}
+              variants={cardVariant}
               className={`group relative overflow-hidden rounded-2xl border ${scholarship.border} bg-gradient-to-br ${scholarship.gradient} p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg`}
             >
               <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${scholarship.bg}`}>

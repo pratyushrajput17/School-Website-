@@ -33,7 +33,7 @@ export default function ContactInfo() {
 
         <motion.div
           className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          variants={containerVariants}
+          variants={staggerContainer(0.1)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -42,7 +42,7 @@ export default function ContactInfo() {
             <motion.a
               key={item.title}
               href={item.href}
-              variants={cardVariants}
+              variants={cardVariant}
               className="group flex items-start gap-4 rounded-2xl border border-border/60 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-md"
             >
               <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${item.bg}`}>

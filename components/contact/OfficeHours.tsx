@@ -34,7 +34,7 @@ export default function OfficeHours() {
         <div className="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-12">
           <motion.div
             className="space-y-4"
-            variants={containerVariants}
+            variants={staggerContainer(0.1)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
@@ -47,7 +47,7 @@ export default function OfficeHours() {
             {schedule.map((item) => (
               <motion.div
                 key={item.day}
-                variants={itemVariants}
+                variants={cardVariant}
                 className="flex items-center justify-between rounded-xl border border-border/60 bg-white px-6 py-4 shadow-sm"
               >
                 <div className="flex items-center gap-3">
@@ -70,7 +70,7 @@ export default function OfficeHours() {
 
           <motion.div
             className="space-y-4"
-            variants={containerVariants}
+            variants={staggerContainer(0.1)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
@@ -83,7 +83,7 @@ export default function OfficeHours() {
             {additionalHours.map((item) => (
               <motion.div
                 key={item.label}
-                variants={itemVariants}
+                variants={cardVariant}
                 className="rounded-xl border border-border/60 bg-white p-6 shadow-sm"
               >
                 <div className="flex items-start gap-3">

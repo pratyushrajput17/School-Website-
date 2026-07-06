@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { motion, useInView, type Variants } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import {
   Users,
   GraduationCap,
@@ -11,6 +11,8 @@ import {
   Trophy,
 } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const statistics = [
   { value: schoolConfig.stats.students.value, suffix: schoolConfig.stats.students.suffix, label: 'Students', icon: Users },

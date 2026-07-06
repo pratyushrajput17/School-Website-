@@ -23,35 +23,22 @@ export default function MapSection() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Find Us
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Visit Our{' '}
-            <span className="text-blue-600">Campus</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            We&apos;re conveniently located in the heart of the city with easy
-            access from all major routes.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Find Us"
+          title="Visit Our"
+          highlight="Campus"
+          description="We're conveniently located in the heart of the city with easy access from all major routes."
+        />
 
         <motion.div
           className="mt-16 grid gap-8 lg:grid-cols-5"
-          variants={containerVariants}
+          variants={staggerContainer(0.1)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
         >
           <motion.div
-            variants={itemVariants}
+            variants={cardVariant}
             className="lg:col-span-3"
           >
             <div className="overflow-hidden rounded-2xl shadow-lg shadow-blue-100/50 ring-1 ring-black/[0.02]">
@@ -60,7 +47,7 @@ export default function MapSection() {
           </motion.div>
 
           <motion.div
-            variants={itemVariants}
+            variants={cardVariant}
             className="lg:col-span-2"
           >
             <div className="rounded-2xl border border-border/60 bg-white p-8 shadow-sm">

@@ -14,29 +14,16 @@ export default function ContactForm() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.02] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Send Us a Message
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            We&apos;re Here to{' '}
-            <span className="text-blue-600">Help</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Have a specific question? Fill out the form below and our team
-            will get back to you within 24 hours.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Send Us a Message"
+          title="We're Here to"
+          highlight="Help"
+          description="Have a specific question? Fill out the form below and our team will get back to you within 24 hours."
+        />
 
         <motion.div
           className="mt-16"
-          variants={containerVariants}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
@@ -44,7 +31,7 @@ export default function ContactForm() {
           <div className="overflow-hidden rounded-2xl border border-border/60 bg-white shadow-sm">
             <div className="grid lg:grid-cols-5">
               <motion.div
-                variants={itemVariants}
+                variants={cardVariant}
                 className="hidden bg-gradient-to-br from-blue-600 to-blue-500 p-10 lg:col-span-2 lg:block"
               >
                 <div className="flex h-full flex-col justify-center">
@@ -88,7 +75,7 @@ export default function ContactForm() {
               </motion.div>
 
               <motion.div
-                variants={itemVariants}
+                variants={cardVariant}
                 className="p-8 lg:col-span-3 lg:p-10"
               >
                 <div className="grid gap-4 sm:grid-cols-2">

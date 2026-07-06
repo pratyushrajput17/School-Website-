@@ -130,7 +130,7 @@ export default function NewsEvents() {
         <div className="mt-16 grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="space-y-8 lg:col-span-7">
             <motion.div
-              variants={cardVariants}
+              variants={cardVariant}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-80px' }}
@@ -243,7 +243,7 @@ variants={cardVariant}
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
           >
-            <motion.div variants={cardVariants}>
+            <motion.div variants={cardVariant}>
               <div className="rounded-3xl border border-border/50 bg-white p-6 shadow-sm sm:p-8">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50">
@@ -301,7 +301,7 @@ variants={cardVariant}
               </div>
             </motion.div>
 
-            <motion.div variants={cardVariants}>
+            <motion.div variants={cardVariant}>
               <div className="rounded-3xl border border-border/50 bg-white p-6 shadow-sm sm:p-8">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50">
