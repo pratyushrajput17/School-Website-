@@ -1,8 +1,10 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Bus, MapPin, User, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const routes = [
   { name: 'North Route', areas: 'City Center, Mall Road, North Colony', stops: 8 },
@@ -20,21 +22,7 @@ const pickupPoints = [
   'Lake View Park',
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-}
 
 export default function Transportation() {
   return (

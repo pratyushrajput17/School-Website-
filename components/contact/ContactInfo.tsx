@@ -1,8 +1,10 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Phone, Mail, MapPin, GraduationCap, Bus, ShieldAlert } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const contactDetails = [
   { icon: Phone, title: 'Phone', detail: schoolConfig.contact.phone, subtitle: 'Mon–Sat, 8 AM – 4 PM', bg: 'bg-blue-50', color: 'text-blue-600', href: `tel:${schoolConfig.contact.phone}` },
@@ -13,21 +15,7 @@ const contactDetails = [
   { icon: ShieldAlert, title: 'Emergency Contact', detail: '+91 98765 43211', subtitle: 'Available 24×7', bg: 'bg-rose-50', color: 'text-rose-600', href: 'tel:+919876543211' },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-}
 
 export default function ContactInfo() {
   return (
@@ -36,25 +24,12 @@ export default function ContactInfo() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.02] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Contact Information
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Ways to{' '}
-            <span className="text-blue-600">Get in Touch</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Choose the most convenient way to reach us. We&apos;re always happy
-            to assist you.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Contact Information"
+          title="Ways to"
+          highlight="Get in Touch"
+          description="Choose the most convenient way to reach us. We're always happy to assist you."
+        />
 
         <motion.div
           className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"

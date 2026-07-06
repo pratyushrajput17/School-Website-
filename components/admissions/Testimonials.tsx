@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const testimonials = [
   {
@@ -24,21 +26,7 @@ const testimonials = [
   },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-}
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
 
 export default function Testimonials() {
   return (
@@ -47,25 +35,12 @@ export default function Testimonials() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Parent Testimonials
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            Hear from Our{' '}
-            <span className="text-blue-600">Parent Community</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Discover why families trust us with their children&apos;s education
-            and future.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Parent Testimonials"
+          title="Hear from Our"
+          highlight="Parent Community"
+          description="Discover why families trust us with their children's education and future."
+        />
 
         <motion.div
           className="mt-16 grid gap-6 md:grid-cols-3"

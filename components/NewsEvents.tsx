@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
   ArrowRight,
@@ -12,6 +12,8 @@ import {
   Newspaper,
 } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const featuredNews = {
   category: 'Achievement',
@@ -115,59 +117,15 @@ const announcements = [
   },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08 },
-  },
-}
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
-
 export default function NewsEvents() {
   return (
     <section className="bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-              Latest Updates
-            </span>
-          </motion.div>
-
-          <motion.h2
-            className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          >
-            News, Events &amp; Achievements
-          </motion.h2>
-
-          <motion.p
-            className="mt-4 text-lg leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-          >
-            Stay updated with the latest happenings, announcements,
-            competitions, celebrations, and academic achievements.
-          </motion.p>
-        </div>
+        <SectionHeader
+          badge="Latest Updates"
+          title="News, Events & Achievements"
+          description="Stay updated with the latest happenings, announcements, competitions, celebrations, and academic achievements."
+        />
 
         <div className="mt-16 grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="space-y-8 lg:col-span-7">
@@ -226,7 +184,7 @@ export default function NewsEvents() {
 
             <motion.div
               className="grid gap-5 sm:grid-cols-3"
-              variants={containerVariants}
+variants={staggerContainer(0.15)}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-80px' }}
@@ -234,7 +192,7 @@ export default function NewsEvents() {
               {newsItems.map((item) => (
                 <motion.div
                   key={item.title}
-                  variants={cardVariants}
+variants={cardVariant}
                   className="group overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <div

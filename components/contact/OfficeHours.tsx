@@ -1,7 +1,9 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Clock, CalendarDays, Sun, GraduationCap, User } from 'lucide-react'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const schedule = [
   { day: 'Monday – Saturday', hours: '8:00 AM – 4:00 PM', status: 'Open', icon: CalendarDays },
@@ -13,21 +15,7 @@ const additionalHours = [
   { icon: User, label: 'Principal Meeting Hours', detail: 'Mon–Fri: 10:00 AM – 12:00 PM', note: 'Prior appointment required' },
 ] as const
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-}
 
 export default function OfficeHours() {
   return (
@@ -36,25 +24,12 @@ export default function OfficeHours() {
       <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Office Hours
-          </span>
-          <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            When We&apos;re{' '}
-            <span className="text-blue-600">Available</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Our campus and offices are open throughout the week. Visit us or
-            call during these hours.
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge="Office Hours"
+          title="When We're"
+          highlight="Available"
+          description="Our campus and offices are open throughout the week. Visit us or call during these hours."
+        />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-12">
           <motion.div

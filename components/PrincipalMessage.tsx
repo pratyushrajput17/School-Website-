@@ -1,8 +1,10 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Check, Quote, User } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+import SectionHeader from '@/components/ui/section-header'
+import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const achievements = [
   'Academic Excellence',
@@ -11,59 +13,15 @@ const achievements = [
   'Character Building',
 ] as const
 
-const achievementContainerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.3 },
-  },
-}
-
-const achievementItemVariants: Variants = {
-  hidden: { opacity: 0, x: -12 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-}
-
 export default function PrincipalMessage() {
   return (
     <section className="bg-slate-50 py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
-              {schoolConfig.principal.badge}
-            </span>
-          </motion.div>
-
-          <motion.h2
-            className="mt-6 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-          >
-            A Message from Our Principal
-          </motion.h2>
-
-          <motion.p
-            className="mt-4 text-lg leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-          >
-            Our philosophy is rooted in nurturing future leaders through
-            academic excellence, values, discipline, and innovation.
-          </motion.p>
-        </div>
+        <SectionHeader
+          badge={schoolConfig.principal.badge}
+          title="A Message from Our Principal"
+          description="Our philosophy is rooted in nurturing future leaders through academic excellence, values, discipline, and innovation."
+        />
 
         <div className="mt-16 grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           <motion.div
@@ -181,7 +139,7 @@ export default function PrincipalMessage() {
 
             <motion.div
               className="mt-8 flex flex-wrap gap-x-6 gap-y-3"
-              variants={achievementContainerVariants}
+              variants={staggerContainer(0.15)}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -189,7 +147,7 @@ export default function PrincipalMessage() {
               {achievements.map((achievement) => (
                 <motion.div
                   key={achievement}
-                  variants={achievementItemVariants}
+                  variants={cardVariant}
                   className="flex items-center gap-2"
                 >
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-100">
