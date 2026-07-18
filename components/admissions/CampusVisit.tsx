@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Calendar, Clock, User, GraduationCap, Phone, MapPin, ArrowRight } from 'lucide-react'
+import { Calendar, Clock, User, GraduationCap, Phone, MapPin } from 'lucide-react'
 import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, cardVariant } from '@/lib/animations'
 

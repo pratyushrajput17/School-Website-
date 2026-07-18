@@ -43,7 +43,7 @@ export default function OurStory() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <div className="space-y-6">
-              {journeyHighlights.map((item, index) => (
+              {journeyHighlights.map((item) => (
                 <div
                   key={item.label}
                   className="group flex gap-4 rounded-2xl border border-border/60 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"

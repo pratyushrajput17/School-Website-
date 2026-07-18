@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, cardVariant } from '@/lib/animations'
 import { Award, Trophy, Medal, Star, Target, TrendingUp } from 'lucide-react'
-import { schoolConfig } from '@/lib/school-config'
 
 const achievements = [
   { icon: Award, label: 'National Awards', value: '15+', description: 'State & national recognition for academic excellence', color: 'text-blue-600', bg: 'bg-blue-50' },

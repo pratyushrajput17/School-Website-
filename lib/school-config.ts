@@ -1,42 +1,43 @@
 export const schoolConfig = {
-  name: 'School Name',
-  tagline: 'Shaping Future Leaders',
-  board: 'CBSE',
-  establishedYear: 2005,
+  name: 'Adarsh High School',
+  tagline: 'Nurturing Minds, Building Futures',
+  board: 'MP Board',
+  establishedYear: 2010,
   logoPath: '/logo.svg',
 
   hero: {
-    title: 'Building Future Leaders Through Excellence in Education',
+    title: 'Quality Education for a Brighter Tomorrow',
     subtitle:
-      'Providing world-class education that nurtures creativity, critical thinking, and character development for the leaders of tomorrow.',
+      'Adarsh High School is committed to providing quality education that nurtures academic excellence, character development, and holistic growth for every student.',
   },
 
   admission: {
     session: '2026–27',
     badge: 'Admissions Open 2026–27',
-    applyText: 'Apply for 2026–27',
+    applyText: 'Apply Now',
     deadline: '31 March',
     seats: 'Limited',
   },
 
   description:
-    'Providing world-class education that nurtures creativity, critical thinking, and character development for the leaders of tomorrow.',
+    'Adarsh High School is committed to providing quality education that nurtures academic excellence, character development, and holistic growth for every student.',
 
-  url: 'https://schoolname.edu',
+  url: 'https://adarshhighschool.edu',
 
   contact: {
-    address: '123 Education Lane, Knowledge City, State – 400001',
-    phone: '+91 98765 43210',
-    email: 'info@schoolname.edu',
+    address: 'Gadarwara Road, Sainkheda, Madhya Pradesh',
+    phone: '+91 9893652202',
+    altPhone: '+91 9993606232',
+    email: '',
     officeHours: 'Mon–Sat: 8:00 AM – 4:00 PM',
   },
 
   socialLinks: {
-    facebook: 'https://facebook.com/schoolname',
-    instagram: 'https://instagram.com/schoolname',
-    twitter: 'https://twitter.com/schoolname',
-    youtube: 'https://youtube.com/@schoolname',
-    linkedin: 'https://linkedin.com/school/schoolname',
+    facebook: '#',
+    instagram: '#',
+    twitter: '#',
+    youtube: '#',
+    linkedin: '#',
     facebookLabel: 'Facebook',
     instagramLabel: 'Instagram',
     youtubeLabel: 'YouTube',
@@ -44,35 +45,35 @@ export const schoolConfig = {
   },
 
   principal: {
-    name: 'Dr. Sarah Mitchell',
-    title: 'Principal, School Name',
-    badge: 'Leadership',
+    name: 'Principal',
+    title: 'Principal, Adarsh High School',
+    badge: 'From the Principal',
     experience: 20,
     quote:
-      'Education is not just about academic excellence; it is about shaping character, nurturing curiosity, and preparing students to become compassionate leaders of tomorrow.',
+      'At Adarsh High School, we believe every child has unique potential. Our mission is to create a nurturing environment where students grow academically, socially, and morally, preparing them to become responsible citizens and future leaders.',
   },
 
   metadata: {
-    siteName: 'School Name',
-    titleTemplate: '%s | School Name',
-    defaultTitle: 'School Name | Excellence in Education',
+    siteName: 'Adarsh High School',
+    titleTemplate: '%s | Adarsh High School',
+    defaultTitle: 'Adarsh High School | Quality Education in Sainkheda, MP',
     locale: 'en_IN',
     country: 'IN',
     themeColor: '#0F172A',
     category: 'education',
     ogImage: '/og-image.png',
-    twitterHandle: '@schoolname',
-    applicationName: 'School Name',
-    creator: 'School Name',
-    publisher: 'School Name',
+    twitterHandle: '@adarshhighschool',
+    applicationName: 'Adarsh High School',
+    creator: 'Adarsh High School',
+    publisher: 'Adarsh High School',
   },
 
   stats: {
-    students: { value: 1500, suffix: '+' },
-    teachers: { value: 75, suffix: '+' },
-    years: { value: 20, suffix: '+' },
-    boardResults: { value: 100, suffix: '%' },
-    smartClassrooms: { value: 30, suffix: '+' },
-    awards: { value: 15, suffix: '+' },
+    students: { value: 900, suffix: '+' },
+    teachers: { value: 40, suffix: '+' },
+    years: { value: 15, suffix: '+' },
+    boardResults: { value: 95, suffix: '%' },
+    smartClassrooms: { value: 15, suffix: '+' },
+    awards: { value: 10, suffix: '+' },
   },
 } as const

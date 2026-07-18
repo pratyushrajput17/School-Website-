@@ -7,48 +7,22 @@ import { schoolConfig } from "@/lib/school-config"
 const OurStory = dynamic(() => import("@/components/about/OurStory"))
 const VisionMission = dynamic(() => import("@/components/about/VisionMission"))
 const CoreValues = dynamic(() => import("@/components/about/CoreValues"))
-const Leadership = dynamic(() => import("@/components/about/Leadership"))
-const Achievements = dynamic(() => import("@/components/about/Achievements"))
-const Infrastructure = dynamic(() => import("@/components/about/Infrastructure"))
-const FacultyExcellence = dynamic(() => import("@/components/about/FacultyExcellence"))
-const CampusLife = dynamic(() => import("@/components/about/CampusLife"))
-const TrustSection = dynamic(() => import("@/components/about/TrustSection"))
-const Recognition = dynamic(() => import("@/components/about/Recognition"))
-const FAQ = dynamic(() => import("@/components/about/FAQ"))
-const FinalCTA = dynamic(() => import("@/components/about/FinalCTA"))
 const Footer = dynamic(() => import("@/components/Footer"))
 
 const title = 'About Us'
 const description =
-  "Discover our school's rich history, vision, and commitment to excellence in education. Learn about our leadership, faculty, and vibrant campus life."
+  "Learn about Adarsh High School — our story, vision, mission, and core values that guide us in providing quality education in Sainkheda, MP."
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: {
-    canonical: `${schoolConfig.url}/about`,
-  },
+  alternates: { canonical: `${schoolConfig.url}/about` },
   openGraph: {
     title: `${schoolConfig.metadata.siteName} | About Us`,
     description,
     url: `${schoolConfig.url}/about`,
     siteName: schoolConfig.metadata.siteName,
-    images: [
-      {
-        url: schoolConfig.metadata.ogImage,
-        width: 1200,
-        height: 630,
-        alt: schoolConfig.name,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${schoolConfig.metadata.siteName} | About Us`,
-    description,
-    images: [schoolConfig.metadata.ogImage],
-    site: schoolConfig.metadata.twitterHandle,
-    creator: schoolConfig.metadata.twitterHandle,
+    images: [{ url: schoolConfig.metadata.ogImage, width: 1200, height: 630, alt: schoolConfig.name }],
   },
 }
 
@@ -60,15 +34,6 @@ export default function AboutPage() {
       <OurStory />
       <VisionMission />
       <CoreValues />
-      <Leadership />
-      <Achievements />
-      <Infrastructure />
-      <FacultyExcellence />
-      <CampusLife />
-      <TrustSection />
-      <Recognition />
-      <FAQ />
-      <FinalCTA />
       <Footer />
     </>
   )

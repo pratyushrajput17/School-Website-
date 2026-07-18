@@ -76,7 +76,7 @@ export default function CurriculumOverview() {
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
           >
-            {stages.map((stage, index) => (
+            {stages.map((stage) => (
               <motion.div
                 key={stage.title}
                 variants={revealLeft}

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { GraduationCap, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react'
-import { contactInfo, quickLinks } from '@/constants'
+import { contactInfo } from '@/config/contact'
+import { quickLinks } from '@/config/navigation'
 import { schoolConfig } from '@/lib/school-config'
 
 const footerSections = [
@@ -11,20 +12,17 @@ const footerSections = [
   {
     title: 'Academics',
     links: [
-      { href: '/academics#pre-primary', label: 'Pre-Primary' },
-      { href: '/academics#primary', label: 'Primary School' },
-      { href: '/academics#middle', label: 'Middle School' },
-      { href: '/academics#senior', label: 'Senior Secondary' },
+      { href: '/academics', label: 'Curriculum' },
+      { href: '/academics', label: 'Teaching Approach' },
+      { href: '/academics', label: 'Activities' },
     ],
   },
   {
     title: 'Support',
     links: [
       { href: '/admissions', label: 'Admissions' },
-      { href: '/facilities', label: 'Facilities' },
+      { href: '/gallery', label: 'Gallery' },
       { href: '/contact', label: 'Contact Us' },
-      { href: '/privacy', label: 'Privacy Policy' },
-      { href: '/terms', label: 'Terms of Use' },
     ],
   },
 ] as const
@@ -149,16 +147,10 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-6">
               <Link
-                href="/privacy"
+                href="/contact"
                 className="text-xs text-white/40 transition-colors hover:text-white/60"
               >
-                Privacy Policy
-              </Link>
-              <Link
-                href="/terms"
-                className="text-xs text-white/40 transition-colors hover:text-white/60"
-              >
-                Terms of Service
+                Contact Us
               </Link>
             </div>
           </div>

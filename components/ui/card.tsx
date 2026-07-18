@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { cardVariant } from '@/lib/animations'
 import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'

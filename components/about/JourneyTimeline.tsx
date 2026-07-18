@@ -33,7 +33,7 @@ export default function JourneyTimeline() {
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
           >
-            {timeline.map((item, index) => (
+            {timeline.map((item) => (
               <motion.div
                 key={item.year}
                 variants={cardVariant}

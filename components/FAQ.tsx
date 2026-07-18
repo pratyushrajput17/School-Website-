@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronDown, Search } from 'lucide-react'
-import { faqs } from '@/constants'
+import { faqs } from '@/data/faq'
 import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, itemVariants } from '@/lib/animations'
 

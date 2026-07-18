@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Mail, Phone, MapPin, Clock, ArrowRight, Send } from 'lucide-react'
-import { contactInfo } from '@/constants'
+import { contactInfo } from '@/config/contact'
 
 const contactMethods = [
   {

@@ -49,33 +49,4 @@ export interface QuickLink {
   label: string
 }
 
-export interface AnimationVariants {
-  container: Variants
-  item: Variants
-}
-
-export { fadeUp, fadeIn, scaleIn, staggerContainer, cardVariant } from '@/lib/animations'
-
-export const fadeUpVariants: AnimationVariants = {
-  container: {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: 0.1 },
-    },
-  },
-  item: {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: 'easeOut' },
-    },
-  },
-}
-
-export const staggerVariants = (stagger = 0.08): Variants => ({
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: stagger },
-  },
-})
+export { fadeUp, fadeIn, scaleIn, staggerContainer, cardVariant, revealLeft, revealRight, itemVariants, sectionHeaderVariants, ctaVariants, listVariants } from '@/lib/animations'

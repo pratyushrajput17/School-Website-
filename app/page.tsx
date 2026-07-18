@@ -9,17 +9,12 @@ import { schoolConfig } from "@/lib/school-config"
 const Facilities = dynamic(() => import("@/components/Facilities"))
 const PrincipalMessage = dynamic(() => import("@/components/PrincipalMessage"))
 const CampusGallery = dynamic(() => import("@/components/CampusGallery"))
-const AcademicPrograms = dynamic(() => import("@/components/AcademicPrograms"))
-const AdmissionProcess = dynamic(() => import("@/components/AdmissionProcess"))
-const Testimonials = dynamic(() => import("@/components/Testimonials"))
-const NewsEvents = dynamic(() => import("@/components/NewsEvents"))
-const FAQ = dynamic(() => import("@/components/FAQ"))
-const BookVisit = dynamic(() => import("@/components/BookVisit"))
-const Contact = dynamic(() => import("@/components/Contact"))
 const FinalCTA = dynamic(() => import("@/components/FinalCTA"))
 const Footer = dynamic(() => import("@/components/Footer"))
 
 export const metadata: Metadata = {
+  title: schoolConfig.metadata.defaultTitle,
+  description: schoolConfig.description,
   alternates: {
     canonical: schoolConfig.url,
   },
@@ -35,13 +30,6 @@ export default function Home() {
       <Facilities />
       <PrincipalMessage />
       <CampusGallery />
-      <AcademicPrograms />
-      <AdmissionProcess />
-      <Testimonials />
-      <NewsEvents />
-      <FAQ />
-      <BookVisit />
-      <Contact />
       <FinalCTA />
       <Footer />
     </>
