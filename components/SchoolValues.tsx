@@ -5,13 +5,13 @@ export default function SchoolValues() {
     <section className="relative overflow-hidden bg-white py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="badge-pill">Our Values & Principles</span>
+          <span className="badge-pill">हमारे मूल्य और आदर्श</span>
           <h2 className="heading-xl mt-6">
-            The Values That Define Us
+            हमारी पहचान के मूल्य
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Our school values are the foundation of every student&apos;s character.
-            They shape responsible citizens and compassionate human beings.
+            हमारे विद्यालय के मूल्य प्रत्येक विद्यार्थी के चरित्र निर्माण की नींव हैं।
+            ये जिम्मेदार नागरिक और संवेदनशील इंसान बनाने में सहायक होते हैं।
           </p>
         </div>
 

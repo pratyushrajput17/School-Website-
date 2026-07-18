@@ -53,12 +53,12 @@ export const schoolConfig = {
   },
 
   schoolValues: [
-    { value: 'Satya (Truth)', meaning: 'Walking the path of truth is the foundation of all learning. We instil honesty and integrity in every student.' },
-    { value: 'Anushasan (Discipline)', meaning: 'Discipline is the bridge between goals and achievement. We cultivate self-discipline and focus.' },
-    { value: 'Samman (Respect)', meaning: 'Respect for parents, teachers, and elders is a core value that shapes character and builds community.' },
-    { value: 'Karuna (Compassion)', meaning: 'Kindness and empathy towards others make us better human beings. We nurture compassionate hearts.' },
-    { value: 'Seva (Service)', meaning: 'Service to society is the highest form of education. We encourage students to contribute and give back.' },
-    { value: 'Rashtraprem (Patriotism)', meaning: 'Love for the nation and pride in our culture and heritage is instilled in every student.' },
+    { value: 'सत्य', meaning: 'सत्य के मार्ग पर चलना सभी सीखने की नींव है। हम प्रत्येक विद्यार्थी में ईमानदारी, सत्यनिष्ठा और नैतिक मूल्यों का विकास करते हैं।' },
+    { value: 'अनुशासन', meaning: 'अनुशासन सफलता की पहली सीढ़ी है। हम विद्यार्थियों में आत्म-अनुशासन, समय का सम्मान और लक्ष्य के प्रति समर्पण की भावना विकसित करते हैं।' },
+    { value: 'सम्मान', meaning: 'माता-पिता, गुरुजनों, बड़ों और समाज के प्रति सम्मान हमारे विद्यालय की मूल पहचान है। सम्मान ही श्रेष्ठ चरित्र का आधार है।' },
+    { value: 'करुणा', meaning: 'दूसरों के प्रति दया, सहानुभूति और संवेदनशीलता एक अच्छे इंसान की पहचान है। हम विद्यार्थियों को मानवीय मूल्यों के साथ आगे बढ़ना सिखाते हैं।' },
+    { value: 'सेवा', meaning: 'समाज सेवा और दूसरों की सहायता करना सच्ची शिक्षा का महत्वपूर्ण भाग है। हम विद्यार्थियों को जिम्मेदार और सहयोगी नागरिक बनने के लिए प्रेरित करते हैं।' },
+    { value: 'राष्ट्रप्रेम', meaning: 'अपने राष्ट्र, संस्कृति और विरासत के प्रति सम्मान और गर्व की भावना प्रत्येक विद्यार्थी में विकसित की जाती है ताकि वे एक जिम्मेदार नागरिक बन सकें।' },
   ],
 
   whyTrustUs: [
