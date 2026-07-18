@@ -1,6 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcrypt";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const prisma = new PrismaClient({ adapter });
 
 const seedNotices = [
   {
@@ -101,6 +104,25 @@ const seedEvents = [
 ];
 
 async function main() {
+  console.log("Seeding admin...");
+  const existingAdmin = await prisma.admin.findUnique({
+    where: { email: "rajputpratyush33@gmail.com" },
+  });
+  if (!existingAdmin) {
+    const hashedPassword = await bcrypt.hash("Adarsh2111", 12);
+    await prisma.admin.create({
+      data: {
+        name: "Super Admin",
+        email: "rajputpratyush33@gmail.com",
+        password: hashedPassword,
+        role: "super_admin",
+      },
+    });
+    console.log("Admin seeded successfully");
+  } else {
+    console.log("Admin already exists, skipping");
+  }
+
   console.log("Seeding notices...");
   for (const notice of seedNotices) {
     await prisma.notice.create({ data: notice });
