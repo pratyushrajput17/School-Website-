@@ -9,6 +9,7 @@ const TOKEN_EXPIRY = "24h";
 export interface JWTPayload {
   id: string;
   email: string;
+  name: string;
   role: string;
 }
 

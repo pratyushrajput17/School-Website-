@@ -21,7 +21,7 @@ function formatDate(iso: string) {
 }
 
 export default async function NoticePreview() {
-  const latest = await getNotices({ limit: 3 }).catch(() => [])
+  const latest = await getNotices({ limit: 3, publishedOnly: true }).catch(() => [])
 
   if (latest.length === 0) return null
 

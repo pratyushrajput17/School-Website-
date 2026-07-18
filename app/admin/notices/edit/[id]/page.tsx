@@ -22,6 +22,7 @@ export default function EditNoticePage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [isPublished, setIsPublished] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -40,6 +41,7 @@ export default function EditNoticePage() {
         setTitle(data.notice.title);
         setCategory(data.notice.category);
         setDescription(data.notice.description);
+        setIsPublished(data.notice.isPublished);
       } catch {
         router.push("/admin/notices");
       } finally {
@@ -67,6 +69,7 @@ export default function EditNoticePage() {
           title: title.trim(),
           category,
           description: description.trim(),
+          isPublished,
         }),
       });
 
@@ -179,6 +182,21 @@ export default function EditNoticePage() {
             onChange={(e) => setDescription(e.target.value)}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent resize-y"
           />
+        </div>
+
+        <div className="flex items-center gap-3">
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isPublished}
+              onChange={(e) => setIsPublished(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div className="w-10 h-5.5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#FF9933] rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4.5 after:w-4.5 after:transition-all peer-checked:bg-[#1B3A5C] dark:border-gray-600" />
+            <span className="ms-3 text-sm font-medium text-gray-700">
+              Published
+            </span>
+          </label>
         </div>
 
         {error && (

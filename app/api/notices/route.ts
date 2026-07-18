@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getNotices, createNotice, getNoticeCount } from "@/lib/notices";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 
 export async function GET(request: Request) {
   try {
@@ -10,9 +10,25 @@ export async function GET(request: Request) {
     const limit = searchParams.get("limit")
       ? Number(searchParams.get("limit"))
       : undefined;
+    const publishedOnly = searchParams.get("publishedOnly") === "true";
+    const isAdminRequest =
+      searchParams.get("admin") === "true" || !publishedOnly;
 
-    const notices = await getNotices({ category, search, limit });
-    const total = await getNoticeCount();
+    const admin = getAdminFromRequest(request);
+    const showAll = !!admin && isAdminRequest;
+
+    const notices = await getNotices({
+      category,
+      search,
+      limit,
+      publishedOnly: !showAll,
+    });
+
+    const total = showAll
+      ? await getNoticeCount()
+      : await getNotices({ publishedOnly: true, category, search }).then(
+          (n) => n.length
+        );
 
     return NextResponse.json({ notices, total });
   } catch (error) {
@@ -28,6 +44,11 @@ export async function POST(request: Request) {
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
 
+  const admin = getAdminFromRequest(request);
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
 
@@ -42,6 +63,8 @@ export async function POST(request: Request) {
       title: body.title,
       description: body.description,
       category: body.category,
+      isPublished: body.isPublished ?? false,
+      createdBy: admin.name,
     });
 
     return NextResponse.json({ notice }, { status: 201 });

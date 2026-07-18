@@ -16,36 +16,48 @@ const seedNotices = [
     description:
       "Applications are now open for Nursery to Class 9 for the upcoming academic session. Visit the school office or contact us for more details.",
     category: "Admissions",
+    isPublished: true,
+    createdBy: "Super Admin",
   },
   {
     title: "Parent-Teacher Meeting",
     description:
       "The first Parent-Teacher Meeting of the session will be held in the school auditorium. Parents are requested to attend and discuss their child's progress.",
     category: "Academic",
+    isPublished: true,
+    createdBy: "Super Admin",
   },
   {
     title: "Winter Break Notice",
     description:
       "School will remain closed for winter break from 25 December to 5 January. Regular classes will resume on 6 January.",
     category: "Holiday",
+    isPublished: true,
+    createdBy: "Super Admin",
   },
   {
     title: "Half-Yearly Examination Schedule",
     description:
       "Half-yearly examinations for Classes I-X will begin from 1 October. Detailed schedule has been shared with students in class.",
     category: "Examination",
+    isPublished: true,
+    createdBy: "Super Admin",
   },
   {
     title: "Annual Sports Day",
     description:
       "Annual Sports Day will be held on 20 November. Students participating in events should report to their class teachers for practice schedules.",
     category: "Events",
+    isPublished: true,
+    createdBy: "Super Admin",
   },
   {
     title: "Republic Day Celebration",
     description:
       "Republic Day will be celebrated in the school premises on 26 January. All students are expected to attend in formal uniform.",
     category: "Events",
+    isPublished: true,
+    createdBy: "Super Admin",
   },
 ];
 

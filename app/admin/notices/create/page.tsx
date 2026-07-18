@@ -19,6 +19,7 @@ export default function CreateNoticePage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [isPublished, setIsPublished] = useState(true);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -40,6 +41,7 @@ export default function CreateNoticePage() {
           title: title.trim(),
           category,
           description: description.trim(),
+          isPublished,
         }),
       });
 
@@ -133,6 +135,21 @@ export default function CreateNoticePage() {
           />
         </div>
 
+        <div className="flex items-center gap-3">
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isPublished}
+              onChange={(e) => setIsPublished(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div className="w-10 h-5.5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#FF9933] rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4.5 after:w-4.5 after:transition-all peer-checked:bg-[#1B3A5C] dark:border-gray-600" />
+            <span className="ms-3 text-sm font-medium text-gray-700">
+              Publish immediately
+            </span>
+          </label>
+        </div>
+
         {error && (
           <div className="bg-red-50 text-red-600 text-sm px-4 py-2.5 rounded-lg border border-red-200">
             {error}
@@ -146,7 +163,7 @@ export default function CreateNoticePage() {
             className="inline-flex items-center gap-2 bg-[#FF9933] text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-[#e8892e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-            {saving ? "Publishing..." : "Publish Notice"}
+            {saving ? "Saving..." : isPublished ? "Publish Notice" : "Save Draft"}
           </button>
           <Link
             href="/admin/notices"

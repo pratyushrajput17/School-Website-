@@ -30,7 +30,7 @@ function formatDate(iso: string) {
 }
 
 export default async function NoticesPage() {
-  const notices = await getNotices().catch(() => [])
+  const notices = await getNotices({ publishedOnly: true }).catch(() => [])
 
   return (
     <>
