@@ -7,13 +7,11 @@ import Link from "next/link";
 
 const CATEGORIES = [
   "Academic Activities",
-  "Annual Function",
   "Cultural Programs",
-  "Sports Activities",
   "National Celebrations",
-  "Competitions",
   "Parent Meetings",
-  "General Events",
+  "Competitions",
+  "General",
 ];
 
 export default function CreateEventPage() {
@@ -23,6 +21,7 @@ export default function CreateEventPage() {
   const [eventDate, setEventDate] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [isPublished, setIsPublished] = useState(false);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -46,6 +45,7 @@ export default function CreateEventPage() {
           eventDate: new Date(eventDate).toISOString(),
           description: description.trim(),
           image: image.trim() || undefined,
+          isPublished,
         }),
       });
 
@@ -176,6 +176,21 @@ export default function CreateEventPage() {
           />
         </div>
 
+        <div className="flex items-center gap-3">
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isPublished}
+              onChange={(e) => setIsPublished(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div className="w-9 h-5 bg-gray-200 peer-focus:ring-2 peer-focus:ring-[#FF9933] rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#FF9933]" />
+          </label>
+          <span className="text-sm text-gray-700 font-medium">
+            Publish immediately
+          </span>
+        </div>
+
         {error && (
           <div className="bg-red-50 text-red-600 text-sm px-4 py-2.5 rounded-lg border border-red-200">
             {error}
@@ -189,7 +204,7 @@ export default function CreateEventPage() {
             className="inline-flex items-center gap-2 bg-[#FF9933] text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-[#e8892e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-            {saving ? "Publishing..." : "Publish Event"}
+            {saving ? "Saving..." : isPublished ? "Publish Event" : "Save as Draft"}
           </button>
           <Link
             href="/admin/events"

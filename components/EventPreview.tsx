@@ -4,13 +4,11 @@ import { getEvents } from '@/lib/events'
 
 const categoryColors: Record<string, string> = {
   'Academic Activities': 'from-cyan-100 to-cyan-50',
-  'Annual Function': 'from-rose-100 to-rose-50',
   'Cultural Programs': 'from-violet-100 to-violet-50',
-  'Sports Activities': 'from-emerald-100 to-emerald-50',
   'National Celebrations': 'from-orange-100 to-orange-50',
-  'Competitions': 'from-amber-100 to-amber-50',
   'Parent Meetings': 'from-blue-100 to-blue-50',
-  'General Events': 'from-gray-100 to-gray-50',
+  'Competitions': 'from-amber-100 to-amber-50',
+  'General': 'from-gray-100 to-gray-50',
 }
 
 function formatDate(iso: string) {
@@ -23,7 +21,7 @@ function formatDate(iso: string) {
 }
 
 export default async function EventPreview() {
-  const latest = await getEvents({ limit: 3 }).catch(() => [])
+  const latest = await getEvents({ limit: 3, publishedOnly: true }).catch(() => [])
 
   if (latest.length === 0) return null
 

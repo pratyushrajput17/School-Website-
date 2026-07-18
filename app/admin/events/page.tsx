@@ -11,17 +11,18 @@ import {
   Calendar,
   X,
   CalendarDays,
+  CheckCircle2,
+  XCircle,
+  Loader2,
 } from "lucide-react";
 
 const CATEGORIES = [
   "Academic Activities",
-  "Annual Function",
   "Cultural Programs",
-  "Sports Activities",
   "National Celebrations",
-  "Competitions",
   "Parent Meetings",
-  "General Events",
+  "Competitions",
+  "General",
 ];
 
 interface EventItem {
@@ -31,18 +32,19 @@ interface EventItem {
   category: string;
   eventDate: string;
   image: string | null;
+  isPublished: boolean;
+  createdBy: string;
+  updatedAt: string;
   createdAt: string;
 }
 
 const categoryColors: Record<string, string> = {
   "Academic Activities": "bg-cyan-100 text-cyan-700",
-  "Annual Function": "bg-rose-100 text-rose-700",
   "Cultural Programs": "bg-violet-100 text-violet-700",
-  "Sports Activities": "bg-emerald-100 text-emerald-700",
   "National Celebrations": "bg-orange-100 text-orange-700",
-  Competitions: "bg-amber-100 text-amber-700",
   "Parent Meetings": "bg-blue-100 text-blue-700",
-  "General Events": "bg-gray-100 text-gray-700",
+  Competitions: "bg-amber-100 text-amber-700",
+  General: "bg-gray-100 text-gray-700",
 };
 
 export default function AdminEventsPage() {
@@ -53,12 +55,14 @@ export default function AdminEventsPage() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const fetchEvents = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (search) params.set("search", search);
       if (categoryFilter) params.set("category", categoryFilter);
+      params.set("admin", "true");
 
       const res = await fetch(`/api/events?${params}`);
       if (!res.ok) {
@@ -90,6 +94,26 @@ export default function AdminEventsPage() {
     } finally {
       setDeleting(false);
       setDeleteId(null);
+    }
+  }
+
+  async function handleTogglePublish(id: string, current: boolean) {
+    setTogglingId(id);
+    try {
+      const res = await fetch(`/api/events/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isPublished: !current }),
+      });
+      if (res.ok) {
+        setEvents((prev) =>
+          prev.map((e) => (e.id === id ? { ...e, isPublished: !current } : e))
+        );
+      }
+    } catch {
+      /* silent */
+    } finally {
+      setTogglingId(null);
     }
   }
 
@@ -175,7 +199,7 @@ export default function AdminEventsPage() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1.5">
+                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                       <span
                         className={`text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                           categoryColors[event.category] ||
@@ -188,6 +212,17 @@ export default function AdminEventsPage() {
                         <Calendar className="w-3 h-3" />
                         {formatDate(event.eventDate)}
                       </span>
+                      {event.isPublished ? (
+                        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" />
+                          Published
+                        </span>
+                      ) : (
+                        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 flex items-center gap-1">
+                          <XCircle className="w-3 h-3" />
+                          Draft
+                        </span>
+                      )}
                     </div>
                     <h3 className="font-medium text-gray-900">
                       {event.title}
@@ -195,13 +230,37 @@ export default function AdminEventsPage() {
                     <p className="text-sm text-gray-500 mt-1 line-clamp-2">
                       {event.description}
                     </p>
-                    {event.image && (
-                      <span className="text-xs text-gray-400 mt-1 block">
-                        Image: {event.image}
-                      </span>
+                    {event.createdBy && (
+                      <p className="text-xs text-gray-400 mt-1">
+                        by {event.createdBy}
+                      </p>
                     )}
                   </div>
                   <div className="flex items-center gap-1 flex-shrink-0">
+                    <button
+                      onClick={() =>
+                        handleTogglePublish(event.id, event.isPublished)
+                      }
+                      disabled={togglingId === event.id}
+                      className={`p-2 rounded-lg transition-colors ${
+                        togglingId === event.id
+                          ? "opacity-50 cursor-not-allowed"
+                          : event.isPublished
+                          ? "text-green-600 hover:bg-green-50"
+                          : "text-gray-400 hover:bg-gray-100"
+                      }`}
+                      title={
+                        event.isPublished ? "Unpublish" : "Publish"
+                      }
+                    >
+                      {togglingId === event.id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : event.isPublished ? (
+                        <CheckCircle2 className="w-4 h-4" />
+                      ) : (
+                        <XCircle className="w-4 h-4" />
+                      )}
+                    </button>
                     <Link
                       href={`/admin/events/edit/${event.id}`}
                       className="p-2 text-gray-400 hover:text-[#FF9933] hover:bg-amber-50 rounded-lg transition-colors"

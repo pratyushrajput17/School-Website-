@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getEventById, updateEvent, deleteEvent } from "@/lib/events";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 
 export async function GET(
   _request: Request,
@@ -31,16 +31,14 @@ export async function PUT(
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
 
+  const admin = getAdminFromRequest(request);
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
     const body = await request.json();
-
-    if (!body.title || !body.description || !body.eventDate || !body.category) {
-      return NextResponse.json(
-        { error: "Title, description, event date, and category are required" },
-        { status: 400 }
-      );
-    }
 
     const existing = await getEventById(id);
     if (!existing) {
@@ -52,7 +50,9 @@ export async function PUT(
       description: body.description,
       eventDate: body.eventDate,
       category: body.category,
-      image: body.image || undefined,
+      image: body.image,
+      isPublished: body.isPublished,
+      updatedBy: admin.name,
     });
 
     return NextResponse.json({ event });

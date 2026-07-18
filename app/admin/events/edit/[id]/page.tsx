@@ -7,13 +7,11 @@ import Link from "next/link";
 
 const CATEGORIES = [
   "Academic Activities",
-  "Annual Function",
   "Cultural Programs",
-  "Sports Activities",
   "National Celebrations",
-  "Competitions",
   "Parent Meetings",
-  "General Events",
+  "Competitions",
+  "General",
 ];
 
 export default function EditEventPage() {
@@ -26,6 +24,7 @@ export default function EditEventPage() {
   const [eventDate, setEventDate] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [isPublished, setIsPublished] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -47,6 +46,7 @@ export default function EditEventPage() {
         setEventDate(ev.eventDate.split("T")[0]);
         setDescription(ev.description);
         setImage(ev.image || "");
+        setIsPublished(ev.isPublished ?? false);
       } catch {
         router.push("/admin/events");
       } finally {
@@ -76,6 +76,7 @@ export default function EditEventPage() {
           eventDate: new Date(eventDate).toISOString(),
           description: description.trim(),
           image: image.trim() || undefined,
+          isPublished,
         }),
       });
 
@@ -224,6 +225,21 @@ export default function EditEventPage() {
             onChange={(e) => setDescription(e.target.value)}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent resize-y"
           />
+        </div>
+
+        <div className="flex items-center gap-3">
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isPublished}
+              onChange={(e) => setIsPublished(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div className="w-9 h-5 bg-gray-200 peer-focus:ring-2 peer-focus:ring-[#FF9933] rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#FF9933]" />
+          </label>
+          <span className="text-sm text-gray-700 font-medium">
+            {isPublished ? "Published" : "Draft — not visible to public"}
+          </span>
         </div>
 
         {error && (
