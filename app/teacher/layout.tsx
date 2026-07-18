@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   ClipboardCheck,
+  BookText,
   LogOut,
   Menu,
   X,
@@ -45,6 +46,7 @@ export default function TeacherLayout({
 
   const sidebarLinks = [
     { href: "/teacher/attendance", label: "Mark Attendance", icon: ClipboardCheck },
+    { href: "/teacher/homework", label: "Homework", icon: BookText },
   ];
 
   async function handleLogout() {

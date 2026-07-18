@@ -17,6 +17,7 @@ import {
   ChevronDown,
   BookOpen,
   ClipboardCheck,
+  BookText,
 } from "lucide-react";
 import NextImage from "next/image";
 
@@ -60,6 +61,7 @@ export default function AdminLayout({
     ...(adminRole === "super_admin"
       ? [{ href: "/admin/admins", label: "Admins", icon: Shield }]
       : []),
+    { href: "/admin/homework", label: "Homework", icon: BookText },
     { href: "/admin/notices", label: "Notices", icon: Bell },
     { href: "/admin/events", label: "Events", icon: Calendar },
     { href: "/admin/gallery", label: "Gallery", icon: Image },

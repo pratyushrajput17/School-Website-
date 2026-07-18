@@ -127,3 +127,20 @@ model Attendance {
   @@index([className, section, attendanceDate])
   @@index([attendanceDate])
 }
+
+model Homework {
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  subject       String
+  className     String
+  section       String
+  dueDate       DateTime
+  attachmentUrl String?
+  createdBy     String
+  createdAt     DateTime @default(now())
+
+  @@index([className, section])
+  @@index([subject])
+  @@index([dueDate])
+}

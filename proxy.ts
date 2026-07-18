@@ -25,7 +25,7 @@ export function proxy(request: NextRequest) {
     }
 
     if (isValid && pathname === "/teacher/login") {
-      return NextResponse.redirect(new URL("/teacher/attendance", request.url));
+      return NextResponse.redirect(new URL("/teacher/homework", request.url));
     }
 
     return NextResponse.next();

@@ -12,6 +12,7 @@ import {
   Shield,
   BookOpen,
   ClipboardCheck,
+  BookText,
 } from "lucide-react";
 
 interface Stats {
@@ -25,6 +26,7 @@ interface Stats {
   teachers: number;
   activeTeachers?: number;
   teachersPerSubject?: { subject: string; count: number }[];
+  homework?: number;
   attendance?: {
     total: number;
     present: number;
@@ -99,6 +101,13 @@ const navigationCards = [
     href: "/admin/attendance",
     color: "bg-emerald-500",
   },
+  {
+    label: "Manage Homework",
+    description: "Assign and manage homework across classes",
+    icon: BookText,
+    href: "/admin/homework",
+    color: "bg-violet-500",
+  },
 ];
 
 export default function AdminDashboard() {
@@ -137,6 +146,7 @@ export default function AdminDashboard() {
     { label: "Active Teachers", value: stats?.activeTeachers ?? 0, icon: BookOpen, color: "bg-teal-500", href: "/admin/teachers?status=Active" },
     { label: "Today Present", value: stats?.attendance?.present ?? 0, icon: ClipboardCheck, color: "bg-emerald-500", href: "/admin/attendance" },
     { label: "Today Absent", value: stats?.attendance?.absent ?? 0, icon: ClipboardCheck, color: "bg-red-500", href: "/admin/attendance?status=Absent" },
+    { label: "Total Homework", value: stats?.homework ?? 0, icon: BookText, color: "bg-violet-500", href: "/admin/homework" },
     { label: "Total Notices", value: stats?.notices ?? 0, icon: Bell, color: "bg-blue-500", href: "/admin/notices" },
     { label: "Total Events", value: stats?.events ?? 0, icon: Calendar, color: "bg-green-500", href: "/admin/events" },
     { label: "Gallery Images", value: stats?.gallery ?? 0, icon: Image, color: "bg-purple-500", href: "/admin/gallery" },
