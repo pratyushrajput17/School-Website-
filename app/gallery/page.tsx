@@ -40,8 +40,8 @@ export default function GalleryPage() {
             ))}
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {categories.flatMap((cat, ci) =>
-              [1, 2].map((num) => {
+                {categories.flatMap((cat, ci) =>
+              [1, 2, 3].map((num) => {
                 const id = `${ci}-${num}`
                 return (
                   <div
@@ -49,18 +49,16 @@ export default function GalleryPage() {
                     className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                   >
                     <div className={`aspect-[4/3] w-full bg-gradient-to-br ${colors[ci % colors.length]}`}>
-                      <div className="flex h-full flex-col items-center justify-center gap-2">
-                        <span className="text-4xl">{categoryIcons[ci]}</span>
-                        <span className="rounded-full bg-white/80 px-3 py-1 text-xs font-medium text-deep-blue shadow-sm">
+                      <div className="flex h-full flex-col items-center justify-center gap-3">
+                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/40 backdrop-blur-sm">
+                          <span className="text-3xl">{categoryIcons[ci]}</span>
+                        </div>
+                        <span className="rounded-full bg-white/90 px-4 py-1.5 text-sm font-semibold text-deep-blue shadow-sm backdrop-blur-sm">
                           {cat}
                         </span>
                       </div>
                     </div>
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/40 to-transparent p-4 pt-8">
-                      <p className="text-sm font-medium text-white">
-                        {cat} - {num}
-                      </p>
-                    </div>
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/30 to-transparent p-4 pt-12" />
                   </div>
                 )
               })

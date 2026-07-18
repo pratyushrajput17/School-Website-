@@ -1,4 +1,4 @@
-import { Quote, User } from 'lucide-react'
+import { Quote, GraduationCap } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 export default function PrincipalMessage() {
@@ -18,8 +18,10 @@ export default function PrincipalMessage() {
               <div className="absolute -inset-4 rounded-full border-2 border-dashed border-saffron/30 lg:-inset-6" />
               <div className="relative h-72 w-72 lg:h-96 lg:w-96">
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-saffron/10 via-saffron-light to-white p-1 shadow-xl shadow-saffron/10">
-                  <div className="flex h-full w-full items-center justify-center rounded-full bg-white">
-                    <User className="h-28 w-28 text-saffron/20 lg:h-36 lg:w-36" />
+                  <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-white px-8 text-center">
+                    <GraduationCap className="h-16 w-16 text-saffron/20 lg:h-20 lg:w-20" />
+                    <p className="mt-3 text-xs font-medium uppercase tracking-widest text-saffron-dark/60">Principal</p>
+                    <p className="mt-1 text-sm font-semibold text-deep-blue/60">Adarsh High School</p>
                   </div>
                 </div>
               </div>

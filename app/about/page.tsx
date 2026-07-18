@@ -26,6 +26,8 @@ export const metadata: Metadata = {
   },
 }
 
+const MaaSaraswati = dynamic(() => import("@/components/MaaSaraswati"))
+
 export default function AboutPage() {
   return (
     <>
@@ -33,6 +35,7 @@ export default function AboutPage() {
       <AboutHero />
       <OurStory />
       <VisionMission />
+      <MaaSaraswati />
       <SchoolValues />
       <Footer />
     </>

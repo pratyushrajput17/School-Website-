@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Phone, Mail, MapPin, Navigation, ArrowRight, MessageSquare, User, Send } from "lucide-react"
+import { Phone, Mail, MapPin, Navigation, ArrowRight } from "lucide-react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
+import ContactForm from "@/components/ContactForm"
 import { schoolConfig } from "@/lib/school-config"
 
 const { contact } = schoolConfig
@@ -116,28 +117,7 @@ export default function ContactPage() {
           </div>
           <div className="mx-auto mt-16 max-w-2xl">
             <div className="rounded-2xl border border-deep-blue/10 bg-white p-8 shadow-sm sm:p-10">
-              <div className="space-y-5">
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <input type="text" placeholder="Name" aria-label="Name" className="w-full rounded-xl border border-deep-blue/10 bg-white py-3.5 pl-11 pr-4 text-sm text-deep-blue placeholder:text-muted-foreground focus:border-saffron focus:outline-none focus:ring-2 focus:ring-saffron/20" />
-                </div>
-                <div className="relative">
-                  <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <input type="tel" placeholder="Phone" aria-label="Phone" className="w-full rounded-xl border border-deep-blue/10 bg-white py-3.5 pl-11 pr-4 text-sm text-deep-blue placeholder:text-muted-foreground focus:border-saffron focus:outline-none focus:ring-2 focus:ring-saffron/20" />
-                </div>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <input type="email" placeholder="Email" aria-label="Email" className="w-full rounded-xl border border-deep-blue/10 bg-white py-3.5 pl-11 pr-4 text-sm text-deep-blue placeholder:text-muted-foreground focus:border-saffron focus:outline-none focus:ring-2 focus:ring-saffron/20" />
-                </div>
-                <div className="relative">
-                  <MessageSquare className="absolute left-4 top-5 h-4 w-4 text-muted-foreground" />
-                  <textarea rows={5} placeholder="Message" aria-label="Message" className="w-full rounded-xl border border-deep-blue/10 bg-white py-3.5 pl-11 pr-4 text-sm text-deep-blue placeholder:text-muted-foreground focus:border-saffron focus:outline-none focus:ring-2 focus:ring-saffron/20 resize-none" />
-                </div>
-                <button type="button" className="inline-flex items-center gap-2 rounded-full bg-deep-blue px-8 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light">
-                  Send Message
-                  <Send className="h-4 w-4" />
-                </button>
-              </div>
+              <ContactForm />
             </div>
           </div>
         </div>
@@ -153,12 +133,17 @@ export default function ContactPage() {
           </div>
           <div className="mt-16">
             <div className="overflow-hidden rounded-2xl shadow-lg shadow-saffron/10 ring-1 ring-black/[0.02]">
-              <div className="aspect-[21/9] w-full bg-gradient-to-br from-saffron/10 via-saffron-light/30 to-deep-blue/5 flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3">
-                  <MapPin className="h-10 w-10 text-saffron-dark" />
-                  <p className="text-sm font-medium text-muted-foreground">Google Maps Integration</p>
-                </div>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3673.542368414607!2d79.168073!3d22.964555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjLCsDU3JzUyLjQiTiA3OcKwMTAnMDUuMSJF!5e0!3m2!1sen!2sin!4v1"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Adarsh High School Location"
+                className="rounded-2xl"
+              />
             </div>
           </div>
         </div>

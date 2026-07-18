@@ -88,12 +88,14 @@ export const schoolConfig = {
   ],
 
   parentTrust: [
-    { title: 'Individual Attention', description: 'Every student receives personal guidance and support for academic and personal growth.' },
-    { title: 'Experienced Teachers', description: 'Our dedicated and experienced teachers help students build strong foundations for the future.' },
-    { title: 'Discipline & Character', description: 'We focus on discipline, responsibility and strong moral values alongside education.' },
-    { title: 'Safe & Caring Environment', description: 'We provide a secure, positive and supportive atmosphere for every child.' },
-    { title: 'Academic Excellence', description: 'We encourage students to achieve their highest potential through quality teaching and continuous learning.' },
-    { title: 'Cultural & Sports Activities', description: 'Students actively participate in cultural, social and sports activities for all-round development.' },
+    { title: 'Quality Education', description: 'Strong academic focus aligned with the MP Board curriculum and experienced faculty.' },
+    { title: 'Discipline & Values', description: 'Students are encouraged to develop respect, responsibility and strong moral character.' },
+    { title: 'Experienced Teachers', description: 'Our dedicated teachers provide personal attention and continuous support to every child.' },
+    { title: 'Safe & Caring Environment', description: 'Classrooms are monitored with CCTV to maintain a safe and disciplined atmosphere.' },
+    { title: 'School Transport Facility', description: 'Reliable pick-up and drop service available for students from nearby areas.' },
+    { title: 'Green & Peaceful Campus', description: 'A natural environment surrounded by greenery that supports focused learning.' },
+    { title: 'Academic Growth', description: 'Strong board results and continuous academic development through quality teaching.' },
+    { title: 'Cultural & Sports Activities', description: 'Students participate in cultural events, sports, and activities for all-round growth.' },
   ],
 
   metadata: {

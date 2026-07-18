@@ -1,5 +1,4 @@
 import { Monitor, Library, FlaskConical, Shield, Bus, TreePine, Cpu, Wrench } from 'lucide-react'
-import { schoolConfig } from '@/lib/school-config'
 
 const facilityList = [
   { title: "Classrooms", description: "Spacious, well-ventilated classrooms designed for focused and effective learning.", icon: Monitor },

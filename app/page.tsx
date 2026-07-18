@@ -1,8 +1,6 @@
 import type { Metadata } from "next"
 import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
-import WhyChoose from "@/components/WhyChoose"
-import MaaSaraswati from "@/components/MaaSaraswati"
 import SchoolValues from "@/components/SchoolValues"
 import ParentTrust from "@/components/ParentTrust"
 import SchoolDayTimeline from "@/components/SchoolDayTimeline"
@@ -11,7 +9,6 @@ import HomeCTA from "@/components/HomeCTA"
 import { schoolConfig } from "@/lib/school-config"
 import dynamic from "next/dynamic"
 
-const SchoolHighlights = dynamic(() => import("@/components/SchoolHighlights"))
 const Facilities = dynamic(() => import("@/components/Facilities"))
 const PrincipalMessage = dynamic(() => import("@/components/PrincipalMessage"))
 
@@ -28,15 +25,12 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
-      <WhyChoose />
-      <SchoolHighlights />
-      <MaaSaraswati />
       <SchoolValues />
       <ParentTrust />
       <SchoolDayTimeline />
-      <InspirationalQuotes />
       <Facilities />
       <PrincipalMessage />
+      <InspirationalQuotes />
       <HomeCTA />
     </>
   )
