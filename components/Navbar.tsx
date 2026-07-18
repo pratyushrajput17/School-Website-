@@ -2,25 +2,31 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { Menu, X, GraduationCap } from 'lucide-react'
+import { Menu, X, GraduationCap, ChevronDown } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
-const NAV_LINKS = [
+const PRIMARY_LINKS = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
   { href: '/academics', label: 'Academics' },
   { href: '/admissions', label: 'Admissions' },
   { href: '/facilities', label: 'Facilities' },
+  { href: '/gallery', label: 'Gallery' },
+] as const
+
+const MORE_LINKS = [
+  { href: '/about', label: 'About Us' },
   { href: '/notices', label: 'Notices' },
   { href: '/events', label: 'Events' },
-  { href: '/gallery', label: 'Gallery' },
   { href: '/contact', label: 'Contact' },
 ] as const
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
   const raf = useRef<number | undefined>(undefined)
+  const moreRef = useRef<HTMLDivElement>(null)
+  const dropdownTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +54,16 @@ export default function Navbar() {
       document.body.style.overflow = ''
     }
   }, [mobileOpen])
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const closeMobile = () => setMobileOpen(false)
 
@@ -77,22 +93,67 @@ export default function Navbar() {
         </Link>
 
         <nav
-          className="hidden lg:flex lg:items-center lg:gap-0.5"
+          className="hidden lg:flex lg:items-center lg:gap-1"
           aria-label="Main navigation"
         >
-          {NAV_LINKS.map(({ href, label }) => (
+          {PRIMARY_LINKS.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="group relative px-3 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
+              className="group relative px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
             >
               {label}
               <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-deep-blue transition-all duration-300 group-hover:w-4/5" />
             </Link>
           ))}
+
+          <div
+            ref={moreRef}
+            className="relative"
+            onMouseEnter={() => {
+              clearTimeout(dropdownTimeout.current)
+              setMoreOpen(true)
+            }}
+            onMouseLeave={() => {
+              dropdownTimeout.current = setTimeout(() => setMoreOpen(false), 150)
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setMoreOpen((o) => !o)}
+              className="group relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
+            >
+              More
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  moreOpen ? 'rotate-180' : ''
+                }`}
+              />
+              <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-deep-blue transition-all duration-300 group-hover:w-4/5" />
+            </button>
+
+            <div
+              className={`absolute left-0 top-full mt-1 w-48 rounded-xl border border-gray-100 bg-white py-2 shadow-lg transition-all duration-200 ${
+                moreOpen
+                  ? 'pointer-events-auto translate-y-0 opacity-100'
+                  : 'pointer-events-none -translate-y-1 opacity-0'
+              }`}
+            >
+              {MORE_LINKS.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="block px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-gray-50 hover:text-deep-blue"
+                  onClick={() => setMoreOpen(false)}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
         </nav>
 
-        <div className="hidden lg:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-3">
           <Link
             href="/login"
             className="rounded-full border border-deep-blue/20 px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
@@ -149,33 +210,49 @@ export default function Navbar() {
           </div>
 
           <nav
-            className="flex flex-1 flex-col items-center justify-center gap-6 px-6"
+            className="flex flex-1 flex-col items-center justify-start gap-1 overflow-y-auto px-6 pt-8"
             aria-label="Mobile navigation"
           >
-            {NAV_LINKS.map(({ href, label }) => (
+            {PRIMARY_LINKS.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="text-2xl font-medium text-muted-foreground transition-colors hover:text-deep-blue"
+                className="w-full py-3 text-center text-2xl font-medium text-muted-foreground transition-colors hover:text-deep-blue"
                 onClick={closeMobile}
               >
                 {label}
               </Link>
             ))}
-            <Link
-              href="/login"
-              className="text-base font-medium text-muted-foreground transition-colors hover:text-deep-blue"
-              onClick={closeMobile}
-            >
-              Admin Login
-            </Link>
-            <Link
-              href="/admissions"
-              className="mt-2 rounded-full bg-deep-blue px-8 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
-              onClick={closeMobile}
-            >
-              Apply Now
-            </Link>
+
+            <div className="my-4 w-12 border-t border-gray-200" />
+
+            {MORE_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="w-full py-3 text-center text-xl font-medium text-muted-foreground/70 transition-colors hover:text-deep-blue"
+                onClick={closeMobile}
+              >
+                {label}
+              </Link>
+            ))}
+
+            <div className="mt-6 flex flex-col items-center gap-4">
+              <Link
+                href="/login"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-deep-blue"
+                onClick={closeMobile}
+              >
+                Admin Login
+              </Link>
+              <Link
+                href="/admissions"
+                className="rounded-full bg-deep-blue px-8 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
+                onClick={closeMobile}
+              >
+                Apply Now
+              </Link>
+            </div>
           </nav>
         </div>
       </div>
