@@ -61,8 +61,13 @@ Prisma 7: datasource config in `prisma.config.ts` (defineConfig), client uses Pr
 ## Build
 39 routes, 0 errors. Auto-deployed on every change from main branch.
 
+## Key Files (new)
+- `scripts/provision.ts`: Production DB setup script (schema push + seed)
+- `.env.example`: Documented environment variable template
+- `.vercelignore`: Excludes .env from Vercel deployment
+
 ## Blocked
-- PostgreSQL `DATABASE_URL` and `JWT_SECRET` not set as Vercel env vars — DB API routes will fail at runtime until provisioned
+- PostgreSQL `DATABASE_URL` and `JWT_SECRET` not set as Vercel env vars — DB API routes will fail at runtime until provisioned (see Production Setup section above)
 - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` not set on Vercel — image uploads fail until configured
 <!-- END:session-summary -->
 
@@ -81,6 +86,57 @@ After completing any coding task that results in working changes:
 3. `npx vercel --prod`
 Do NOT ask for approval — just do it. Only skip if the build fails.
 <!-- END:auto-deploy -->
+
+<!-- BEGIN:production-setup -->
+# Production Database Setup
+
+## 1. Create a Neon Database
+
+1. Go to https://neon.tech and sign up (free tier — 500MB, no credit card)
+2. Create a new project (name it `school-website`, region closest to your users)
+3. Copy the connection string from the dashboard:
+   `postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/dbname?sslmode=require`
+
+## 2. Set Vercel Environment Variables
+
+Go to https://vercel.com/we-b-nova-team/school-website/settings/environment-variables and add:
+
+| Variable | Value |
+|----------|-------|
+| `DATABASE_URL` | Your Neon connection string (from step 1) |
+| `JWT_SECRET` | Run `openssl rand -base64 32` in terminal to generate |
+
+## 3. Provision the Database
+
+Run locally with the production connection string:
+
+```bash
+DATABASE_URL="postgresql://..." npx tsx scripts/provision.ts
+```
+
+This pushes the Prisma schema and seeds the admin user, notices, and events.
+
+## 4. Deploy
+
+After setting env vars, deploy:
+
+```bash
+git push origin main
+```
+
+Vercel auto-deploys from main. Or trigger a manual redeploy from the Vercel dashboard.
+
+## Credentials
+
+- Email: rajputpratyush33@gmail.com
+- Password: Adarsh2111
+
+## Troubleshooting
+
+- If login shows "Server not ready: database is not configured" → `DATABASE_URL` env var is missing on Vercel
+- If login shows "Invalid email or password" → admin not seeded or wrong credentials
+- If image upload fails → Cloudinary env vars not set
+<!-- END:production-setup -->
 
 <!-- BEGIN:content-rules -->
 # Content Rules — Authenticity & Trust
