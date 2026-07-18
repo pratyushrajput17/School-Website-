@@ -47,6 +47,7 @@ export async function GET() {
       subjects,
       classTeachers,
       subjectAssignments,
+      parents,
     ] = await Promise.all([
       prisma.notice.count(),
       prisma.event.count(),
@@ -65,6 +66,7 @@ export async function GET() {
       (await getSubjects()).length,
       (await getClassTeachers()).length,
       (await getSubjectAssignments()).length,
+      prisma.parent.count(),
     ]);
 
     return NextResponse.json({
@@ -86,6 +88,7 @@ export async function GET() {
         subjects,
         classTeachers,
         subjectAssignments,
+        parents,
       },
     });
   } catch {

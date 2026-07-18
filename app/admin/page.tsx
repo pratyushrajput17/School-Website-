@@ -18,6 +18,8 @@ import {
   BookMarked,
   UserCheck,
   BookCheck,
+  UserRound,
+  MessageSquare,
 } from "lucide-react";
 
 interface Stats {
@@ -37,6 +39,7 @@ interface Stats {
   subjects?: number;
   classTeachers?: number;
   subjectAssignments?: number;
+  parents?: number;
   attendance?: {
     total: number;
     present: number;
@@ -153,6 +156,20 @@ const navigationCards = [
     href: "/admin/subject-assignments",
     color: "bg-lime-500",
   },
+  {
+    label: "Manage Parents",
+    description: "Create and manage parent portal accounts",
+    icon: UserRound,
+    href: "/admin/parents",
+    color: "bg-sky-500",
+  },
+  {
+    label: "Send Notification",
+    description: "Send notifications to parents",
+    icon: MessageSquare,
+    href: "/admin/notifications",
+    color: "bg-rose-500",
+  },
 ];
 
 export default function AdminDashboard() {
@@ -201,6 +218,7 @@ export default function AdminDashboard() {
     { label: "Subjects", value: stats?.subjects ?? 0, icon: BookMarked, color: "bg-teal-500", href: "/admin/subjects" },
     { label: "Class Teachers", value: stats?.classTeachers ?? 0, icon: UserCheck, color: "bg-pink-500", href: "/admin/class-teachers" },
     { label: "Subject Assignments", value: stats?.subjectAssignments ?? 0, icon: BookCheck, color: "bg-lime-500", href: "/admin/subject-assignments" },
+    { label: "Parents", value: stats?.parents ?? 0, icon: UserRound, color: "bg-sky-500", href: "/admin/parents" },
   ];
 
   return (

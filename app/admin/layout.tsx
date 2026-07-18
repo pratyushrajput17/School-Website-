@@ -23,6 +23,8 @@ import {
   BookMarked,
   UserCheck,
   BookCheck,
+  UserRound,
+  MessageSquare,
 } from "lucide-react";
 import NextImage from "next/image";
 
@@ -63,6 +65,7 @@ export default function AdminLayout({
     { href: "/admin/students", label: "Students", icon: Users },
     { href: "/admin/teachers", label: "Teachers", icon: BookOpen },
     { href: "/admin/attendance", label: "Attendance", icon: ClipboardCheck },
+    { href: "/admin/parents", label: "Parents", icon: UserRound },
     ...(adminRole === "super_admin"
       ? [{ href: "/admin/admins", label: "Admins", icon: Shield }]
       : []),
@@ -72,6 +75,7 @@ export default function AdminLayout({
     { href: "/admin/subjects", label: "Subjects", icon: BookMarked },
     { href: "/admin/class-teachers", label: "Class Teachers", icon: UserCheck },
     { href: "/admin/subject-assignments", label: "Subject Assignments", icon: BookCheck },
+    { href: "/admin/notifications", label: "Send Notification", icon: MessageSquare },
     { href: "/admin/notices", label: "Notices", icon: Bell },
     { href: "/admin/events", label: "Events", icon: Calendar },
     { href: "/admin/gallery", label: "Gallery", icon: Image },
