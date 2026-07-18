@@ -4,7 +4,7 @@ export const schoolConfig = {
   tagline: 'Education with Values, Knowledge with Character',
   board: 'MP Board',
   establishedYear: 2010,
-  logoPath: '/logo.svg',
+  logoPath: '/school-logo.png',
 
   hero: {
     shloka: 'सा विद्या या विमुक्तये',
@@ -106,7 +106,7 @@ export const schoolConfig = {
     country: 'IN',
     themeColor: '#1B3A5C',
     category: 'education',
-    ogImage: '/og-image.png',
+    ogImage: '/school-logo.png',
     twitterHandle: '@adarshhighschool',
     applicationName: 'Adarsh High School',
     creator: 'Adarsh High School',

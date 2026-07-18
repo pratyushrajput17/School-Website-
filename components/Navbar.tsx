@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { Menu, X, GraduationCap, ChevronDown } from 'lucide-react'
+import { Menu, X, ChevronDown } from 'lucide-react'
+import Image from 'next/image'
 import { schoolConfig } from '@/lib/school-config'
 
 const NAV_LINKS = [
@@ -80,9 +81,14 @@ export default function Navbar() {
             className="flex shrink-0 items-center gap-3"
             aria-label={`${schoolConfig.name} - Home`}
           >
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-deep-blue/10">
-              <GraduationCap className="h-7 w-7 text-deep-blue" />
-            </div>
+            <Image
+              src="/school-logo.png"
+              alt={`${schoolConfig.name} Logo`}
+              width={56}
+              height={56}
+              className="h-14 w-14 rounded-full object-contain"
+              priority
+            />
             <div className="flex flex-col">
               <span className="text-xl font-bold leading-tight text-deep-blue">
                 {schoolConfig.name}
@@ -202,9 +208,13 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between border-b px-6 py-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-deep-blue/10">
-                <GraduationCap className="h-5 w-5 text-deep-blue" />
-              </div>
+              <Image
+                src="/school-logo.png"
+                alt={`${schoolConfig.name} Logo`}
+                width={40}
+                height={40}
+                className="h-10 w-10 rounded-full object-contain"
+              />
               <span className="text-lg font-bold text-deep-blue">{schoolConfig.name}</span>
             </div>
             <button

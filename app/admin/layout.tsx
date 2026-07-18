@@ -14,9 +14,9 @@ import {
   LogOut,
   Menu,
   X,
-  School,
   ChevronDown,
 } from "lucide-react";
+import NextImage from "next/image";
 
 export default function AdminLayout({
   children,
@@ -85,7 +85,13 @@ export default function AdminLayout({
         <div className="h-full flex flex-col">
           <div className="px-6 py-5 border-b border-white/10">
             <div className="flex items-center gap-3">
-              <School className="w-8 h-8 text-[#FF9933]" />
+              <NextImage
+                src="/school-logo.png"
+                alt="Adarsh High School Logo"
+                width={32}
+                height={32}
+                className="w-8 h-8 rounded-full object-contain"
+              />
               <div>
                 <h2 className="font-semibold text-sm">Adarsh High School</h2>
                 <p className="text-xs text-white/60">Admin Panel</p>
