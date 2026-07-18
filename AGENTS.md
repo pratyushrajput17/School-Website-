@@ -70,3 +70,41 @@ After completing any coding task that results in working changes:
 3. `npx vercel --prod`
 Do NOT ask for approval — just do it. Only skip if the build fails.
 <!-- END:auto-deploy -->
+
+<!-- BEGIN:content-rules -->
+# Content Rules — Authenticity & Trust
+
+## NEVER use these phrases:
+- World Class
+- International Standard
+- Global Excellence
+- State of the Art
+- Industry Leading
+- Revolutionary
+- AI Powered Education
+- Future Ready Ecosystem
+- Premium Luxury Campus
+
+## Do NOT:
+- Exaggerate or make unrealistic claims
+- Claim features that are not confirmed to exist
+- Use corporate buzzwords or startup language
+- Make the school sound like a business
+
+## DO focus on:
+- Discipline
+- Personal Attention
+- Experienced Teachers
+- Character Development
+- Academic Growth
+- Student Wellbeing
+- Cultural Values
+- Sports and Activities
+- Community Trust
+
+## Tone:
+- Honest, authentic, and grounded
+- Reflects a genuine Indian school serving its community
+- Parents should trust the content because it feels real, not because it sounds impressive
+- Value-based (Education + Character + Discipline), not hype-based
+<!-- END:content-rules -->

@@ -47,10 +47,10 @@ export const schoolConfig = {
   principal: {
     name: 'Principal',
     title: 'Principal, Adarsh High School',
-    badge: 'From the Principal',
+    badge: "Principal's Message",
     experience: 20,
     quote:
-      'At Adarsh High School, we believe every child has unique potential. Our mission is to create a nurturing environment where students grow academically, socially, and morally, preparing them to become responsible citizens and future leaders.',
+      'Education is not only about achieving academic success, but also about becoming a responsible and compassionate human being.',
   },
 
   schoolValues: [
