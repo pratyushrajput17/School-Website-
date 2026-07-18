@@ -77,6 +77,16 @@ export const schoolConfig = {
     labNote: 'A Smart Learning Lab is currently under development and will be introduced in the future.',
   },
 
+  schoolDay: [
+    { title: 'Morning Assembly', description: 'Students begin the day with prayer, positive thoughts and discipline.' },
+    { title: 'Classroom Learning', description: 'Focused academic learning with guidance from teachers.' },
+    { title: 'Interactive Activities', description: 'Students participate in discussions, practical learning and classroom engagement.' },
+    { title: 'Break & Social Development', description: 'Students learn friendship, teamwork and positive interaction.' },
+    { title: 'Values & Discipline', description: 'Respect, responsibility and good behaviour are encouraged throughout the day.' },
+    { title: 'Sports & Physical Activity', description: 'Students participate in physical activities for health and fitness.' },
+    { title: 'A Positive End to the Day', description: 'Students return home with new knowledge, confidence and experiences.' },
+  ],
+
   parentTrust: [
     { title: 'Individual Attention', description: 'Every student receives personal guidance and support for academic and personal growth.' },
     { title: 'Experienced Teachers', description: 'Our dedicated and experienced teachers help students build strong foundations for the future.' },

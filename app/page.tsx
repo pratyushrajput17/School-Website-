@@ -5,6 +5,7 @@ import WhyChoose from "@/components/WhyChoose"
 import MaaSaraswati from "@/components/MaaSaraswati"
 import SchoolValues from "@/components/SchoolValues"
 import ParentTrust from "@/components/ParentTrust"
+import SchoolDayTimeline from "@/components/SchoolDayTimeline"
 import InspirationalQuotes from "@/components/InspirationalQuotes"
 import HomeCTA from "@/components/HomeCTA"
 import { schoolConfig } from "@/lib/school-config"
@@ -32,6 +33,7 @@ export default function Home() {
       <MaaSaraswati />
       <SchoolValues />
       <ParentTrust />
+      <SchoolDayTimeline />
       <InspirationalQuotes />
       <Facilities />
       <PrincipalMessage />
