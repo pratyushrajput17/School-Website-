@@ -35,10 +35,11 @@ Hero → SchoolAtAGlance → ParentTrust (8 cards) → SchoolValues (Hindi) → 
 - **Contact**: Hero, Contact Info, Quick Cards, ContactForm, Google Maps, Final CTA
 - **/login**: Admin login page
 
-## Backend — 5 CMS Modules (Complete)
+## Backend — 6 CMS Modules (Complete)
 | Module | Model | Admin Pages | API Routes | Public Integration |
 |--------|-------|-------------|------------|-------------------|
 | **Auth** | Admin | login, dashboard, logout | POST /login, POST /logout, GET /me | Proxy protects /admin/* |
+| **Students** | Student | list+search+class+section filter, create, edit, CSV export | GET/POST /api/students, GET/PUT/DELETE /api/students/[id], GET /api/students/export | Admin-only |
 | **Notices** | Notice | list+search/filter, create, edit | GET/POST /api/notices, GET/PUT/DELETE /api/notices/[id] | /notices page + homepage NoticePreview |
 | **Events** | Event | list+search/filter, create, edit | GET/POST /api/events, GET/PUT/DELETE /api/events/[id] | /events page + homepage EventPreview |
 | **Gallery** | Gallery | grid+thumbnails+search/filter, create (drag/click upload), edit (replace) | GET/POST /api/gallery, GET/PUT/DELETE /api/gallery/[id] | /gallery page + homepage GalleryPreview |
@@ -58,7 +59,7 @@ Prisma 7: datasource config in `prisma.config.ts` (defineConfig), client uses Pr
 - `prisma/seed.ts`: Seeds 6 notices + 8 events
 
 ## Build
-35 routes, 0 errors. Auto-deployed on every change from main branch.
+39 routes, 0 errors. Auto-deployed on every change from main branch.
 
 ## Blocked
 - PostgreSQL `DATABASE_URL` and `JWT_SECRET` not set as Vercel env vars — DB API routes will fail at runtime until provisioned

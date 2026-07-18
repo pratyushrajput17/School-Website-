@@ -92,12 +92,20 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <Link
-          href="/admissions"
-          className="hidden shrink-0 rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light lg:inline-block"
-        >
-          Apply Now
-        </Link>
+        <div className="hidden lg:flex items-center gap-2">
+          <Link
+            href="/login"
+            className="rounded-full border border-deep-blue/20 px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
+          >
+            Admin Login
+          </Link>
+          <Link
+            href="/admissions"
+            className="rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
+          >
+            Apply Now
+          </Link>
+        </div>
 
         <button
           type="button"
@@ -155,8 +163,15 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
+              href="/login"
+              className="text-base font-medium text-muted-foreground transition-colors hover:text-deep-blue"
+              onClick={closeMobile}
+            >
+              Admin Login
+            </Link>
+            <Link
               href="/admissions"
-              className="mt-4 rounded-full bg-deep-blue px-8 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
+              className="mt-2 rounded-full bg-deep-blue px-8 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               onClick={closeMobile}
             >
               Apply Now
