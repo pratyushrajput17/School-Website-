@@ -6,12 +6,9 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  try {
-    const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
-    return new PrismaClient({ adapter });
-  } catch {
-    return new PrismaClient();
-  }
+  const url = process.env.DATABASE_URL || "postgresql://placeholder/placeholder";
+  const adapter = new PrismaPg({ connectionString: url });
+  return new PrismaClient({ adapter });
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
