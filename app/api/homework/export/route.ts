@@ -6,34 +6,28 @@ export const runtime = "nodejs";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const className = searchParams.get("className") || undefined;
-    const section = searchParams.get("section") || undefined;
-    const subject = searchParams.get("subject") || undefined;
+    const classId = searchParams.get("classId") || undefined;
+    const sectionId = searchParams.get("sectionId") || undefined;
+    const subjectId = searchParams.get("subjectId") || undefined;
+    const teacherId = searchParams.get("teacherId") || undefined;
+    const status = searchParams.get("status") || undefined;
 
     const homework = await getHomework({
-      className, section, subject,
+      classId, sectionId, subjectId, teacherId, status,
       limit: 10000,
     });
 
     const headers = [
-      "Title",
-      "Description",
-      "Subject",
-      "Class",
-      "Section",
-      "Due Date",
-      "Attachment URL",
-      "Created At",
+      "Title", "Description", "Subject", "Teacher", "Class", "Section",
+      "Due Date", "Attachment URL", "Status", "Created At",
     ];
 
     const rows = homework.map((h) => [
-      h.title,
-      h.description,
-      h.subject,
-      h.className,
-      h.section,
+      h.title, h.description,
+      h.subject?.subjectName || "", h.teacher?.teacherName || "",
+      h.class?.className || "", h.section?.sectionName || "",
       new Date(h.dueDate).toLocaleDateString("en-IN"),
-      h.attachmentUrl || "",
+      h.attachmentUrl || "", h.status,
       new Date(h.createdAt).toLocaleDateString("en-IN"),
     ]);
 

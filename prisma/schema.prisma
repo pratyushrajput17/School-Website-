@@ -87,6 +87,10 @@ model Teacher {
   status          String   @default("Active")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  homework             Homework[]
+  classTeachers        ClassTeacher[]
+  subjectAssignments   SubjectAssignment[]
 }
 
 model Student {
@@ -128,19 +132,88 @@ model Attendance {
   @@index([attendanceDate])
 }
 
+model SchoolClass {
+  id        String   @id @default(cuid())
+  className String   @unique
+  status    String   @default("Active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  homework             Homework[]
+  classTeachers        ClassTeacher[]
+  subjectAssignments   SubjectAssignment[]
+}
+
+model Section {
+  id          String @id @default(cuid())
+  sectionName String @unique
+  status      String @default("Active")
+
+  homework             Homework[]
+  classTeachers        ClassTeacher[]
+  subjectAssignments   SubjectAssignment[]
+}
+
+model Subject {
+  id          String @id @default(cuid())
+  subjectName String @unique
+  subjectCode String @default("")
+  status      String @default("Active")
+
+  homework             Homework[]
+  subjectAssignments   SubjectAssignment[]
+}
+
+model ClassTeacher {
+  id        String   @id @default(cuid())
+  classId   String
+  sectionId String
+  teacherId String   @unique
+
+  class   SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  section Section     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  teacher Teacher     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, sectionId])
+}
+
+model SubjectAssignment {
+  id        String @id @default(cuid())
+  classId   String
+  sectionId String
+  subjectId String
+  teacherId String
+
+  class   SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  section Section     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  subject Subject     @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  teacher Teacher     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, sectionId, subjectId])
+  @@index([classId, sectionId])
+  @@index([teacherId])
+}
+
 model Homework {
   id            String   @id @default(cuid())
   title         String
   description   String
-  subject       String
-  className     String
-  section       String
+  subjectId     String
+  teacherId     String
+  classId       String
+  sectionId     String
   dueDate       DateTime
   attachmentUrl String?
-  createdBy     String
+  status        String   @default("published")
   createdAt     DateTime @default(now())
 
-  @@index([className, section])
-  @@index([subject])
+  subject Subject     @relation(fields: [subjectId], references: [id])
+  teacher Teacher     @relation(fields: [teacherId], references: [id])
+  class   SchoolClass @relation(fields: [classId], references: [id])
+  section Section     @relation(fields: [sectionId], references: [id])
+
+  @@index([classId, sectionId])
+  @@index([teacherId])
+  @@index([subjectId])
   @@index([dueDate])
 }

@@ -13,6 +13,11 @@ import {
   BookOpen,
   ClipboardCheck,
   BookText,
+  Layers,
+  Columns,
+  BookMarked,
+  UserCheck,
+  BookCheck,
 } from "lucide-react";
 
 interface Stats {
@@ -27,6 +32,11 @@ interface Stats {
   activeTeachers?: number;
   teachersPerSubject?: { subject: string; count: number }[];
   homework?: number;
+  classes?: number;
+  sections?: number;
+  subjects?: number;
+  classTeachers?: number;
+  subjectAssignments?: number;
   attendance?: {
     total: number;
     present: number;
@@ -108,6 +118,41 @@ const navigationCards = [
     href: "/admin/homework",
     color: "bg-violet-500",
   },
+  {
+    label: "Manage Classes",
+    description: "Create and manage school classes",
+    icon: Layers,
+    href: "/admin/classes",
+    color: "bg-rose-500",
+  },
+  {
+    label: "Manage Sections",
+    description: "Create and manage class sections",
+    icon: Columns,
+    href: "/admin/sections",
+    color: "bg-orange-500",
+  },
+  {
+    label: "Manage Subjects",
+    description: "Create and manage subjects",
+    icon: BookMarked,
+    href: "/admin/subjects",
+    color: "bg-teal-500",
+  },
+  {
+    label: "Class Teachers",
+    description: "Assign class teachers to sections",
+    icon: UserCheck,
+    href: "/admin/class-teachers",
+    color: "bg-pink-500",
+  },
+  {
+    label: "Subject Assignments",
+    description: "Assign subjects to teachers",
+    icon: BookCheck,
+    href: "/admin/subject-assignments",
+    color: "bg-lime-500",
+  },
 ];
 
 export default function AdminDashboard() {
@@ -151,6 +196,11 @@ export default function AdminDashboard() {
     { label: "Total Events", value: stats?.events ?? 0, icon: Calendar, color: "bg-green-500", href: "/admin/events" },
     { label: "Gallery Images", value: stats?.gallery ?? 0, icon: Image, color: "bg-purple-500", href: "/admin/gallery" },
     { label: "Academic Achievers", value: stats?.achievers ?? 0, icon: Award, color: "bg-amber-500", href: "/admin/achievers" },
+    { label: "Classes", value: stats?.classes ?? 0, icon: Layers, color: "bg-rose-500", href: "/admin/classes" },
+    { label: "Sections", value: stats?.sections ?? 0, icon: Columns, color: "bg-orange-500", href: "/admin/sections" },
+    { label: "Subjects", value: stats?.subjects ?? 0, icon: BookMarked, color: "bg-teal-500", href: "/admin/subjects" },
+    { label: "Class Teachers", value: stats?.classTeachers ?? 0, icon: UserCheck, color: "bg-pink-500", href: "/admin/class-teachers" },
+    { label: "Subject Assignments", value: stats?.subjectAssignments ?? 0, icon: BookCheck, color: "bg-lime-500", href: "/admin/subject-assignments" },
   ];
 
   return (

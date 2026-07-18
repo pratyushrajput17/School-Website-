@@ -40,22 +40,15 @@ export async function PUT(
       return NextResponse.json({ error: "Homework not found" }, { status: 404 });
     }
 
-    const teacher = getTeacherFromRequest(request);
-    if (teacher) {
-      const assigned = (teacher.assignedClasses || "").split(",").map((c) => c.trim());
-      if (!assigned.includes(existing.className)) {
-        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-      }
-    }
-
     const homework = await updateHomework(id, {
       title: body.title,
       description: body.description,
-      subject: body.subject,
-      className: body.className,
-      section: body.section,
+      subjectId: body.subjectId,
+      classId: body.classId,
+      sectionId: body.sectionId,
       dueDate: body.dueDate,
       attachmentUrl: body.attachmentUrl,
+      status: body.status,
     });
 
     return NextResponse.json({ homework });
@@ -80,14 +73,6 @@ export async function DELETE(
     const existing = await getHomeworkById(id);
     if (!existing) {
       return NextResponse.json({ error: "Homework not found" }, { status: 404 });
-    }
-
-    const teacher = getTeacherFromRequest(request);
-    if (teacher) {
-      const assigned = (teacher.assignedClasses || "").split(",").map((c) => c.trim());
-      if (!assigned.includes(existing.className)) {
-        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-      }
     }
 
     await deleteHomework(id);

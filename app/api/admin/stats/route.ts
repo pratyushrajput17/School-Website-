@@ -9,6 +9,11 @@ import {
 } from "@/lib/teachers";
 import { getTodaysAttendanceSummary } from "@/lib/attendance";
 import { getHomeworkCount } from "@/lib/homework";
+import { getClasses } from "@/lib/classes";
+import { getSections } from "@/lib/sections";
+import { getSubjects } from "@/lib/subjects";
+import { getClassTeachers } from "@/lib/class-teachers";
+import { getSubjectAssignments } from "@/lib/subject-assignments";
 
 export async function GET() {
   try {
@@ -37,6 +42,11 @@ export async function GET() {
       teachersPerSubject,
       attendanceSummary,
       homework,
+      classes,
+      sections,
+      subjects,
+      classTeachers,
+      subjectAssignments,
     ] = await Promise.all([
       prisma.notice.count(),
       prisma.event.count(),
@@ -50,6 +60,11 @@ export async function GET() {
       getTeachersPerSubject(),
       getTodaysAttendanceSummary(),
       getHomeworkCount(),
+      (await getClasses()).length,
+      (await getSections()).length,
+      (await getSubjects()).length,
+      (await getClassTeachers()).length,
+      (await getSubjectAssignments()).length,
     ]);
 
     return NextResponse.json({
@@ -66,6 +81,11 @@ export async function GET() {
         teachersPerSubject,
         attendance: attendanceSummary,
         homework,
+        classes,
+        sections,
+        subjects,
+        classTeachers,
+        subjectAssignments,
       },
     });
   } catch {

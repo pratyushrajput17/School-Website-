@@ -18,6 +18,11 @@ import {
   BookOpen,
   ClipboardCheck,
   BookText,
+  Layers,
+  Columns,
+  BookMarked,
+  UserCheck,
+  BookCheck,
 } from "lucide-react";
 import NextImage from "next/image";
 
@@ -62,6 +67,11 @@ export default function AdminLayout({
       ? [{ href: "/admin/admins", label: "Admins", icon: Shield }]
       : []),
     { href: "/admin/homework", label: "Homework", icon: BookText },
+    { href: "/admin/classes", label: "Classes", icon: Layers },
+    { href: "/admin/sections", label: "Sections", icon: Columns },
+    { href: "/admin/subjects", label: "Subjects", icon: BookMarked },
+    { href: "/admin/class-teachers", label: "Class Teachers", icon: UserCheck },
+    { href: "/admin/subject-assignments", label: "Subject Assignments", icon: BookCheck },
     { href: "/admin/notices", label: "Notices", icon: Bell },
     { href: "/admin/events", label: "Events", icon: Calendar },
     { href: "/admin/gallery", label: "Gallery", icon: Image },
