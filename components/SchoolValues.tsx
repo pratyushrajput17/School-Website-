@@ -7,7 +7,7 @@ export default function SchoolValues() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="badge-pill">हमारे मूल्य और आदर्श</span>
           <h2 className="heading-xl mt-6">
-            हमारी पहचान के मूल्य
+            Core Values
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
             हमारे विद्यालय के मूल्य प्रत्येक विद्यार्थी के चरित्र निर्माण की नींव हैं।

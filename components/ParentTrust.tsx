@@ -5,12 +5,12 @@ export default function ParentTrust() {
     <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="badge-pill">Why Parents Trust Us</span>
+          <span className="badge-pill">Why Families Choose Us</span>
           <h2 className="heading-xl mt-6">
-            Why Parents Trust Adarsh High School
+            Why Families Choose Adarsh High School
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            For years, parents have trusted Adarsh High School for quality education, discipline and character development.
+            Quality education, strong values, and a nurturing environment — reasons families trust us.
           </p>
         </div>
 

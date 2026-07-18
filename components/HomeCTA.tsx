@@ -9,17 +9,17 @@ export default function HomeCTA() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
-            Get in Touch With Us
+            Admissions Open
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-white/70">
-            We are here to help you with admissions, academics and any school related inquiries.
+            Give your child the gift of quality education with values. Enrol today.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/contact"
+              href="/admissions"
               className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-saffron-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2"
             >
-              Contact Us
+              Apply for Admission
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
