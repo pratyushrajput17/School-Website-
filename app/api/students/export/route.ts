@@ -11,16 +11,23 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const className = searchParams.get("className") || undefined;
+    const section = searchParams.get("section") || undefined;
 
-    const students = await getStudents({ className });
+    const students = await getStudents({ className, section });
 
     const headers = [
       "Admission Number",
       "Student Name",
       "Father Name",
+      "Mother Name",
       "Mobile Number",
+      "Alternate Mobile",
+      "Date of Birth",
+      "Gender",
       "Class",
       "Section",
+      "Address",
+      "Admission Date",
       "Status",
     ];
 
@@ -28,9 +35,15 @@ export async function GET(request: Request) {
       s.admissionNumber,
       s.studentName,
       s.fatherName,
+      s.motherName,
       s.mobileNumber,
+      s.alternateMobile || "",
+      s.dateOfBirth.split("T")[0],
+      s.gender,
       s.className,
       s.section,
+      s.address,
+      s.admissionDate.split("T")[0],
       s.status,
     ]);
 
@@ -41,9 +54,14 @@ export async function GET(request: Request) {
       ),
     ].join("\n");
 
-    const filename = className
-      ? `students-class-${className}.csv`
-      : "students-all.csv";
+    let filename = "students-all.csv";
+    if (className && section) {
+      filename = `students-class-${className}-section-${section}.csv`;
+    } else if (className) {
+      filename = `students-class-${className}.csv`;
+    } else if (section) {
+      filename = `students-section-${section}.csv`;
+    }
 
     return new NextResponse(csvContent, {
       status: 200,

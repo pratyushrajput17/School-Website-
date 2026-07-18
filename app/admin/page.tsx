@@ -18,6 +18,8 @@ interface Stats {
   gallery: number;
   achievers: number;
   students: number;
+  activeStudents?: number;
+  studentsPerClass?: { className: string; count: number }[];
 }
 
 interface AdminInfo {
@@ -102,6 +104,7 @@ export default function AdminDashboard() {
 
   const statCards: StatCard[] = [
     { label: "Total Students", value: stats?.students ?? 0, icon: Users, color: "bg-cyan-500", href: "/admin/students" },
+    { label: "Active Students", value: stats?.activeStudents ?? 0, icon: Users, color: "bg-emerald-500", href: "/admin/students?status=Active" },
     { label: "Total Notices", value: stats?.notices ?? 0, icon: Bell, color: "bg-blue-500", href: "/admin/notices" },
     { label: "Total Events", value: stats?.events ?? 0, icon: Calendar, color: "bg-green-500", href: "/admin/events" },
     { label: "Gallery Images", value: stats?.gallery ?? 0, icon: Image, color: "bg-purple-500", href: "/admin/gallery" },
@@ -129,7 +132,7 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {statCards.map((card) => {
           const Icon = card.icon;
           return (
@@ -157,6 +160,30 @@ export default function AdminDashboard() {
           );
         })}
       </div>
+
+      {stats?.studentsPerClass && stats.studentsPerClass.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Students Per Class
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+            {stats.studentsPerClass.map((item) => (
+              <Link
+                key={item.className}
+                href={`/admin/students?className=${item.className}`}
+                className="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition-shadow"
+              >
+                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                  Class {item.className}
+                </p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">
+                  {item.count}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       <h2 className="text-lg font-semibold text-gray-900 mb-4">
         Quick Actions

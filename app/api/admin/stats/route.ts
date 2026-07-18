@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { verifyToken } from "@/lib/auth";
+import { getStudentCount, getStudentsPerClass } from "@/lib/students";
 
 export async function GET() {
   try {
@@ -17,13 +18,16 @@ export async function GET() {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    const [notices, events, gallery, achievers, students] = await Promise.all([
-      prisma.notice.count(),
-      prisma.event.count(),
-      prisma.gallery.count(),
-      prisma.achiever.count(),
-      prisma.student.count(),
-    ]);
+    const [notices, events, gallery, achievers, students, activeStudents, studentsPerClass] =
+      await Promise.all([
+        prisma.notice.count(),
+        prisma.event.count(),
+        prisma.gallery.count(),
+        prisma.achiever.count(),
+        prisma.student.count(),
+        getStudentCount({ status: "Active" }),
+        getStudentsPerClass(),
+      ]);
 
     return NextResponse.json({
       stats: {
@@ -32,6 +36,8 @@ export async function GET() {
         gallery,
         achievers,
         students,
+        activeStudents,
+        studentsPerClass,
       },
     });
   } catch {

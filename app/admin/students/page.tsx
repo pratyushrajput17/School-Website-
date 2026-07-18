@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -12,7 +12,10 @@ import {
   X,
   Download,
   ChevronDown,
-  Filter,
+  Upload,
+  Loader2,
+  Eye,
+  CheckCircle2,
 } from "lucide-react";
 
 interface Student {
@@ -22,18 +25,37 @@ interface Student {
   fatherName: string;
   motherName: string;
   mobileNumber: string;
+  alternateMobile: string;
+  dateOfBirth: string;
+  gender: string;
   className: string;
   section: string;
-  dateOfBirth: string;
   address: string;
   status: string;
   admissionDate: string;
+  photoUrl: string | null;
   createdAt: string;
 }
 
-const CLASSES = Array.from({ length: 12 }, (_, i) => String(i + 1));
+interface ImportResult {
+  row: number;
+  admissionNumber: string;
+  studentName: string;
+  status: "created" | "skipped" | "error";
+  error?: string;
+}
 
+const CLASSES = Array.from({ length: 12 }, (_, i) => String(i + 1));
 const SECTIONS = ["A", "B", "C"];
+
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
 
 export default function AdminStudentsPage() {
   const router = useRouter();
@@ -42,11 +64,24 @@ export default function AdminStudentsPage() {
   const [search, setSearch] = useState("");
   const [classFilter, setClassFilter] = useState("");
   const [sectionFilter, setSectionFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [exportClass, setExportClass] = useState("");
+  const [exportSection, setExportSection] = useState("");
   const [exporting, setExporting] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const [importResults, setImportResults] = useState<ImportResult[] | null>(
+    null
+  );
+  const [importSummary, setImportSummary] = useState<{
+    total: number;
+    created: number;
+    errors: number;
+    skipped: number;
+  } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchStudents = useCallback(async () => {
     try {
@@ -54,6 +89,7 @@ export default function AdminStudentsPage() {
       if (search) params.set("search", search);
       if (classFilter) params.set("className", classFilter);
       if (sectionFilter) params.set("section", sectionFilter);
+      if (statusFilter) params.set("status", statusFilter);
 
       const res = await fetch(`/api/students?${params}`);
       if (!res.ok) {
@@ -67,7 +103,7 @@ export default function AdminStudentsPage() {
     } finally {
       setLoading(false);
     }
-  }, [search, classFilter, sectionFilter, router]);
+  }, [search, classFilter, sectionFilter, statusFilter, router]);
 
   useEffect(() => {
     fetchStudents();
@@ -92,7 +128,10 @@ export default function AdminStudentsPage() {
     setExporting(true);
     try {
       const params = new URLSearchParams();
-      if (!all && exportClass) params.set("className", exportClass);
+      if (!all) {
+        if (exportClass) params.set("className", exportClass);
+        if (exportSection) params.set("section", exportSection);
+      }
 
       const res = await fetch(`/api/students/export?${params}`);
       if (!res.ok) return;
@@ -101,7 +140,14 @@ export default function AdminStudentsPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = all ? "students-all.csv" : `students-class-${exportClass}.csv`;
+      let filename = "students-all.csv";
+      if (exportClass && exportSection)
+        filename = `students-class-${exportClass}-section-${exportSection}.csv`;
+      else if (exportClass)
+        filename = `students-class-${exportClass}.csv`;
+      else if (exportSection)
+        filename = `students-section-${exportSection}.csv`;
+      a.download = filename;
       a.click();
       URL.revokeObjectURL(url);
     } catch {
@@ -112,13 +158,85 @@ export default function AdminStudentsPage() {
     }
   }
 
-  function formatDate(iso: string) {
-    const d = new Date(iso);
-    return d.toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
+  async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setImporting(true);
+    setImportResults(null);
+    setImportSummary(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/students/import", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setImportSummary({
+          total: 0,
+          created: 0,
+          errors: 1,
+          skipped: 0,
+        });
+        return;
+      }
+
+      setImportSummary(data.summary);
+      setImportResults(data.results);
+      fetchStudents();
+    } catch {
+      setImportSummary({ total: 0, created: 0, errors: 1, skipped: 0 });
+    } finally {
+      setImporting(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
+
+  function downloadSampleCSV() {
+    const headers = [
+      "admissionNumber",
+      "studentName",
+      "fatherName",
+      "motherName",
+      "mobileNumber",
+      "alternateMobile",
+      "dateOfBirth",
+      "gender",
+      "className",
+      "section",
+      "address",
+      "admissionDate",
+      "status",
+    ];
+    const sampleRow = [
+      "AHS-2026-001",
+      "Rahul Kumar",
+      "Suresh Kumar",
+      "Sunita Devi",
+      "9876543210",
+      "9876543211",
+      "2010-05-15",
+      "Male",
+      "10",
+      "A",
+      "123, Main Street, City",
+      "2026-04-01",
+      "Active",
+    ];
+    const csv = [headers.join(","), sampleRow.join(",")].join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sample-students.csv";
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   return (
@@ -133,6 +251,25 @@ export default function AdminStudentsPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv"
+            onChange={handleImportFile}
+            className="hidden"
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={importing}
+            className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
+          >
+            {importing ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Upload className="w-4 h-4" />
+            )}
+            Import CSV
+          </button>
           <div className="relative">
             <button
               onClick={() => setExportOpen(!exportOpen)}
@@ -154,9 +291,9 @@ export default function AdminStudentsPage() {
                 >
                   All Students
                 </button>
-                <div className="mt-2 pt-2 border-t border-gray-100">
-                  <label className="text-xs font-medium text-gray-500 mb-1 block">
-                    Class Wise
+                <div className="mt-2 pt-2 border-t border-gray-100 space-y-2">
+                  <label className="text-xs font-medium text-gray-500 block">
+                    Filtered Export
                   </label>
                   <div className="flex gap-2">
                     <select
@@ -164,16 +301,28 @@ export default function AdminStudentsPage() {
                       onChange={(e) => setExportClass(e.target.value)}
                       className="flex-1 px-2 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-[#FF9933] appearance-none bg-white"
                     >
-                      <option value="">Select Class</option>
+                      <option value="">All Classes</option>
                       {CLASSES.map((c) => (
                         <option key={c} value={c}>
                           Class {c}
                         </option>
                       ))}
                     </select>
+                    <select
+                      value={exportSection}
+                      onChange={(e) => setExportSection(e.target.value)}
+                      className="flex-1 px-2 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-[#FF9933] appearance-none bg-white"
+                    >
+                      <option value="">All Sections</option>
+                      {SECTIONS.map((s) => (
+                        <option key={s} value={s}>
+                          Section {s}
+                        </option>
+                      ))}
+                    </select>
                     <button
                       onClick={() => handleExport(false)}
-                      disabled={exporting || !exportClass}
+                      disabled={exporting}
                       className="px-3 py-1.5 text-xs font-medium bg-[#FF9933] text-white rounded-lg hover:bg-[#e8892e] disabled:opacity-50"
                     >
                       {exporting ? "..." : "Go"}
@@ -193,6 +342,83 @@ export default function AdminStudentsPage() {
         </div>
       </div>
 
+      {importSummary && (
+        <div className="mb-6 bg-white rounded-xl border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-semibold text-gray-900 flex items-center gap-2">
+              <Upload className="w-4 h-4 text-[#FF9933]" />
+              Import Results
+            </h3>
+            <button
+              onClick={() => {
+                setImportSummary(null);
+                setImportResults(null);
+              }}
+              className="p-1 hover:bg-gray-100 rounded-lg"
+            >
+              <X className="w-4 h-4 text-gray-400" />
+            </button>
+          </div>
+          <div className="flex gap-4 text-sm">
+            <span className="text-gray-600">
+              Total: <strong>{importSummary.total}</strong>
+            </span>
+            <span className="text-green-600">
+              Created: <strong>{importSummary.created}</strong>
+            </span>
+            {importSummary.skipped > 0 && (
+              <span className="text-amber-600">
+                Skipped: <strong>{importSummary.skipped}</strong>
+              </span>
+            )}
+            {importSummary.errors > 0 && (
+              <span className="text-red-600">
+                Errors: <strong>{importSummary.errors}</strong>
+              </span>
+            )}
+          </div>
+          {importResults && importResults.length > 0 && (
+            <div className="mt-3 max-h-40 overflow-y-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="text-left py-1 pr-2">Row</th>
+                    <th className="text-left py-1 pr-2">Student</th>
+                    <th className="text-left py-1 pr-2">Status</th>
+                    <th className="text-left py-1">Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {importResults.map((r, idx) => (
+                    <tr key={idx} className="border-b border-gray-50">
+                      <td className="py-1 pr-2 text-gray-500">{r.row}</td>
+                      <td className="py-1 pr-2">
+                        {r.studentName || r.admissionNumber}
+                      </td>
+                      <td className="py-1 pr-2">
+                        {r.status === "created" ? (
+                          <span className="text-green-600 flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" />
+                            Created
+                          </span>
+                        ) : r.status === "skipped" ? (
+                          <span className="text-amber-600">Skipped</span>
+                        ) : (
+                          <span className="text-red-600">Error</span>
+                        )}
+                      </td>
+                      <td className="py-1 text-gray-500">
+                        {r.error || ""}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="bg-white rounded-xl border border-gray-200 mb-6">
         <div className="p-4 border-b border-gray-100">
           <div className="flex flex-col sm:flex-row gap-3">
@@ -200,18 +426,18 @@ export default function AdminStudentsPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search by name, admission no, father name, or mobile..."
+                placeholder="Search by name, admission no, father, mother, or mobile..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
               />
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <div className="relative">
                 <select
                   value={classFilter}
                   onChange={(e) => setClassFilter(e.target.value)}
-                  className="w-full sm:w-32 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
+                  className="w-full sm:w-28 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
                 >
                   <option value="">All Classes</option>
                   {CLASSES.map((c) => (
@@ -235,6 +461,19 @@ export default function AdminStudentsPage() {
                   ))}
                 </select>
               </div>
+              <div className="relative">
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="w-full sm:w-28 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
+                >
+                  <option value="">All Status</option>
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                  <option value="Transferred">Transferred</option>
+                  <option value="Left">Left</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -250,7 +489,7 @@ export default function AdminStudentsPage() {
               No students found
             </h3>
             <p className="text-gray-500 text-sm">
-              {search || classFilter || sectionFilter
+              {search || classFilter || sectionFilter || statusFilter
                 ? "Try a different search or filter"
                 : "Add your first student to get started"}
             </p>
@@ -260,6 +499,9 @@ export default function AdminStudentsPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50">
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
+                    Photo
+                  </th>
                   <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
                     Admission No.
                   </th>
@@ -292,16 +534,33 @@ export default function AdminStudentsPage() {
                     key={student.id}
                     className="hover:bg-gray-50 transition-colors"
                   >
+                    <td className="px-4 py-3">
+                      {student.photoUrl ? (
+                        <img
+                          src={student.photoUrl}
+                          alt=""
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-saffron-light flex items-center justify-center text-xs font-bold text-saffron-dark">
+                          {student.studentName.charAt(0)}
+                        </div>
+                      )}
+                    </td>
                     <td className="px-4 py-3 text-sm font-mono text-gray-700">
                       {student.admissionNumber}
                     </td>
                     <td className="px-4 py-3">
-                      <Link
-                        href={`/admin/students/edit/${student.id}`}
-                        className="text-sm font-medium text-gray-900 hover:text-[#FF9933]"
-                      >
-                        {student.studentName}
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">
+                          {student.studentName}
+                        </span>
+                        {student.gender && (
+                          <span className="text-[10px] text-gray-400">
+                            ({student.gender})
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-600">
                       {student.fatherName}
@@ -332,6 +591,12 @@ export default function AdminStudentsPage() {
                     </td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end gap-1">
+                        <Link
+                          href={`/admin/students/${student.id}`}
+                          className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                        </Link>
                         <Link
                           href={`/admin/students/edit/${student.id}`}
                           className="p-1.5 text-gray-400 hover:text-[#FF9933] hover:bg-amber-50 rounded-lg transition-colors"

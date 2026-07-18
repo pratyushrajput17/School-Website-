@@ -18,12 +18,15 @@ export default function EditStudentPage() {
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
+  const [alternateMobile, setAlternateMobile] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
   const [address, setAddress] = useState("");
   const [className, setClassName] = useState("");
   const [section, setSection] = useState("");
   const [status, setStatus] = useState("Active");
   const [admissionDate, setAdmissionDate] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -45,12 +48,15 @@ export default function EditStudentPage() {
         setFatherName(s.fatherName);
         setMotherName(s.motherName);
         setMobileNumber(s.mobileNumber);
+        setAlternateMobile(s.alternateMobile || "");
         setDateOfBirth(s.dateOfBirth.split("T")[0]);
+        setGender(s.gender || "");
         setAddress(s.address);
         setClassName(s.className);
         setSection(s.section);
         setStatus(s.status);
         setAdmissionDate(s.admissionDate.split("T")[0]);
+        setPhotoUrl(s.photoUrl || "");
       } catch {
         router.push("/admin/students");
       } finally {
@@ -76,7 +82,7 @@ export default function EditStudentPage() {
       !section ||
       !admissionDate
     ) {
-      setError("All fields are required");
+      setError("All required fields must be filled");
       return;
     }
 
@@ -96,12 +102,15 @@ export default function EditStudentPage() {
           fatherName: fatherName.trim(),
           motherName: motherName.trim(),
           mobileNumber: mobileNumber.trim(),
+          alternateMobile: alternateMobile.trim(),
+          dateOfBirth,
+          gender,
           className,
           section,
-          dateOfBirth,
           address: address.trim(),
           status,
           admissionDate,
+          photoUrl: photoUrl.trim() || undefined,
         }),
       });
 
@@ -130,7 +139,9 @@ export default function EditStudentPage() {
   if (notFound) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-xl font-bold text-gray-900">Student not found</h2>
+        <h2 className="text-xl font-bold text-gray-900">
+          Student not found
+        </h2>
         <p className="text-gray-500 mt-2">
           The student you are looking for does not exist.
         </p>
@@ -274,6 +285,27 @@ export default function EditStudentPage() {
 
           <div>
             <label
+              htmlFor="alternateMobile"
+              className="block text-sm font-medium text-gray-700 mb-1.5"
+            >
+              Alternate Mobile
+            </label>
+            <input
+              id="alternateMobile"
+              type="tel"
+              maxLength={10}
+              value={alternateMobile}
+              onChange={(e) =>
+                setAlternateMobile(e.target.value.replace(/\D/g, ""))
+              }
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label
               htmlFor="dateOfBirth"
               className="block text-sm font-medium text-gray-700 mb-1.5"
             >
@@ -286,6 +318,25 @@ export default function EditStudentPage() {
               onChange={(e) => setDateOfBirth(e.target.value)}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
             />
+          </div>
+
+          <div>
+            <label
+              htmlFor="gender"
+              className="block text-sm font-medium text-gray-700 mb-1.5"
+            >
+              Gender
+            </label>
+            <select
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
           </div>
         </div>
 
@@ -305,7 +356,7 @@ export default function EditStudentPage() {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">
           <div>
             <label
               htmlFor="className"
@@ -319,7 +370,7 @@ export default function EditStudentPage() {
               onChange={(e) => setClassName(e.target.value)}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
             >
-              <option value="">Select Class</option>
+              <option value="">Select</option>
               {CLASSES.map((c) => (
                 <option key={c} value={c}>
                   Class {c}
@@ -341,7 +392,7 @@ export default function EditStudentPage() {
               onChange={(e) => setSection(e.target.value)}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
             >
-              <option value="">Select Section</option>
+              <option value="">Select</option>
               {SECTIONS.map((s) => (
                 <option key={s} value={s}>
                   Section {s}
@@ -362,6 +413,22 @@ export default function EditStudentPage() {
               type="date"
               value={admissionDate}
               onChange={(e) => setAdmissionDate(e.target.value)}
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="photoUrl"
+              className="block text-sm font-medium text-gray-700 mb-1.5"
+            >
+              Photo URL
+            </label>
+            <input
+              id="photoUrl"
+              type="text"
+              value={photoUrl}
+              onChange={(e) => setPhotoUrl(e.target.value)}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
             />
           </div>

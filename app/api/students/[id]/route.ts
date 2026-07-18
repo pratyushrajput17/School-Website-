@@ -48,33 +48,33 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { admissionNumber, studentName, fatherName, motherName, mobileNumber, className, section, dateOfBirth, address, status, admissionDate } = body;
-
-    if (!admissionNumber || !studentName || !fatherName || !motherName || !mobileNumber || !className || !section || !dateOfBirth || !address || !admissionDate) {
-      return NextResponse.json(
-        { error: "All required fields must be provided" },
-        { status: 400 }
-      );
-    }
 
     const student = await updateStudent(id, {
-      admissionNumber,
-      studentName,
-      fatherName,
-      motherName,
-      mobileNumber,
-      className,
-      section,
-      dateOfBirth,
-      address,
-      status: status || "Active",
-      admissionDate,
+      admissionNumber: body.admissionNumber,
+      studentName: body.studentName,
+      fatherName: body.fatherName,
+      motherName: body.motherName,
+      mobileNumber: body.mobileNumber,
+      alternateMobile: body.alternateMobile,
+      dateOfBirth: body.dateOfBirth,
+      gender: body.gender,
+      className: body.className,
+      section: body.section,
+      address: body.address,
+      status: body.status,
+      admissionDate: body.admissionDate,
+      photoUrl: body.photoUrl,
     });
 
     return NextResponse.json({ student });
   } catch (error: unknown) {
     console.error("PUT /api/students/[id] error:", error);
-    if (typeof error === "object" && error !== null && "code" in error && (error as { code: string }).code === "P2002") {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      (error as { code: string }).code === "P2002"
+    ) {
       return NextResponse.json(
         { error: "A student with this admission number already exists" },
         { status: 409 }

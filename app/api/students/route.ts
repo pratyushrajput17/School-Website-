@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
-import { getStudents, createStudent, getStudentCount, getStudentClasses, getStudentSections } from "@/lib/students";
-import { requireAdmin } from "@/lib/api-auth";
+import {
+  getStudents,
+  createStudent,
+  getStudentCount,
+  getStudentClasses,
+  getStudentSections,
+  getStudentsPerClass,
+} from "@/lib/students";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 
 export const runtime = "nodejs";
 
@@ -10,14 +17,32 @@ export async function GET(request: Request) {
     const search = searchParams.get("search") || undefined;
     const className = searchParams.get("className") || undefined;
     const section = searchParams.get("section") || undefined;
-    const limit = searchParams.get("limit") ? Number(searchParams.get("limit")) : undefined;
+    const status = searchParams.get("status") || undefined;
+    const limit = searchParams.get("limit")
+      ? Number(searchParams.get("limit"))
+      : undefined;
 
-    const students = await getStudents({ search, className, section, limit });
+    const students = await getStudents({
+      search,
+      className,
+      section,
+      status,
+      limit,
+    });
     const total = await getStudentCount();
     const classes = await getStudentClasses();
     const sections = await getStudentSections();
+    const activeCount = await getStudentCount({ status: "Active" });
+    const studentsPerClass = await getStudentsPerClass();
 
-    return NextResponse.json({ students, total, classes, sections });
+    return NextResponse.json({
+      students,
+      total,
+      classes,
+      sections,
+      activeCount,
+      studentsPerClass,
+    });
   } catch (error) {
     console.error("GET /api/students error:", error);
     return NextResponse.json(
@@ -33,18 +58,40 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { admissionNumber, studentName, fatherName, motherName, mobileNumber, className, section, dateOfBirth, address, status, admissionDate } = body;
+    const {
+      admissionNumber,
+      studentName,
+      fatherName,
+      motherName,
+      mobileNumber,
+      alternateMobile,
+      dateOfBirth,
+      gender,
+      className,
+      section,
+      address,
+      status,
+      admissionDate,
+      photoUrl,
+    } = body;
 
-    if (!admissionNumber || !studentName || !fatherName || !motherName || !mobileNumber || !className || !section || !dateOfBirth || !address || !admissionDate) {
+    if (
+      !admissionNumber ||
+      !studentName ||
+      !fatherName ||
+      !motherName ||
+      !mobileNumber ||
+      !className ||
+      !section ||
+      !dateOfBirth ||
+      !address ||
+      !admissionDate
+    ) {
       return NextResponse.json(
         { error: "All required fields must be provided" },
         { status: 400 }
       );
     }
-
-    const existing = await import("@/lib/students").then((m) =>
-      m.getStudents({ search: admissionNumber })
-    );
 
     const student = await createStudent({
       admissionNumber,
@@ -52,18 +99,26 @@ export async function POST(request: Request) {
       fatherName,
       motherName,
       mobileNumber,
+      alternateMobile,
+      dateOfBirth,
+      gender,
       className,
       section,
-      dateOfBirth,
       address,
       status: status || "Active",
       admissionDate,
+      photoUrl,
     });
 
     return NextResponse.json({ student }, { status: 201 });
   } catch (error: unknown) {
     console.error("POST /api/students error:", error);
-    if (typeof error === "object" && error !== null && "code" in error && (error as { code: string }).code === "P2002") {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      (error as { code: string }).code === "P2002"
+    ) {
       return NextResponse.json(
         { error: "A student with this admission number already exists" },
         { status: 409 }
