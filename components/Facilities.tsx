@@ -1,30 +1,15 @@
-import { Monitor, FlaskConical, Library, Trophy } from 'lucide-react'
+import { Monitor, Library, FlaskConical, Shield, Bus, TreePine, Cpu, Wrench } from 'lucide-react'
+import { schoolConfig } from '@/lib/school-config'
 
-const facilities = [
-  {
-    title: 'स्मार्ट डिजिटल क्लासरूम',
-    description: 'आधुनिक तकनीक से सुसज्जित कक्षाएँ जहाँ शिक्षण रोचक और प्रभावी होता है।',
-    icon: Monitor,
-    points: ['इंटरैक्टिव स्मार्ट बोर्ड', 'डिजिटल लर्निंग टूल्स', 'विशाल और हवादार कक्षाएँ'],
-  },
-  {
-    title: 'विज्ञान एवं कंप्यूटर प्रयोगशाला',
-    description: 'व्यावहारिक शिक्षा के लिए पूरी तरह सुसज्जित प्रयोगशालाएँ।',
-    icon: FlaskConical,
-    points: ['भौतिकी प्रयोगशाला', 'रसायन विज्ञान प्रयोगशाला', 'जीवविज्ञान प्रयोगशाला', 'कंप्यूटर प्रयोगशाला'],
-  },
-  {
-    title: 'पुस्तकालय एवं अध्ययन कक्ष',
-    description: 'ज्ञानवर्धन और शोध के लिए शांत और समृद्ध वातावरण।',
-    icon: Library,
-    points: ['हजारों पुस्तकें', 'डिजिटल संसाधन', 'अध्ययन क्षेत्र'],
-  },
-  {
-    title: 'खेलकूद एवं शारीरिक शिक्षा',
-    description: 'खेल और शारीरिक गतिविधियों के माध्यम से सर्वांगीण विकास।',
-    icon: Trophy,
-    points: ['इनडोर खेल', 'आउटडोर मैदान', 'वार्षिक खेलकूद प्रतियोगिताएँ'],
-  },
+const facilityList = [
+  { title: "Classrooms", description: "Spacious, well-ventilated classrooms designed for focused and effective learning.", icon: Monitor },
+  { title: "Library", description: "A quiet and resource-rich library with a wide collection of books and study materials.", icon: Library },
+  { title: "Computer Lab", description: "A fully equipped computer lab to develop digital literacy and technical skills.", icon: Cpu },
+  { title: "Science Lab", description: "Well-maintained physics, chemistry and biology labs for hands-on practical learning.", icon: FlaskConical },
+  { title: "CCTV Monitoring", description: "School premises are monitored with CCTV cameras to ensure student safety.", icon: Shield },
+  { title: "School Transport", description: "Reliable pick-up and drop service available for students from nearby areas.", icon: Bus },
+  { title: "Green Environment", description: "A peaceful campus surrounded by greenery that supports focused learning and wellbeing.", icon: TreePine },
+  { title: "Smart Learning Lab", description: "Currently under development and will be introduced in the future.", icon: Wrench, comingSoon: true },
 ] as const
 
 export default function Facilities() {
@@ -32,42 +17,35 @@ export default function Facilities() {
     <section className="relative overflow-hidden bg-white py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="badge-pill">सुविधाएँ</span>
+          <span className="badge-pill">Our Facilities</span>
           <h2 className="heading-xl mt-6">
-            हमारी प्रमुख सुविधाएँ
+            School Facilities
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            हमारा कैंपस आधुनिक सुविधाओं से सुसज्जित है जो विद्यार्थियों के सर्वांगीण विकास में सहायक हैं।
+            We provide a safe, supportive and well-equipped environment for every student.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
-          {facilities.map((facility, index) => (
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {facilityList.map((facility) => (
             <div
               key={facility.title}
-              className="rounded-2xl border border-deep-blue/10 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md"
+              className="group rounded-2xl border border-deep-blue/10 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md"
             >
-              <div className="flex items-start gap-5">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-saffron-light">
-                  <facility.icon className="h-7 w-7 text-saffron-dark" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-deep-blue">{facility.title}</h3>
-                  <p className="mt-2 text-base leading-relaxed text-muted-foreground hindi-text">
-                    {facility.description}
-                  </p>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {facility.points.map((point) => (
-                      <li
-                        key={point}
-                        className="rounded-full bg-saffron-light/50 px-3 py-1 text-xs font-medium text-saffron-dark"
-                      >
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-saffron-light">
+                <facility.icon className="h-6 w-6 text-saffron-dark" />
               </div>
+              <div className="mt-4 flex items-start justify-between gap-2">
+                <h3 className="text-lg font-bold text-deep-blue">{facility.title}</h3>
+                {'comingSoon' in facility && facility.comingSoon && (
+                  <span className="shrink-0 rounded-full bg-saffron-light px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-saffron-dark">
+                    Coming Soon
+                  </span>
+                )}
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {facility.description}
+              </p>
             </div>
           ))}
         </div>

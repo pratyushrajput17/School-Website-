@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "hi_IN",
+    locale: "en_IN",
     siteName: meta.siteName,
     title: meta.defaultTitle,
     description: schoolConfig.description,
@@ -100,7 +100,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="hi"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>

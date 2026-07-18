@@ -1,12 +1,15 @@
 import Link from 'next/link'
-import { GraduationCap } from 'lucide-react'
+import { GraduationCap, MapPin, Phone, Mail } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
+
+const { contact } = schoolConfig
 
 const quickLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About Us' },
   { href: '/academics', label: 'Academics' },
   { href: '/admissions', label: 'Admissions' },
+  { href: '/facilities', label: 'Facilities' },
   { href: '/gallery', label: 'Gallery' },
   { href: '/contact', label: 'Contact' },
 ] as const
@@ -95,29 +98,43 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-2">
-            <h4 className="text-sm font-semibold text-white">Contact</h4>
+          <div className="lg:col-span-3">
+            <h4 className="text-sm font-semibold text-white">Contact Us</h4>
             <ul className="mt-4 space-y-3">
               <li>
-                <Link
-                  href="/contact"
-                  className="text-sm text-white/60 transition-colors hover:text-saffron"
-                >
-                  Contact Page
-                </Link>
+                <span className="flex items-start gap-2 text-sm text-white/60">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-saffron" />
+                  Gadarwara Road, Sainkheda, MP 484661
+                </span>
               </li>
               <li>
-                <Link
-                  href="/admissions"
-                  className="text-sm text-white/60 transition-colors hover:text-saffron"
-                >
-                  Apply for Admission
-                </Link>
+                <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
+                  <Phone className="h-4 w-4 shrink-0 text-saffron" />
+                  9893652202
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${contact.altPhone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
+                  <Phone className="h-4 w-4 shrink-0 text-saffron" />
+                  9993606232
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${contact.thirdPhone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
+                  <Phone className="h-4 w-4 shrink-0 text-saffron" />
+                  9993794981
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${contact.email}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
+                  <Mail className="h-4 w-4 shrink-0 text-saffron" />
+                  adresh2111@gmail.com
+                </a>
               </li>
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <h4 className="text-sm font-semibold text-white">School</h4>
             <ul className="mt-4 space-y-3">
               <li><p className="text-sm text-white/60">Education with Values</p></li>
