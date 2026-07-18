@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight, Calendar } from 'lucide-react'
-import { schoolConfig } from '@/lib/school-config'
+import { getNotices } from '@/lib/notices'
 
 const categoryColors: Record<string, string> = {
   Admissions: 'bg-emerald-100 text-emerald-700',
@@ -8,10 +8,22 @@ const categoryColors: Record<string, string> = {
   Examination: 'bg-violet-100 text-violet-700',
   Holiday: 'bg-amber-100 text-amber-700',
   Events: 'bg-rose-100 text-rose-700',
+  General: 'bg-gray-100 text-gray-700',
 }
 
-export default function NoticePreview() {
-  const latest = schoolConfig.notices.slice(0, 3)
+function formatDate(iso: string) {
+  const d = new Date(iso)
+  return d.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
+}
+
+export default async function NoticePreview() {
+  const latest = await getNotices({ limit: 3 }).catch(() => [])
+
+  if (latest.length === 0) return null
 
   return (
     <section className="relative overflow-hidden bg-white py-24 lg:py-28">
@@ -34,7 +46,7 @@ export default function NoticePreview() {
             >
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Calendar className="h-3.5 w-3.5" />
-                <span>{notice.date}</span>
+                <span>{formatDate(notice.createdAt)}</span>
                 <span className={`ml-auto rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${categoryColors[notice.category] || 'bg-gray-100 text-gray-700'}`}>
                   {notice.category}
                 </span>

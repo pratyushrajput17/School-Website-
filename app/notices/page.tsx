@@ -3,6 +3,7 @@ import { Calendar } from 'lucide-react'
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import { schoolConfig } from "@/lib/school-config"
+import { getNotices } from "@/lib/notices"
 
 export const metadata: Metadata = {
   title: "Notices",
@@ -16,9 +17,21 @@ const categoryColors: Record<string, string> = {
   Examination: 'bg-violet-100 text-violet-700',
   Holiday: 'bg-amber-100 text-amber-700',
   Events: 'bg-rose-100 text-rose-700',
+  General: 'bg-gray-100 text-gray-700',
 }
 
-export default function NoticesPage() {
+function formatDate(iso: string) {
+  const d = new Date(iso)
+  return d.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
+}
+
+export default async function NoticesPage() {
+  const notices = await getNotices().catch(() => [])
+
   return (
     <>
       <Navbar />
@@ -38,28 +51,34 @@ export default function NoticesPage() {
 
       <section className="relative overflow-hidden bg-white py-24 lg:py-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {schoolConfig.notices.map((notice) => (
-              <div
-                key={notice.id}
-                className="group rounded-2xl border border-deep-blue/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md sm:p-8"
-              >
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Calendar className="h-3.5 w-3.5" />
-                  <span>{notice.date}</span>
-                  <span className={`ml-auto rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${categoryColors[notice.category] || 'bg-gray-100 text-gray-700'}`}>
-                    {notice.category}
-                  </span>
+          {notices.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No notices published yet.</p>
+            </div>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {notices.map((notice) => (
+                <div
+                  key={notice.id}
+                  className="group rounded-2xl border border-deep-blue/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md sm:p-8"
+                >
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="h-3.5 w-3.5" />
+                    <span>{formatDate(notice.createdAt)}</span>
+                    <span className={`ml-auto rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${categoryColors[notice.category] || 'bg-gray-100 text-gray-700'}`}>
+                      {notice.category}
+                    </span>
+                  </div>
+                  <h3 className="mt-3 text-lg font-bold text-deep-blue leading-snug">
+                    {notice.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {notice.description}
+                  </p>
                 </div>
-                <h3 className="mt-3 text-lg font-bold text-deep-blue leading-snug">
-                  {notice.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {notice.description}
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
