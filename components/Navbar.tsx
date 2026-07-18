@@ -5,19 +5,19 @@ import Link from 'next/link'
 import { Menu, X, GraduationCap, ChevronDown } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
-const PRIMARY_LINKS = [
+const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/academics', label: 'Academics' },
   { href: '/admissions', label: 'Admissions' },
   { href: '/facilities', label: 'Facilities' },
   { href: '/gallery', label: 'Gallery' },
+  { href: '/notices', label: 'Notices' },
+  { href: '/events', label: 'Events' },
 ] as const
 
 const MORE_LINKS = [
   { href: '/about', label: 'About Us' },
-  { href: '/notices', label: 'Notices' },
-  { href: '/events', label: 'Events' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact Us' },
 ] as const
 
 export default function Navbar() {
@@ -69,114 +69,117 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-sm' : 'bg-transparent'
+      className={`sticky top-0 z-50 transition-shadow duration-300 ${
+        scrolled ? 'shadow-md' : 'shadow-none'
       }`}
     >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-3"
-          aria-label={`${schoolConfig.name} - Home`}
-        >
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-deep-blue/10">
-            <GraduationCap className="h-6 w-6 text-deep-blue" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold leading-tight text-deep-blue">
-              {schoolConfig.name}
-            </span>
-            <span className="text-xs leading-tight text-muted-foreground">
-              {schoolConfig.tagline}
-            </span>
-          </div>
-        </Link>
-
-        <nav
-          className="hidden lg:flex lg:items-center lg:gap-1"
-          aria-label="Main navigation"
-        >
-          {PRIMARY_LINKS.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="group relative px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
-            >
-              {label}
-              <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-deep-blue transition-all duration-300 group-hover:w-4/5" />
-            </Link>
-          ))}
-
-          <div
-            ref={moreRef}
-            className="relative"
-            onMouseEnter={() => {
-              clearTimeout(dropdownTimeout.current)
-              setMoreOpen(true)
-            }}
-            onMouseLeave={() => {
-              dropdownTimeout.current = setTimeout(() => setMoreOpen(false), 150)
-            }}
+      <div className="bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
+          <Link
+            href="/"
+            className="flex shrink-0 items-center gap-3"
+            aria-label={`${schoolConfig.name} - Home`}
           >
-            <button
-              type="button"
-              onClick={() => setMoreOpen((o) => !o)}
-              className="group relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-deep-blue/10">
+              <GraduationCap className="h-7 w-7 text-deep-blue" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold leading-tight text-deep-blue">
+                {schoolConfig.name}
+              </span>
+              <span className="text-xs leading-tight text-muted-foreground hidden sm:block">
+                {schoolConfig.tagline}
+              </span>
+            </div>
+          </Link>
+
+          <div className="hidden lg:flex items-center gap-3">
+            <Link
+              href="/login"
+              className="rounded-full border border-deep-blue/20 px-5 py-2 text-sm font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
             >
-              More
-              <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                  moreOpen ? 'rotate-180' : ''
-                }`}
-              />
-              <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-deep-blue transition-all duration-300 group-hover:w-4/5" />
-            </button>
+              Admin Login
+            </Link>
+            <Link
+              href="/admissions"
+              className="rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
+            >
+              Apply Now
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:text-deep-blue lg:hidden"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open navigation menu"
+            aria-expanded={mobileOpen}
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
+      </div>
+
+      <div className="hidden lg:block border-t border-gray-100 bg-white">
+        <div className="mx-auto flex max-w-7xl items-center px-8">
+          <nav className="flex items-center gap-0.5" aria-label="Main navigation">
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="group relative px-5 py-3 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
+              >
+                {label}
+                <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-deep-blue transition-all duration-300 group-hover:w-4/5" />
+              </Link>
+            ))}
 
             <div
-              className={`absolute left-0 top-full mt-1 w-48 rounded-xl border border-gray-100 bg-white py-2 shadow-lg transition-all duration-200 ${
-                moreOpen
-                  ? 'pointer-events-auto translate-y-0 opacity-100'
-                  : 'pointer-events-none -translate-y-1 opacity-0'
-              }`}
+              ref={moreRef}
+              className="relative"
+              onMouseEnter={() => {
+                clearTimeout(dropdownTimeout.current)
+                setMoreOpen(true)
+              }}
+              onMouseLeave={() => {
+                dropdownTimeout.current = setTimeout(() => setMoreOpen(false), 150)
+              }}
             >
-              {MORE_LINKS.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="block px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-gray-50 hover:text-deep-blue"
-                  onClick={() => setMoreOpen(false)}
-                >
-                  {label}
-                </Link>
-              ))}
+              <button
+                type="button"
+                onClick={() => setMoreOpen((o) => !o)}
+                className="group relative flex items-center gap-1.5 px-5 py-3 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
+              >
+                More
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    moreOpen ? 'rotate-180' : ''
+                  }`}
+                />
+                <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-deep-blue transition-all duration-300 group-hover:w-4/5" />
+              </button>
+
+              <div
+                className={`absolute left-0 top-full mt-0 w-44 rounded-b-xl border border-t-0 border-gray-100 bg-white py-2 shadow-lg transition-all duration-200 ${
+                  moreOpen
+                    ? 'pointer-events-auto translate-y-0 opacity-100'
+                    : 'pointer-events-none -translate-y-1 opacity-0'
+                }`}
+              >
+                {MORE_LINKS.map(({ href, label }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="block px-5 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-gray-50 hover:text-deep-blue"
+                    onClick={() => setMoreOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </nav>
-
-        <div className="hidden lg:flex items-center gap-3">
-          <Link
-            href="/login"
-            className="rounded-full border border-deep-blue/20 px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
-          >
-            Admin Login
-          </Link>
-          <Link
-            href="/admissions"
-            className="rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
-          >
-            Apply Now
-          </Link>
+          </nav>
         </div>
-
-        <button
-          type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:text-deep-blue lg:hidden"
-          onClick={() => setMobileOpen(true)}
-          aria-label="Open navigation menu"
-          aria-expanded={mobileOpen}
-        >
-          <Menu className="h-6 w-6" />
-        </button>
       </div>
 
       <div
@@ -197,8 +200,13 @@ export default function Navbar() {
             mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <div className="flex items-center justify-between border-b px-6 py-4">
-            <span className="text-lg font-bold text-deep-blue">{schoolConfig.name}</span>
+          <div className="flex items-center justify-between border-b px-6 py-5">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-deep-blue/10">
+                <GraduationCap className="h-5 w-5 text-deep-blue" />
+              </div>
+              <span className="text-lg font-bold text-deep-blue">{schoolConfig.name}</span>
+            </div>
             <button
               type="button"
               className="rounded-md p-2 text-muted-foreground transition-colors hover:text-deep-blue"
@@ -210,10 +218,10 @@ export default function Navbar() {
           </div>
 
           <nav
-            className="flex flex-1 flex-col items-center justify-start gap-1 overflow-y-auto px-6 pt-8"
+            className="flex flex-1 flex-col items-center justify-start gap-1 overflow-y-auto px-6 pt-10"
             aria-label="Mobile navigation"
           >
-            {PRIMARY_LINKS.map(({ href, label }) => (
+            {NAV_LINKS.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
@@ -237,10 +245,10 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <div className="mt-6 flex flex-col items-center gap-4">
+            <div className="mt-8 flex flex-col items-center gap-4">
               <Link
                 href="/login"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-deep-blue"
+                className="rounded-full border border-deep-blue/20 px-6 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:border-deep-blue/40 hover:text-deep-blue"
                 onClick={closeMobile}
               >
                 Admin Login
