@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { getGalleryImages } from '@/lib/gallery'
 
-const categories = [
-  { label: 'Campus Life', color: 'from-emerald-100 to-emerald-50', icon: '🏫' },
-  { label: 'Classroom Activities', color: 'from-blue-100 to-blue-50', icon: '📚' },
-  { label: 'Cultural Programs', color: 'from-amber-100 to-amber-50', icon: '🎭' },
-] as const
+export default async function GalleryPreview() {
+  const latest = await getGalleryImages({ limit: 6 }).catch(() => [])
 
-export default function GalleryPreview() {
+  if (latest.length === 0) return null
+
   return (
     <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -22,20 +21,23 @@ export default function GalleryPreview() {
         </div>
 
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((cat) => (
+          {latest.map((img) => (
             <div
-              key={cat.label}
+              key={img.id}
               className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
-              <div className={`aspect-[4/3] w-full bg-gradient-to-br ${cat.color}`}>
-                <div className="flex h-full flex-col items-center justify-center gap-3">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/60 backdrop-blur-sm">
-                    <span className="text-3xl">{cat.icon}</span>
-                  </div>
-                  <span className="rounded-full bg-white/90 px-4 py-1.5 text-sm font-semibold text-deep-blue shadow-sm">
-                    {cat.label}
-                  </span>
-                </div>
+              <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                <img
+                  src={img.image}
+                  alt={img.title}
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
+                <h3 className="text-sm font-semibold text-white">
+                  {img.title}
+                </h3>
               </div>
             </div>
           ))}

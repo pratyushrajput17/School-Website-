@@ -45,7 +45,7 @@ const seedEvents = [
   {
     title: "Annual Day Celebration",
     description:
-      "Students presented cultural performances, music, dance, and drama before parents and distinguished guests. The event celebrated another successful academic year.",
+      "Students presented cultural performances, music, dance, and drama before parents and distinguished guests.",
     eventDate: new Date("2025-12-15"),
     category: "Annual Function",
   },
@@ -73,28 +73,28 @@ const seedEvents = [
   {
     title: "Cultural Fest",
     description:
-      "Students showcased their talents in music, dance, drama, and traditional art forms. The event highlighted the cultural diversity and creativity of our students.",
+      "Students showcased their talents in music, dance, drama, and traditional art forms.",
     eventDate: new Date("2025-10-10"),
     category: "Cultural Programs",
   },
   {
     title: "Science Exhibition",
     description:
-      "Students presented working models and projects on scientific concepts. The exhibition encouraged curiosity, innovation, and practical learning.",
+      "Students presented working models and projects on scientific concepts.",
     eventDate: new Date("2025-02-28"),
     category: "Academic Activities",
   },
   {
     title: "Inter-Class Quiz Competition",
     description:
-      "Students from different classes participated in a general knowledge and academic quiz. The competition promoted healthy academic rivalry and learning.",
+      "Students from different classes participated in a general knowledge and academic quiz.",
     eventDate: new Date("2025-09-05"),
     category: "Competitions",
   },
   {
     title: "Teachers' Day Celebration",
     description:
-      "Students organised a special assembly to honour teachers. Cultural performances, speeches, and heartfelt gestures expressed gratitude to the teaching staff.",
+      "Students organised a special assembly to honour teachers.",
     eventDate: new Date("2025-09-05"),
     category: "General Events",
   },
@@ -112,6 +112,10 @@ async function main() {
     await prisma.event.create({ data: event });
   }
   console.log(`Seeded ${seedEvents.length} events`);
+
+  console.log("Seeding gallery...");
+  const galleryCount = await prisma.gallery.count();
+  console.log(`Gallery has ${galleryCount} existing images (seed uploads via admin UI)`);
 }
 
 main()

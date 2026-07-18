@@ -1,10 +1,8 @@
-import dynamic from "next/dynamic"
 import type { Metadata } from "next"
 import Navbar from "@/components/Navbar"
-import PageBanner from "@/components/layout/PageBanner"
+import Footer from "@/components/Footer"
 import { schoolConfig } from "@/lib/school-config"
-
-const Footer = dynamic(() => import("@/components/Footer"))
+import { getGalleryImages } from "@/lib/gallery"
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -12,58 +10,105 @@ export const metadata: Metadata = {
   alternates: { canonical: `${schoolConfig.url}/gallery` },
 }
 
-const categories = ["Campus Life", "Classroom Activities", "Academic Activities", "Cultural Programs", "Annual Functions"] as const
-const colors = ["from-emerald-100 to-emerald-50 text-emerald-700", "from-blue-100 to-blue-50 text-blue-700", "from-violet-100 to-violet-50 text-violet-700", "from-amber-100 to-amber-50 text-amber-700", "from-rose-100 to-rose-50 text-rose-700"]
-const categoryIcons = ["🏫", "📚", "🔬", "🎭", "🏆"]
+const GALLERY_CATEGORIES = [
+  "Campus Life",
+  "Classroom Activities",
+  "Academic Activities",
+  "Annual Function",
+  "Cultural Programs",
+  "Sports Activities",
+  "Independence Day",
+  "Republic Day",
+  "Other",
+] as const
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const images = await getGalleryImages().catch(() => [])
+
+  const grouped = GALLERY_CATEGORIES.map((cat) => ({
+    category: cat,
+    items: images.filter((img) => img.category === cat),
+  })).filter((g) => g.items.length > 0)
+
   return (
     <>
       <Navbar />
-      <PageBanner
-        badge="Gallery"
-        title="Moments from"
-        highlight="Our School"
-        description="A glimpse into life at Adarsh High School — academics, sports, events, and special moments."
-        minHeight="min-h-[50vh]"
-      />
+      <section className="relative min-h-[50vh] overflow-hidden bg-gradient-to-b from-saffron-light/30 via-white to-white">
+        <div className="absolute -top-48 right-0 h-[600px] w-[600px] rounded-full bg-saffron/5 blur-3xl" />
+        <div className="absolute -bottom-48 left-0 h-[500px] w-[500px] rounded-full bg-deep-blue/5 blur-3xl" />
+        <div className="relative mx-auto flex min-h-[50vh] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-8">
+          <span className="badge-pill">Gallery</span>
+          <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-deep-blue sm:text-5xl lg:text-6xl">
+            Moments from Our School
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+            A glimpse into life at Adarsh High School — academics, sports, events, and special moments.
+          </p>
+        </div>
+      </section>
+
       <section className="relative overflow-hidden py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 flex flex-wrap justify-center gap-3">
-            {categories.map((cat, i) => (
-              <span
-                key={cat}
-                className="rounded-full border border-deep-blue/10 bg-white px-5 py-2 text-sm font-medium text-deep-blue shadow-sm"
-              >
-                {categoryIcons[i]} {cat}
-              </span>
-            ))}
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {categories.flatMap((cat, ci) =>
-              [1, 2, 3].map((num) => {
-                const id = `${ci}-${num}`
-                return (
-                  <div
-                    key={id}
-                    className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-                  >
-                    <div className={`aspect-[4/3] w-full bg-gradient-to-br ${colors[ci % colors.length]}`}>
-                      <div className="flex h-full flex-col items-center justify-center gap-3">
-                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/40 backdrop-blur-sm">
-                          <span className="text-3xl">{categoryIcons[ci]}</span>
-                        </div>
-                        <span className="rounded-full bg-white/90 px-4 py-1.5 text-sm font-semibold text-deep-blue shadow-sm backdrop-blur-sm">
-                          {cat}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/30 to-transparent p-4 pt-12" />
+          {images.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No images in gallery yet.</p>
+            </div>
+          ) : grouped.length === 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {images.map((img) => (
+                <div
+                  key={img.id}
+                  className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                >
+                  <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                    <img
+                      src={img.image}
+                      alt={img.title}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
                   </div>
-                )
-              })
-            )}
-          </div>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
+                    <h3 className="text-sm font-semibold text-white">
+                      {img.title}
+                    </h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-16">
+              {grouped.map(({ category, items }) => (
+                <div key={category}>
+                  <h2 className="text-2xl font-bold text-deep-blue mb-6">
+                    {category}
+                  </h2>
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {items.map((img) => (
+                      <div
+                        key={img.id}
+                        className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                      >
+                        <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                          <img
+                            src={img.image}
+                            alt={img.title}
+                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
+                          <h3 className="text-sm font-semibold text-white">
+                            {img.title}
+                          </h3>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
       <Footer />
