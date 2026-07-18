@@ -1,8 +1,6 @@
 import Link from 'next/link'
-import { GraduationCap, Mail, Phone, MapPin } from 'lucide-react'
+import { GraduationCap } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
-
-const { contact } = schoolConfig
 
 const quickLinks = [
   { href: '/', label: 'Home' },
@@ -40,8 +38,8 @@ export default function Footer() {
   return (
     <footer className="border-t border-deep-blue/10 bg-deep-blue" role="contentinfo">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="sm:col-span-2 lg:col-span-2">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="sm:col-span-2 lg:col-span-5">
             <Link
               href="/"
               className="inline-flex items-center gap-2.5"
@@ -65,34 +63,6 @@ export default function Footer() {
               but for life — with knowledge, values, discipline, and character.
             </p>
 
-            <div className="mt-6 space-y-3">
-              <a
-                href={`tel:${contact.phone.replace(/\s/g, '')}`}
-                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-saffron"
-              >
-                <Phone className="h-4 w-4 shrink-0" />
-                {contact.phone}
-              </a>
-              <a
-                href={`tel:${contact.altPhone.replace(/\s/g, '')}`}
-                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-saffron"
-              >
-                <Phone className="h-4 w-4 shrink-0" />
-                {contact.altPhone}
-              </a>
-              <a
-                href={`mailto:${contact.email}`}
-                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-saffron"
-              >
-                <Mail className="h-4 w-4 shrink-0" />
-                {contact.email}
-              </a>
-              <span className="flex items-center gap-2.5 text-sm text-white/60">
-                <MapPin className="h-4 w-4 shrink-0" />
-                {contact.address}
-              </span>
-            </div>
-
             <div className="mt-6 flex items-center gap-3">
               {socialLinks.map((social) => (
                 <a
@@ -109,7 +79,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="lg:col-span-2">
             <h4 className="text-sm font-semibold text-white">Quick Links</h4>
             <ul className="mt-4 space-y-3">
               {quickLinks.map((link) => (
@@ -125,28 +95,35 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-sm font-semibold text-white">Connect</h4>
+          <div className="lg:col-span-2">
+            <h4 className="text-sm font-semibold text-white">Contact</h4>
+            <ul className="mt-4 space-y-3">
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-sm text-white/60 transition-colors hover:text-saffron"
+                >
+                  Contact Page
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admissions"
+                  className="text-sm text-white/60 transition-colors hover:text-saffron"
+                >
+                  Apply for Admission
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3">
+            <h4 className="text-sm font-semibold text-white">School</h4>
             <ul className="mt-4 space-y-3">
               <li><p className="text-sm text-white/60">Education with Values</p></li>
               <li><p className="text-sm text-white/60">Knowledge with Character</p></li>
               <li><p className="text-sm text-white/60">MP Board | English Medium</p></li>
               <li><p className="text-sm text-white/60">900+ Students | 40+ Teachers</p></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold text-white">Office Hours</h4>
-            <ul className="mt-4 space-y-3">
-              <li><p className="text-sm text-white/60">{contact.officeHours}</p></li>
-              <li className="mt-4">
-                <Link
-                  href="/admissions"
-                  className="inline-flex items-center gap-2 rounded-full bg-saffron px-5 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-saffron-dark"
-                >
-                  Apply for Admission
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic"
 import type { Metadata } from "next"
 import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
@@ -7,13 +6,13 @@ import MaaSaraswati from "@/components/MaaSaraswati"
 import SchoolValues from "@/components/SchoolValues"
 import ParentTrust from "@/components/ParentTrust"
 import InspirationalQuotes from "@/components/InspirationalQuotes"
+import HomeCTA from "@/components/HomeCTA"
 import { schoolConfig } from "@/lib/school-config"
+import dynamic from "next/dynamic"
 
 const SchoolHighlights = dynamic(() => import("@/components/SchoolHighlights"))
 const Facilities = dynamic(() => import("@/components/Facilities"))
 const PrincipalMessage = dynamic(() => import("@/components/PrincipalMessage"))
-const FinalCTA = dynamic(() => import("@/components/FinalCTA"))
-const Footer = dynamic(() => import("@/components/Footer"))
 
 export const metadata: Metadata = {
   title: schoolConfig.metadata.defaultTitle,
@@ -36,8 +35,7 @@ export default function Home() {
       <InspirationalQuotes />
       <Facilities />
       <PrincipalMessage />
-      <FinalCTA />
-      <Footer />
+      <HomeCTA />
     </>
   )
 }
