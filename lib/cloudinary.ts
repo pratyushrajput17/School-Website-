@@ -6,17 +6,26 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function uploadImage(file: File): Promise<string> {
+async function uploadToCloudinary(
+  file: File,
+  folder: string,
+  options: { width?: number; height?: number } = {}
+): Promise<string> {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
-        folder: "adarsh-high-school/gallery",
+        folder,
         resource_type: "image",
         transformation: [
-          { width: 1200, height: 900, crop: "limit", quality: "auto" },
+          {
+            width: options.width || 1200,
+            height: options.height || 900,
+            crop: "limit",
+            quality: "auto",
+          },
         ],
       },
       (error, result) => {
@@ -25,6 +34,20 @@ export async function uploadImage(file: File): Promise<string> {
       }
     );
     uploadStream.end(buffer);
+  });
+}
+
+export async function uploadImage(file: File): Promise<string> {
+  return uploadToCloudinary(file, "adarsh-high-school/gallery", {
+    width: 1200,
+    height: 900,
+  });
+}
+
+export async function uploadPhoto(file: File): Promise<string> {
+  return uploadToCloudinary(file, "adarsh-high-school/achievers", {
+    width: 400,
+    height: 500,
   });
 }
 
