@@ -9,16 +9,16 @@ const ContactForm = dynamic(() => import("@/components/contact/ContactForm"))
 const MapSection = dynamic(() => import("@/components/contact/MapSection"))
 const Footer = dynamic(() => import("@/components/Footer"))
 
-const title = 'Contact Us'
+const title = 'संपर्क करें'
 const description =
-  "Get in touch with Adarsh High School. Find our address, phone numbers, and send us an inquiry. Located in Gadarwara Road, Sainkheda, MP."
+  "Adarsh High School से संपर्क करें। पता, फ़ोन नंबर और ईमेल। Gadarwara Road, Sainkheda, MP में स्थित।"
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${schoolConfig.url}/contact` },
   openGraph: {
-    title: `${schoolConfig.metadata.siteName} | Contact Us`,
+    title: `${schoolConfig.metadata.siteName} | संपर्क करें`,
     description,
     url: `${schoolConfig.url}/contact`,
     siteName: schoolConfig.metadata.siteName,

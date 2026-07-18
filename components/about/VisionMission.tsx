@@ -1,86 +1,64 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { Eye, Target } from 'lucide-react'
-import SectionHeader from '@/components/ui/section-header'
-import { cardVariant } from '@/lib/animations'
+import { schoolConfig } from '@/lib/school-config'
 
 export default function VisionMission() {
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-24 lg:py-32">
-      <div className="absolute -left-40 top-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
-      <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
-
+    <section className="relative overflow-hidden bg-white py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader badge="Our Purpose" title="What Drives Us Forward" />
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="badge-pill">हमारा उद्देश्य</span>
+          <h2 className="heading-xl mt-6">
+            हमारी दृष्टि और मिशन
+          </h2>
+        </div>
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
-          <motion.div
-            variants={cardVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="group relative overflow-hidden rounded-2xl border border-white/40 bg-white/80 p-10 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:shadow-md lg:p-12"
-          >
-            <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-blue-500/5 blur-2xl transition-all duration-500 group-hover:bg-blue-500/10" />
-            <div className="relative">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
-                <Eye className="h-7 w-7 text-blue-600" />
-              </div>
-              <h3 className="mt-6 text-2xl font-bold text-primary">Our Vision</h3>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                To be a globally respected educational institution that nurtures
-                compassionate leaders, innovative thinkers, and responsible global
-                citizens who contribute meaningfully to society.
-              </p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  'Global perspective in education',
-                  'Holistic student development',
-                  'Continuous innovation in teaching',
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+          <div className="group rounded-2xl border border-saffron/10 bg-white p-10 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md lg:p-12">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-saffron-light">
+              <Eye className="h-7 w-7 text-saffron-dark" />
             </div>
-          </motion.div>
+            <h3 className="mt-6 text-2xl font-bold text-deep-blue">हमारी दृष्टि</h3>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground hindi-text">
+              {schoolConfig.name} का लक्ष्य एक ऐसी शिक्षा प्रणाली विकसित करना है
+              जो विद्यार्थियों को न केवल शैक्षणिक रूप से सक्षम बनाए, बल्कि उनमें
+              नैतिक मूल्यों, अनुशासन और चरित्र का भी विकास करे।
+            </p>
+            <ul className="mt-6 space-y-3">
+              {[
+                'गुणवत्तापूर्ण शिक्षा पर ध्यान',
+                'चरित्र और संस्कारों का विकास',
+                'समाज के प्रति जिम्मेदारी',
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div className="h-1.5 w-1.5 rounded-full bg-saffron" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <motion.div
-            variants={cardVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="group relative overflow-hidden rounded-2xl border border-white/40 bg-white/80 p-10 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:shadow-md lg:p-12"
-          >
-            <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent/5 blur-2xl transition-all duration-500 group-hover:bg-accent/10" />
-            <div className="relative">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
-                <Target className="h-7 w-7 text-blue-600" />
-              </div>
-              <h3 className="mt-6 text-2xl font-bold text-primary">Our Mission</h3>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                To provide an inspiring, inclusive, and future-ready learning
-                environment that empowers every student to discover their potential
-                and excel academically, socially, and emotionally.
-              </p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  'Academic excellence through innovative teaching',
-                  'Character building and value-based education',
-                  'Preparing students for a dynamic world',
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <div className="h-1.5 w-1.5 rounded-full bg-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+          <div className="group rounded-2xl border border-saffron/10 bg-white p-10 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md lg:p-12">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-saffron-light">
+              <Target className="h-7 w-7 text-saffron-dark" />
             </div>
-          </motion.div>
+            <h3 className="mt-6 text-2xl font-bold text-deep-blue">हमारा मिशन</h3>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground hindi-text">
+              हर बच्चे को एक ऐसा वातावरण प्रदान करना जहाँ वे शैक्षणिक, सामाजिक
+              और नैतिक रूप से विकसित हो सकें और जीवन में सफल और संस्कारी नागरिक बन सकें।
+            </p>
+            <ul className="mt-6 space-y-3">
+              {[
+                'अनुभवी शिक्षकों द्वारा गुणवत्तापूर्ण शिक्षा',
+                'संस्कार और अनुशासन पर आधारित शिक्षा',
+                'विद्यार्थियों को जीवन के लिए तैयार करना',
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div className="h-1.5 w-1.5 rounded-full bg-saffron" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

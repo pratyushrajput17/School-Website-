@@ -1,86 +1,61 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, BookOpen } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
-import { staggerContainer, fadeUp } from '@/lib/animations'
 
 const heroStats = [
-  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years' },
-  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'Students' },
-  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'Teachers' },
-  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Results' },
+  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'वर्षों का अनुभव' },
+  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'विद्यार्थी' },
+  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'शिक्षक' },
+  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'बोर्ड परिणाम' },
 ] as const
 
 export default function AcademicsHero() {
   return (
-    <section className="relative min-h-[85vh] overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-white">
-      <div className="absolute -top-48 right-0 h-[600px] w-[600px] rounded-full bg-blue-500/5 blur-3xl" />
-      <div className="absolute -bottom-48 left-0 h-[500px] w-[500px] rounded-full bg-primary/[0.02] blur-3xl" />
-      <div className="absolute left-1/3 top-1/4 h-[400px] w-[400px] rounded-full bg-accent/[0.02] blur-3xl" />
+    <section className="relative min-h-[85vh] overflow-hidden bg-gradient-to-b from-saffron-light/30 via-white to-white">
+      <div className="absolute -top-48 right-0 h-[600px] w-[600px] rounded-full bg-saffron/5 blur-3xl" />
+      <div className="absolute -bottom-48 left-0 h-[500px] w-[500px] rounded-full bg-deep-blue/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex min-h-[85vh] flex-col items-center justify-center py-20 text-center lg:py-32">
-          <motion.div
-            className="w-full max-w-4xl"
-            variants={staggerContainer(0.15)}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.div variants={fadeUp}>
-              <span className="badge-pill">Academics</span>
-            </motion.div>
+          <div className="mx-auto max-w-4xl">
+            <span className="badge-pill">{schoolConfig.board} पाठ्यक्रम</span>
 
-            <motion.h1
-              className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-primary sm:text-5xl lg:text-6xl xl:text-7xl"
-              variants={fadeUp}
-            >
-              Academic Excellence{' '}
-              <span className="text-blue-600">Starts Here</span>
-            </motion.h1>
+            <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-deep-blue sm:text-5xl lg:text-6xl xl:text-7xl">
+              शैक्षणिक उत्कृष्टता{' '}
+              <span className="text-saffron">हमारी पहचान</span>
+            </h1>
 
-            <motion.p
-              className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-              variants={fadeUp}
-            >
-              Our comprehensive curriculum blends academic rigor with innovative
-              teaching methods, preparing students to excel in board examinations
-              and beyond.
-            </motion.p>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl hindi-text">
+              हम MP Board पाठ्यक्रम के माध्यम से विद्यार्थियों को गुणवत्तापूर्ण शिक्षा प्रदान करते हैं।
+              हमारा उद्देश्य केवल परीक्षा में सफलता नहीं, बल्कि जीवन में सफल और संस्कारी नागरिक तैयार करना है।
+            </p>
 
-            <motion.div
-              className="mt-8 flex flex-wrap items-center justify-center gap-4"
-              variants={fadeUp}
-            >
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="/academics#curriculum"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                href="/admissions"
+                className="inline-flex items-center gap-2 rounded-full bg-deep-blue px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2"
               >
-                Explore Programs
+                प्रवेश के लिए संपर्क करें
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/admissions"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-7 py-3 text-sm font-semibold text-primary shadow-sm transition-all duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                href="/about"
+                className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-7 py-3 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-300 hover:bg-saffron-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2"
               >
                 <BookOpen className="h-4 w-4" />
-                Apply Now
+                हमारे बारे में जानें
               </Link>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="mt-16 grid grid-cols-2 gap-8 border-t pt-12 sm:grid-cols-4"
-              variants={fadeUp}
-            >
+            <div className="mt-16 grid grid-cols-2 gap-8 border-t border-deep-blue/10 pt-12 sm:grid-cols-4">
               {heroStats.map((stat) => (
                 <div key={stat.label}>
-                  <p className="text-3xl font-bold tracking-tight text-blue-600 sm:text-4xl">{stat.value}</p>
-                  <p className="mt-1 text-sm font-medium uppercase tracking-wider text-muted-foreground">{stat.label}</p>
+                  <p className="text-3xl font-bold tracking-tight text-saffron sm:text-4xl">{stat.value}</p>
+                  <p className="mt-1 text-sm font-medium text-muted-foreground">{stat.label}</p>
                 </div>
               ))}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,227 +1,74 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import {
-  Monitor,
-  FlaskConical,
-  Library,
-  Trophy,
-  ArrowRight,
-} from 'lucide-react'
-import SectionHeader from '@/components/ui/section-header'
-import { cardVariant } from '@/lib/animations'
+import { Monitor, FlaskConical, Library, Trophy } from 'lucide-react'
 
 const facilities = [
   {
-    title: 'Smart Digital Classrooms',
-    description:
-      'Interactive classrooms equipped with modern teaching technology.',
+    title: 'स्मार्ट डिजिटल क्लासरूम',
+    description: 'आधुनिक तकनीक से सुसज्जित कक्षाएँ जहाँ शिक्षण रोचक और प्रभावी होता है।',
     icon: Monitor,
-    gradient: 'from-blue-600 to-sky-400',
-    badge: 'Interactive Learning',
-    points: [
-      'Interactive Smart Boards',
-      'Digital Learning Tools',
-      'Airy & Spacious Rooms',
-      'Student-Centric Environment',
-    ],
+    points: ['इंटरैक्टिव स्मार्ट बोर्ड', 'डिजिटल लर्निंग टूल्स', 'विशाल और हवादार कक्षाएँ'],
   },
   {
-    title: 'Science & Computer Laboratories',
-    description:
-      'Well-equipped laboratories designed for practical learning.',
+    title: 'विज्ञान एवं कंप्यूटर प्रयोगशाला',
+    description: 'व्यावहारिक शिक्षा के लिए पूरी तरह सुसज्जित प्रयोगशालाएँ।',
     icon: FlaskConical,
-    gradient: 'from-violet-600 to-purple-400',
-    badge: 'Hands-On Learning',
-    points: [
-      'Physics Lab',
-      'Chemistry Lab',
-      'Biology Lab',
-      'Computer Lab',
-    ],
+    points: ['भौतिकी प्रयोगशाला', 'रसायन विज्ञान प्रयोगशाला', 'जीवविज्ञान प्रयोगशाला', 'कंप्यूटर प्रयोगशाला'],
   },
   {
-    title: 'Library & Innovation Center',
-    description:
-      'A peaceful space encouraging reading, creativity and research.',
+    title: 'पुस्तकालय एवं अध्ययन कक्ष',
+    description: 'ज्ञानवर्धन और शोध के लिए शांत और समृद्ध वातावरण।',
     icon: Library,
-    gradient: 'from-amber-600 to-orange-400',
-    badge: 'Knowledge Hub',
-    points: [
-      'Thousands of Books',
-      'Digital Resources',
-      'Reading Zone',
-      'Research Support',
-    ],
+    points: ['हजारों पुस्तकें', 'डिजिटल संसाधन', 'अध्ययन क्षेत्र'],
   },
   {
-    title: 'Sports & Recreation',
-    description:
-      'Developing teamwork, discipline and physical fitness.',
+    title: 'खेलकूद एवं शारीरिक शिक्षा',
+    description: 'खेल और शारीरिक गतिविधियों के माध्यम से सर्वांगीण विकास।',
     icon: Trophy,
-    gradient: 'from-emerald-600 to-teal-400',
-    badge: 'Physical Excellence',
-    points: [
-      'Indoor Sports',
-      'Outdoor Grounds',
-      'Annual Sports Events',
-      'Professional Coaching',
-    ],
+    points: ['इनडोर खेल', 'आउटडोर मैदान', 'वार्षिक खेलकूद प्रतियोगिताएँ'],
   },
 ] as const
 
-function FacilityImage({
-  icon: Icon,
-  gradient,
-  badge,
-  index,
-}: {
-  icon: React.ElementType
-  gradient: string
-  badge: string
-  index: number
-}) {
-  return (
-    <motion.div
-      className="group relative overflow-hidden rounded-3xl"
-      initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      <div
-        className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${gradient}`}
-      >
-        <div className="absolute inset-0 bg-black/10 transition-transform duration-700 group-hover:scale-105" />
-
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent" />
-
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/20 shadow-lg shadow-black/10 backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
-            <Icon className="h-10 w-10 text-white" />
-          </div>
-        </div>
-
-        <div className="absolute left-4 top-4 sm:left-6 sm:top-6">
-          <motion.div
-            className="rounded-xl border border-white/30 bg-white/15 px-3 py-1.5 text-xs font-medium text-white shadow-sm backdrop-blur-sm"
-            animate={{ y: [0, -4, 0] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: index * 0.5,
-            }}
-          >
-            {badge}
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6">
-          <motion.div
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/30 bg-white/15 shadow-sm backdrop-blur-sm"
-            animate={{ y: [0, 4, 0] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: index * 0.5 + 0.5,
-            }}
-          >
-            <div className="h-2 w-2 rounded-full bg-white" />
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-12 left-6">
-          <div className="flex -space-x-1.5">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white/50 bg-white/20 text-[10px] font-semibold text-white backdrop-blur-sm"
-              >
-                {i}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
 export default function Facilities() {
   return (
-    <section className="bg-white py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-white py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          badge="Our Facilities"
-          title="Designed for Learning, Innovation & Growth"
-          description="Our campus provides a modern, safe, and inspiring environment where students can explore, learn, and grow."
-        />
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="badge-pill">सुविधाएँ</span>
+          <h2 className="heading-xl mt-6">
+            हमारी प्रमुख सुविधाएँ
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            हमारा कैंपस आधुनिक सुविधाओं से सुसज्जित है जो विद्यार्थियों के सर्वांगीण विकास में सहायक हैं।
+          </p>
+        </div>
 
-        <div className="mt-20 space-y-24 lg:space-y-32">
+        <div className="mt-16 grid gap-8 lg:grid-cols-2">
           {facilities.map((facility, index) => (
-            <motion.div
+            <div
               key={facility.title}
-              className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20"
-              variants={cardVariant}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
+              className="rounded-2xl border border-deep-blue/10 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md"
             >
-              <div
-                className={index % 2 !== 0 ? 'lg:order-2' : ''}
-              >
-                <FacilityImage
-                  icon={facility.icon}
-                  gradient={facility.gradient}
-                  badge={facility.badge}
-                  index={index}
-                />
-              </div>
-
-              <div
-                className={index % 2 !== 0 ? 'lg:order-1' : ''}
-              >
-                <motion.span className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-                  {facility.badge}
-                </motion.span>
-
-                <motion.h3 className="mt-2 text-2xl font-bold leading-tight text-primary sm:text-3xl">
-                  {facility.title}
-                </motion.h3>
-
-                <motion.p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                  {facility.description}
-                </motion.p>
-
-                <motion.ul className="mt-6 space-y-3">
-                  {facility.points.map((point) => (
-                    <li
-                      key={point}
-                      className="flex items-start gap-3"
-                    >
-                      <span className="mt-1.5 flex h-2 w-2 shrink-0 rounded-full bg-blue-600" />
-                      <span className="text-base text-muted-foreground">
+              <div className="flex items-start gap-5">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-saffron-light">
+                  <facility.icon className="h-7 w-7 text-saffron-dark" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-deep-blue">{facility.title}</h3>
+                  <p className="mt-2 text-base leading-relaxed text-muted-foreground hindi-text">
+                    {facility.description}
+                  </p>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {facility.points.map((point) => (
+                      <li
+                        key={point}
+                        className="rounded-full bg-saffron-light/50 px-3 py-1 text-xs font-medium text-saffron-dark"
+                      >
                         {point}
-                      </span>
-                    </li>
-                  ))}
-                </motion.ul>
-
-                <motion.div>
-                  <Link
-                    href="/about"
-                    className="group mt-6 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"
-                    aria-label={`Learn more about ${facility.title}`}
-                  >
-                    Learn More
-                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                  </Link>
-                </motion.div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

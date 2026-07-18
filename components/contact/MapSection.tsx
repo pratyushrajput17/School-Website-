@@ -1,93 +1,58 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { MapPin, Navigation, Building2, ArrowRight } from 'lucide-react'
+import { MapPin, Navigation, ArrowRight } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
-import SectionHeader from '@/components/ui/section-header'
-import { staggerContainer, cardVariant } from '@/lib/animations'
-
-const landmarks = [
-  'Gadarwara Road, Sainkheda',
-  'Near Sainkheda Bus Stand',
-  'Accessible from NH 44',
-  '5 km from Gadarwara town',
-] as const
-
-
 
 export default function MapSection() {
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-24 lg:py-32" id="map">
-      <div className="absolute -left-40 top-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
-      <div className="absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-blue-500/[0.03] blur-3xl" />
-
+    <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28" id="map">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          badge="Find Us"
-          title="Visit Our"
-          highlight="Campus"
-          description={`Located on Gadarwara Road in Sainkheda, our campus is easily accessible from the main town area.`}
-        />
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="badge-pill">हमारा स्थान</span>
+          <h2 className="heading-xl mt-6">
+            हमसे मिलें
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Gadarwara Road, Sainkheda में स्थित हमारा कैंपस मुख्य मार्ग से आसानी से पहुँचा जा सकता है।
+          </p>
+        </div>
 
-        <motion.div
-          className="mt-16 grid gap-8 lg:grid-cols-5"
-          variants={staggerContainer(0.1)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          <motion.div
-            variants={cardVariant}
-            className="lg:col-span-3"
-          >
-            <div className="overflow-hidden rounded-2xl shadow-lg shadow-blue-100/50 ring-1 ring-black/[0.02]">
-              <div className="aspect-[16/9] w-full bg-gradient-to-br from-blue-500/10 via-slate-100 to-primary/5" />
+        <div className="mt-16 grid gap-8 lg:grid-cols-5">
+          <div className="lg:col-span-3">
+            <div className="overflow-hidden rounded-2xl shadow-lg shadow-saffron/10 ring-1 ring-black/[0.02]">
+              <div className="aspect-[16/9] w-full bg-gradient-to-br from-saffron/10 via-saffron-light/30 to-deep-blue/5" />
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={cardVariant}
-            className="lg:col-span-2"
-          >
-            <div className="rounded-2xl border border-border/60 bg-white p-8 shadow-sm">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50">
-                <MapPin className="h-6 w-6 text-blue-600" />
+          <div className="lg:col-span-2">
+            <div className="rounded-2xl border border-deep-blue/10 bg-white p-8 shadow-sm">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-saffron-light">
+                <MapPin className="h-6 w-6 text-saffron-dark" />
               </div>
 
-              <h3 className="mt-4 text-xl font-bold text-primary">{schoolConfig.name}</h3>
+              <h3 className="mt-4 text-xl font-bold text-deep-blue">{schoolConfig.name}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {schoolConfig.contact.address}
               </p>
 
-              <div className="mt-6">
-                <h4 className="flex items-center gap-2 text-sm font-bold text-primary">
-                  <Building2 className="h-4 w-4 text-blue-600" />
-                  Nearby Landmarks
-                </h4>
-                <ul className="mt-3 space-y-2">
-                  {landmarks.map((landmark) => (
-                    <li key={landmark} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
-                      {landmark}
-                    </li>
-                  ))}
-                </ul>
+              <div className="mt-6 space-y-2 text-sm text-muted-foreground">
+                <p>📍 Gadarwara Road, Sainkheda के पास</p>
+                <p>🚌 Sainkheda बस स्टैंड से निकट</p>
+                <p>🛣️ NH 44 से आसान पहुँच</p>
               </div>
 
               <Link
                 href="https://maps.google.com/?q=Gadarwara+Road+Sainkheda+Madhya+Pradesh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-deep-blue px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               >
                 <Navigation className="h-4 w-4" />
-                Get Directions
+                दिशा-निर्देश प्राप्त करें
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

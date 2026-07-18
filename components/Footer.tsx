@@ -1,38 +1,16 @@
 import Link from 'next/link'
-import { GraduationCap, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react'
+import { GraduationCap, Mail, Phone, MapPin } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 const { contact } = schoolConfig
 
 const quickLinks = [
-  { href: '/about', label: 'About Us' },
-  { href: '/academics', label: 'Academics' },
-  { href: '/admissions', label: 'Admissions' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/contact', label: 'Contact Us' },
-] as const
-
-const footerSections = [
-  {
-    title: 'Quick Links',
-    links: quickLinks,
-  },
-  {
-    title: 'Academics',
-    links: [
-      { href: '/academics', label: 'Curriculum' },
-      { href: '/academics', label: 'Teaching Approach' },
-      { href: '/academics', label: 'Activities' },
-    ],
-  },
-  {
-    title: 'Support',
-    links: [
-      { href: '/admissions', label: 'Admissions' },
-      { href: '/gallery', label: 'Gallery' },
-      { href: '/contact', label: 'Contact Us' },
-    ],
-  },
+  { href: '/', label: 'होम' },
+  { href: '/about', label: 'हमारे बारे में' },
+  { href: '/academics', label: 'शैक्षणिक' },
+  { href: '/admissions', label: 'प्रवेश' },
+  { href: '/gallery', label: 'गैलरी' },
+  { href: '/contact', label: 'संपर्क' },
 ] as const
 
 const socialLinks = [
@@ -60,7 +38,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-primary" role="contentinfo">
+    <footer className="border-t border-deep-blue/10 bg-deep-blue" role="contentinfo">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="sm:col-span-2 lg:col-span-2">
@@ -69,8 +47,8 @@ export default function Footer() {
               className="inline-flex items-center gap-2.5"
               aria-label={`${schoolConfig.name} - Home`}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
-                <GraduationCap className="h-5 w-5 text-white" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-saffron/20">
+                <GraduationCap className="h-5 w-5 text-saffron" />
               </div>
               <div>
                 <span className="text-lg font-bold text-white">
@@ -82,22 +60,31 @@ export default function Footer() {
               </div>
             </Link>
 
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
-              {schoolConfig.description}
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60 hindi-text">
+              {schoolConfig.name} में हम विद्यार्थियों को केवल परीक्षा के लिए नहीं,
+              बल्कि जीवन में सफल और संस्कारी बनने के लिए तैयार करते हैं।
             </p>
 
             <div className="mt-6 space-y-3">
               <a
                 href={`tel:${contact.phone.replace(/\s/g, '')}`}
-                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-white"
+                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-saffron"
                 aria-label={`Call us at ${contact.phone}`}
               >
                 <Phone className="h-4 w-4 shrink-0" />
                 {contact.phone}
               </a>
               <a
+                href={`tel:${contact.altPhone.replace(/\s/g, '')}`}
+                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-saffron"
+                aria-label={`Call us at ${contact.altPhone}`}
+              >
+                <Phone className="h-4 w-4 shrink-0" />
+                {contact.altPhone}
+              </a>
+              <a
                 href={`mailto:${contact.email}`}
-                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-white"
+                className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-saffron"
                 aria-label={`Email us at ${contact.email}`}
               >
                 <Mail className="h-4 w-4 shrink-0" />
@@ -116,7 +103,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white/60 backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:text-white"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white/60 backdrop-blur-sm transition-all duration-200 hover:bg-saffron/20 hover:text-saffron"
                   aria-label={`Follow us on ${social.label}`}
                 >
                   {social.icon}
@@ -125,42 +112,74 @@ export default function Footer() {
             </div>
           </div>
 
-          {footerSections.map((section) => (
-            <div key={section.title}>
-              <h4 className="text-sm font-semibold text-white">
-                {section.title}
-              </h4>
-              <ul className="mt-4 space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <Link
-                      href={link.href}
-                      className="group inline-flex items-center gap-1 text-sm text-white/60 transition-colors hover:text-white"
-                    >
-                      {link.label}
-                      <ArrowUpRight className="h-3 w-3 opacity-0 transition-all duration-200 group-hover:opacity-100" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <h4 className="text-sm font-semibold text-white">त्वरित लिंक</h4>
+            <ul className="mt-4 space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.href + link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/60 transition-colors hover:text-saffron"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold text-white">हमसे जुड़ें</h4>
+            <ul className="mt-4 space-y-3">
+              <li>
+                <p className="text-sm text-white/60 hindi-text">
+                  शिक्षा के साथ संस्कार
+                </p>
+              </li>
+              <li>
+                <p className="text-sm text-white/60 hindi-text">
+                  ज्ञान के साथ चरित्र
+                </p>
+              </li>
+              <li>
+                <p className="text-sm text-white/60 hindi-text">
+                  MP Board मान्यता प्राप्त
+                </p>
+              </li>
+              <li>
+                <p className="text-sm text-white/60 hindi-text">
+                  900+ विद्यार्थी, 40+ शिक्षक
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold text-white">कार्य के घंटे</h4>
+            <ul className="mt-4 space-y-3">
+              <li>
+                <p className="text-sm text-white/60">{contact.officeHours}</p>
+              </li>
+              <li className="mt-4">
+                <Link
+                  href="/admissions"
+                  className="inline-flex items-center gap-2 rounded-full bg-saffron px-5 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-saffron-dark"
+                >
+                  प्रवेश के लिए संपर्क करें
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="mt-12 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-xs text-white/40">
-              &copy; {new Date().getFullYear()} {schoolConfig.name}. All rights
-              reserved.
+              &copy; {new Date().getFullYear()} {schoolConfig.name}. सर्वाधिकार सुरक्षित।
             </p>
-            <div className="flex items-center gap-6">
-              <Link
-                href="/contact"
-                className="text-xs text-white/40 transition-colors hover:text-white/60"
-              >
-                Contact Us
-              </Link>
-            </div>
+            <p className="text-xs text-white/40">
+              शिक्षा के साथ संस्कार, ज्ञान के साथ चरित्र
+            </p>
           </div>
         </div>
       </div>

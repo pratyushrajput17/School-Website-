@@ -6,12 +6,12 @@ import { Menu, X, GraduationCap } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/academics', label: 'Academics' },
-  { href: '/admissions', label: 'Admissions' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/', label: 'होम' },
+  { href: '/about', label: 'हमारे बारे में' },
+  { href: '/academics', label: 'शैक्षणिक' },
+  { href: '/admissions', label: 'प्रवेश' },
+  { href: '/gallery', label: 'गैलरी' },
+  { href: '/contact', label: 'संपर्क' },
 ] as const
 
 export default function Navbar() {
@@ -60,11 +60,11 @@ export default function Navbar() {
           className="flex shrink-0 items-center gap-3"
           aria-label={`${schoolConfig.name} - Home`}
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/5">
-            <GraduationCap className="h-6 w-6 text-primary" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-deep-blue/10">
+            <GraduationCap className="h-6 w-6 text-deep-blue" />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold leading-tight text-primary">
+            <span className="text-lg font-bold leading-tight text-deep-blue">
               {schoolConfig.name}
             </span>
             <span className="text-xs leading-tight text-muted-foreground">
@@ -91,10 +91,10 @@ export default function Navbar() {
 
         <Link
           href="/admissions"
-          className="hidden shrink-0 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 lg:inline-block"
-          aria-label="Apply Now"
+          className="hidden shrink-0 rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 lg:inline-block"
+          aria-label="प्रवेश के लिए आवेदन करें"
         >
-          Apply Now
+          प्रवेश
         </Link>
 
         <button
@@ -127,7 +127,7 @@ export default function Navbar() {
           }`}
         >
           <div className="flex items-center justify-between border-b px-6 py-4">
-            <span className="text-lg font-bold text-primary">{schoolConfig.name}</span>
+            <span className="text-lg font-bold text-deep-blue">{schoolConfig.name}</span>
             <button
               type="button"
               className="rounded-md p-2 text-muted-foreground transition-colors hover:text-primary"
@@ -154,11 +154,11 @@ export default function Navbar() {
             ))}
             <Link
               href="/admissions"
-              className="mt-4 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md"
+              className="mt-4 rounded-full bg-deep-blue px-8 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               onClick={closeMobile}
-              aria-label="Apply Now"
+              aria-label="प्रवेश के लिए आवेदन करें"
             >
-              Apply Now
+              प्रवेश
             </Link>
           </nav>
         </div>

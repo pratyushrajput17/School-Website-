@@ -6,19 +6,19 @@ import { schoolConfig } from "@/lib/school-config"
 
 const AdmissionJourney = dynamic(() => import("@/components/admissions/AdmissionJourney"))
 const Documents = dynamic(() => import("@/components/admissions/Documents"))
-const FinalCTA = dynamic(() => import("@/components/admissions/FinalCTA"))
+const FinalCTA = dynamic(() => import("@/components/FinalCTA"))
 const Footer = dynamic(() => import("@/components/Footer"))
 
-const title = 'Admissions'
+const title = 'प्रवेश'
 const description =
-  "Begin your child's journey at Adarsh High School. Learn about our simple admission process, required documents, and how to apply for the upcoming session."
+  "Adarsh High School में अपने बच्चे का प्रवेश सुनिश्चित करें। सरल प्रक्रिया, आवश्यक दस्तावेज और प्रवेश संबंधी सभी जानकारी।"
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${schoolConfig.url}/admissions` },
   openGraph: {
-    title: `${schoolConfig.metadata.siteName} | Admissions`,
+    title: `${schoolConfig.metadata.siteName} | प्रवेश`,
     description,
     url: `${schoolConfig.url}/admissions`,
     siteName: schoolConfig.metadata.siteName,

@@ -31,15 +31,13 @@ export const metadata: Metadata = {
   keywords: [
     "school",
     "education",
-    "academics",
-    "admissions",
-    "campus",
-    "learning",
-    "students",
-    "teachers",
-    schoolConfig.name.toLowerCase(),
-    schoolConfig.board,
-    "k-12 school",
+    "Adarsh High School",
+    "MP Board",
+    "Sainkheda",
+    "Gadarwara",
+    "school in Sainkheda",
+    "बच्चों के लिए स्कूल",
+    "MP Board school",
   ],
   authors: [{ name: schoolConfig.name }],
   alternates: {
@@ -47,7 +45,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: meta.locale,
+    locale: "hi_IN",
     siteName: meta.siteName,
     title: meta.defaultTitle,
     description: schoolConfig.description,
@@ -102,7 +100,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="hi"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
@@ -119,22 +117,22 @@ export default function RootLayout({
                 logo: `${schoolConfig.url}${schoolConfig.logoPath}`,
                 foundingDate: schoolConfig.establishedYear,
                 foundingYear: schoolConfig.establishedYear,
-                areaServed: "Knowledge City and surrounding regions",
-                knowsAbout: ["Education", "K-12 School", "Academics"],
+                areaServed: "Sainkheda, Gadarwara, Madhya Pradesh",
+                knowsAbout: ["Education", "K-12 School", "MP Board"],
                 address: {
                   "@type": "PostalAddress",
-                  streetAddress: contact.address.split(",")[0].trim(),
-                  addressLocality: "Knowledge City",
-                  addressRegion: "State",
-                  postalCode: "400001",
-                  addressCountry: meta.country,
+                  streetAddress: "Gadarwara Road",
+                  addressLocality: "Sainkheda",
+                  addressRegion: "Madhya Pradesh",
+                  postalCode: "484661",
+                  addressCountry: "IN",
                 },
                 contactPoint: {
                   "@type": "ContactPoint",
                   telephone: contact.phone.replace(/\s/g, ''),
                   contactType: "admissions",
                   email: contact.email,
-                  availableLanguage: ["English", "Hindi"],
+                  availableLanguage: ["Hindi", "English"],
                 },
                 sameAs: [
                   schoolConfig.socialLinks.facebook,
@@ -149,14 +147,6 @@ export default function RootLayout({
                 name: schoolConfig.name,
                 url: schoolConfig.url,
                 description: schoolConfig.description,
-                potentialAction: {
-                  "@type": "SearchAction",
-                  target: {
-                    "@type": "EntryPoint",
-                    urlTemplate: `${schoolConfig.url}/search?q={search_term_string}`,
-                  },
-                  "query-input": "required name=search_term_string",
-                },
               },
             ]),
           }}

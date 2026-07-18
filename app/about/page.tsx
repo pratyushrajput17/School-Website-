@@ -2,23 +2,23 @@ import dynamic from "next/dynamic"
 import type { Metadata } from "next"
 import Navbar from "@/components/Navbar"
 import AboutHero from "@/components/about/AboutHero"
+import SchoolValues from "@/components/SchoolValues"
 import { schoolConfig } from "@/lib/school-config"
 
 const OurStory = dynamic(() => import("@/components/about/OurStory"))
 const VisionMission = dynamic(() => import("@/components/about/VisionMission"))
-const CoreValues = dynamic(() => import("@/components/about/CoreValues"))
 const Footer = dynamic(() => import("@/components/Footer"))
 
-const title = 'About Us'
+const title = 'हमारे बारे में'
 const description =
-  "Learn about Adarsh High School — our story, vision, mission, and core values that guide us in providing quality education in Sainkheda, MP."
+  "Adarsh High School के बारे में जानें — हमारा इतिहास, दृष्टिकोण, मिशन और मूल्य। Sainkheda, MP में गुणवत्तापूर्ण शिक्षा के लिए समर्पित।"
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${schoolConfig.url}/about` },
   openGraph: {
-    title: `${schoolConfig.metadata.siteName} | About Us`,
+    title: `${schoolConfig.metadata.siteName} | हमारे बारे में`,
     description,
     url: `${schoolConfig.url}/about`,
     siteName: schoolConfig.metadata.siteName,
@@ -33,7 +33,7 @@ export default function AboutPage() {
       <AboutHero />
       <OurStory />
       <VisionMission />
-      <CoreValues />
+      <SchoolValues />
       <Footer />
     </>
   )
