@@ -62,14 +62,20 @@ export const schoolConfig = {
     { value: 'राष्ट्रप्रेम', meaning: 'अपने राष्ट्र, संस्कृति और विरासत के प्रति सम्मान और गर्व की भावना प्रत्येक विद्यार्थी में विकसित की जाती है ताकि वे एक जिम्मेदार नागरिक बन सकें।' },
   ],
 
-  whyTrustUs: [
-    { title: 'Personal Attention to Every Child', description: 'Each student receives individual care, guidance, and mentoring to reach their full potential.' },
-    { title: 'Experienced & Dedicated Teachers', description: 'Our team of 40+ qualified and committed educators ensures high-quality instruction.' },
-    { title: 'Disciplined & Nurturing Environment', description: 'A structured environment that balances academic rigour with moral and cultural values.' },
-    { title: 'Safe & Secure Campus', description: 'Fully secured campus with round-the-clock monitoring for complete peace of mind.' },
-    { title: 'Value-Based Education', description: 'Education that goes beyond textbooks — building character, values, and life skills.' },
-    { title: 'Holistic Development', description: 'Equal emphasis on physical, mental, intellectual, and moral development of every child.' },
+  whyChooseFamilies: [
+    { title: 'Quality Education', description: 'Strong academic focus aligned with MP Board curriculum.' },
+    { title: 'Discipline & Values', description: 'Students are encouraged to develop respect, responsibility and positive character.' },
+    { title: 'Experienced & Caring Teachers', description: 'Teachers guide students with personal attention and continuous support.' },
+    { title: 'Safe Learning Environment', description: 'Classrooms are monitored with CCTV cameras to help maintain a safe and disciplined environment.' },
+    { title: 'School Transport Facility', description: 'Pick-up and drop service available for students from nearby areas.' },
+    { title: 'Green & Peaceful Campus', description: 'A natural environment surrounded by greenery that supports focused learning and student wellbeing.' },
   ],
+
+  futureGrowth: {
+    title: 'Growing for a Better Tomorrow',
+    description: 'Adarsh High School continuously works to improve learning facilities and educational opportunities for students.',
+    labNote: 'A Smart Learning Lab is currently under development and will be introduced in the future.',
+  },
 
   parentTrust: [
     { title: 'Individual Attention', description: 'Every student receives personal guidance and support for academic and personal growth.' },
