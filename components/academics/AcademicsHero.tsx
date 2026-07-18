@@ -54,7 +54,7 @@ export default function AcademicsHero() {
               variants={fadeUp}
             >
               <Link
-                href="/academics#programs"
+                href="/academics#curriculum"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               >
                 Explore Programs

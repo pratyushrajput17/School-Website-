@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Phone, Mail, MapPin } from 'lucide-react'
+import { schoolConfig } from '@/lib/school-config'
 import { staggerContainer, fadeUp } from '@/lib/animations'
 
 export default function ContactHero() {
@@ -46,14 +47,14 @@ export default function ContactHero() {
               variants={fadeUp}
             >
               <Link
-                href="tel:+919876543210"
+                href={`tel:${schoolConfig.contact.phone.replace(/\s/g, '')}`}
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               >
                 <Phone className="h-4 w-4" />
                 Call Us
               </Link>
               <Link
-                href="mailto:info@schoolname.edu"
+                href={`mailto:${schoolConfig.contact.email || 'info@adarshhighschool.edu'}`}
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-7 py-3 text-sm font-semibold text-primary shadow-sm transition-all duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Mail className="h-4 w-4" />

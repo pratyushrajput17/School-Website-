@@ -8,10 +8,10 @@ import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const landmarks = [
-  'Opposite City Mall, Main Avenue',
-  '2 km from Central Railway Station',
-  'Adjacent to Greenfield Park',
-  '500 m from City Hospital',
+  'Gadarwara Road, Sainkheda',
+  'Near Sainkheda Bus Stand',
+  'Accessible from NH 44',
+  '5 km from Gadarwara town',
 ] as const
 
 
@@ -27,7 +27,7 @@ export default function MapSection() {
           badge="Find Us"
           title="Visit Our"
           highlight="Campus"
-          description="We're conveniently located in the heart of the city with easy access from all major routes."
+          description={`Located on Gadarwara Road in Sainkheda, our campus is easily accessible from the main town area.`}
         />
 
         <motion.div
@@ -76,7 +76,7 @@ export default function MapSection() {
               </div>
 
               <Link
-                href="https://maps.google.com"
+                href="https://maps.google.com/?q=Gadarwara+Road+Sainkheda+Madhya+Pradesh"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

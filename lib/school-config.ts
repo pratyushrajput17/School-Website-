@@ -28,7 +28,7 @@ export const schoolConfig = {
     address: 'Gadarwara Road, Sainkheda, Madhya Pradesh',
     phone: '+91 9893652202',
     altPhone: '+91 9993606232',
-    email: '',
+    email: 'info@adarshhighschool.edu',
     officeHours: 'Mon–Sat: 8:00 AM – 4:00 PM',
   },
 

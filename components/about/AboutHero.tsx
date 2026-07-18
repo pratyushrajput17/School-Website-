@@ -44,11 +44,11 @@ export default function AboutHero() {
               className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
               variants={fadeUp}
             >
-              {schoolConfig.name} is a premier CBSE-affiliated institution dedicated
-              to academic excellence, character development, and holistic growth.
-              Since {schoolConfig.establishedYear}, we have nurtured young minds
-              with a perfect blend of rigorous academics, innovative pedagogy, and
-              values-based education.
+              {schoolConfig.name} is a premier MP Board-affiliated institution
+              dedicated to academic excellence, character development, and
+              holistic growth. Since {schoolConfig.establishedYear}, we have
+              nurtured young minds with a focus on strong fundamentals, practical
+              learning, and values-based education.
             </motion.p>
 
             <motion.div
@@ -56,10 +56,10 @@ export default function AboutHero() {
               variants={fadeUp}
             >
               <Link
-                href="/facilities"
+                href="/about"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               >
-                Explore Campus
+                About Our School
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link

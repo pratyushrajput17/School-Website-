@@ -15,7 +15,7 @@ export default function FinalCTA() {
         { label: 'Apply for Admission', href: '/admissions', icon: <ArrowRight className="h-4 w-4" />, variant: 'primary' },
         { label: 'Talk to Our Team', href: '/contact', variant: 'secondary' },
       ]}
-      features={['Limited Seats Available', 'Merit-Based Scholarships', 'Global Curriculum Standards', 'Holistic Development Focus']}
+      features={['Limited Seats Available', 'Merit-Based Scholarships', 'MP Board Curriculum', 'Holistic Development Focus']}
     />
   )
 }

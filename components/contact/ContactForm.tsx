@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { User, Mail, Phone, GraduationCap, MessageSquare, Send } from 'lucide-react'
+import { schoolConfig } from '@/lib/school-config'
 import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, cardVariant } from '@/lib/animations'
 
@@ -49,7 +50,7 @@ export default function ContactForm() {
                       </div>
                       <div>
                         <p className="text-xs font-medium text-blue-200">Call Us</p>
-                        <p className="text-sm font-semibold text-white">+91 98765 43210</p>
+                        <p className="text-sm font-semibold text-white">{schoolConfig.contact.phone}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -58,7 +59,7 @@ export default function ContactForm() {
                       </div>
                       <div>
                         <p className="text-xs font-medium text-blue-200">Email</p>
-                        <p className="text-sm font-semibold text-white">info@schoolname.edu</p>
+                        <p className="text-sm font-semibold text-white">{schoolConfig.contact.email || 'info@adarshhighschool.edu'}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">

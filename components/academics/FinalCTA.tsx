@@ -15,7 +15,7 @@ export default function FinalCTA() {
         { label: 'Apply Now', href: '/admissions', icon: <ArrowRight className="h-4 w-4" />, variant: 'primary' },
         { label: 'Contact Us', href: '/contact', icon: <BookOpen className="h-4 w-4" />, variant: 'secondary' },
       ]}
-      features={['CBSE Curriculum', 'Expert Faculty', 'Smart Classrooms', 'Holistic Development']}
+      features={['MP Board Curriculum', 'Expert Faculty', 'Smart Classrooms', 'Holistic Development']}
     />
   )
 }

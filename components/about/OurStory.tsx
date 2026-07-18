@@ -2,23 +2,22 @@
 
 import { motion } from 'framer-motion'
 import { BookOpen, Heart, TrendingUp, Globe } from 'lucide-react'
+import { schoolConfig } from '@/lib/school-config'
 import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const milestones = [
-  { year: 2005, title: 'Foundation', description: 'School established with 120 students and a vision to redefine education.' },
-  { year: 2010, title: 'Academic Excellence', description: 'First batch achieved 100% board results, setting a benchmark for quality.' },
-  { year: 2015, title: 'Campus Expansion', description: 'State-of-the-art science labs, library, and sports complex inaugurated.' },
-  { year: 2020, title: 'Digital Transformation', description: 'Smart classrooms and blended learning models adopted across all grades.' },
-  { year: 2024, title: 'National Recognition', description: 'Ranked among top schools nationally for academic excellence and innovation.' },
-  { year: 2026, title: 'Global Reach', description: 'International collaborations, exchange programs, and global curriculum integration.' },
+  { year: 2010, title: 'Foundation', description: `${schoolConfig.name} was established with a vision to provide quality education to the children of Sainkheda and surrounding areas.` },
+  { year: 2015, title: 'Campus Growth', description: 'Expanded facilities with new classrooms, science labs, and a dedicated library to support holistic learning.' },
+  { year: 2020, title: 'Digital Integration', description: 'Introduced smart classrooms and digital learning tools to enhance teaching methods across all grades.' },
+  { year: 2025, title: 'Community Impact', description: 'Continuing our mission of providing accessible, quality education with strong board results and growing student community.' },
 ] as const
 
 const journeyHighlights = [
-  { icon: BookOpen, label: 'Why We Started', detail: 'Founded to bridge the gap between traditional education and 21st-century learning needs.' },
-  { icon: Heart, label: 'Our Mission', detail: 'To nurture confident, compassionate, and capable leaders who contribute meaningfully to society.' },
-  { icon: TrendingUp, label: 'Our Growth', detail: 'From 120 students to 2,500+ learners, our campus has expanded sevenfold since inception.' },
-  { icon: Globe, label: 'Where We Stand', detail: 'Recognised as one of the top schools nationally, with 100% board results and global partnerships.' },
+  { icon: BookOpen, label: 'Our Beginning', detail: `Founded in ${schoolConfig.establishedYear} to serve the educational needs of the local community with a focus on academic excellence and moral values.` },
+  { icon: Heart, label: 'Our Commitment', detail: 'To nurture confident, compassionate, and capable students who contribute meaningfully to their community and society.' },
+  { icon: TrendingUp, label: 'Our Growth', detail: `From humble beginnings to ${schoolConfig.stats.students.value}+ students and ${schoolConfig.stats.teachers.value}+ dedicated teachers.` },
+  { icon: Globe, label: 'Our Vision', detail: 'To remain a trusted institution that prepares students for success in higher education and life beyond school.' },
 ] as const
 
 export default function OurStory() {
@@ -31,7 +30,7 @@ export default function OurStory() {
           badge="The School Story"
           title="From Vision to"
           highlight="Reality"
-          description="What began as a bold vision to transform education has grown into one of the most respected learning institutions in the region."
+          description={`What began as a vision to provide quality education in Sainkheda has grown into a trusted institution serving ${schoolConfig.stats.students.value}+ students.`}
         />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-[1fr_1.5fr] lg:gap-16">

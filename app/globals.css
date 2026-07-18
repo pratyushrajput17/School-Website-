@@ -100,7 +100,7 @@
 
 @layer utilities {
   .section-spacing {
-    @apply py-24 lg:py-32;
+    @apply py-16 sm:py-20 lg:py-28;
   }
 
   .container-page {

@@ -8,11 +8,11 @@ import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const contactDetails = [
   { icon: Phone, title: 'Phone', detail: schoolConfig.contact.phone, subtitle: 'Mon–Sat, 8 AM – 4 PM', bg: 'bg-blue-50', color: 'text-blue-600', href: `tel:${schoolConfig.contact.phone}` },
-  { icon: Mail, title: 'Email', detail: schoolConfig.contact.email, subtitle: 'We respond within 24 hours', bg: 'bg-emerald-50', color: 'text-emerald-600', href: `mailto:${schoolConfig.contact.email}` },
+  { icon: Mail, title: 'Email', detail: schoolConfig.contact.email || 'info@adarshhighschool.edu', subtitle: 'We respond within 24 hours', bg: 'bg-emerald-50', color: 'text-emerald-600', href: `mailto:${schoolConfig.contact.email || 'info@adarshhighschool.edu'}` },
   { icon: MapPin, title: 'Office Address', detail: schoolConfig.contact.address, subtitle: 'Main Administration Block', bg: 'bg-violet-50', color: 'text-violet-600', href: '#map' },
-  { icon: GraduationCap, title: 'Admission Office', detail: schoolConfig.contact.phone, subtitle: 'admissions@schoolname.edu', bg: 'bg-amber-50', color: 'text-amber-600', href: `tel:${schoolConfig.contact.phone}` },
-  { icon: Bus, title: 'Transport Office', detail: schoolConfig.contact.phone, subtitle: 'transport@schoolname.edu', bg: 'bg-cyan-50', color: 'text-cyan-600', href: `tel:${schoolConfig.contact.phone}` },
-  { icon: ShieldAlert, title: 'Emergency Contact', detail: '+91 98765 43211', subtitle: 'Available 24×7', bg: 'bg-rose-50', color: 'text-rose-600', href: 'tel:+919876543211' },
+  { icon: GraduationCap, title: 'Admission Office', detail: schoolConfig.contact.phone, subtitle: schoolConfig.contact.altPhone, bg: 'bg-amber-50', color: 'text-amber-600', href: `tel:${schoolConfig.contact.phone}` },
+  { icon: Bus, title: 'Transport Office', detail: schoolConfig.contact.phone, subtitle: schoolConfig.contact.altPhone, bg: 'bg-cyan-50', color: 'text-cyan-600', href: `tel:${schoolConfig.contact.phone}` },
+  { icon: ShieldAlert, title: 'Emergency Contact', detail: schoolConfig.contact.phone, subtitle: 'Available 24×7', bg: 'bg-rose-50', color: 'text-rose-600', href: `tel:${schoolConfig.contact.phone}` },
 ] as const
 
 

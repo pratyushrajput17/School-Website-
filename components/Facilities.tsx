@@ -212,7 +212,7 @@ export default function Facilities() {
 
                 <motion.div>
                   <Link
-                    href="/facilities"
+                    href="/about"
                     className="group mt-6 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"
                     aria-label={`Learn more about ${facility.title}`}
                   >

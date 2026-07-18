@@ -1,8 +1,16 @@
 import Link from 'next/link'
 import { GraduationCap, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react'
-import { contactInfo } from '@/config/contact'
-import { quickLinks } from '@/config/navigation'
 import { schoolConfig } from '@/lib/school-config'
+
+const { contact } = schoolConfig
+
+const quickLinks = [
+  { href: '/about', label: 'About Us' },
+  { href: '/academics', label: 'Academics' },
+  { href: '/admissions', label: 'Admissions' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/contact', label: 'Contact Us' },
+] as const
 
 const footerSections = [
   {
@@ -80,24 +88,24 @@ export default function Footer() {
 
             <div className="mt-6 space-y-3">
               <a
-                href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
+                href={`tel:${contact.phone.replace(/\s/g, '')}`}
                 className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-white"
-                aria-label={`Call us at ${contactInfo.phone}`}
+                aria-label={`Call us at ${contact.phone}`}
               >
                 <Phone className="h-4 w-4 shrink-0" />
-                {contactInfo.phone}
+                {contact.phone}
               </a>
               <a
-                href={`mailto:${contactInfo.email}`}
+                href={`mailto:${contact.email}`}
                 className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-white"
-                aria-label={`Email us at ${contactInfo.email}`}
+                aria-label={`Email us at ${contact.email}`}
               >
                 <Mail className="h-4 w-4 shrink-0" />
-                {contactInfo.email}
+                {contact.email}
               </a>
               <span className="flex items-center gap-2.5 text-sm text-white/60">
                 <MapPin className="h-4 w-4 shrink-0" />
-                {contactInfo.address}
+                {contact.address}
               </span>
             </div>
 
