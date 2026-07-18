@@ -5,6 +5,7 @@ import SchoolAtAGlance from "@/components/SchoolAtAGlance"
 import ParentTrust from "@/components/ParentTrust"
 import SchoolValues from "@/components/SchoolValues"
 import AcademicAchievers from "@/components/AcademicAchievers"
+import EventPreview from "@/components/EventPreview"
 import NoticePreview from "@/components/NoticePreview"
 import GalleryPreview from "@/components/GalleryPreview"
 import HomeCTA from "@/components/HomeCTA"
@@ -31,6 +32,7 @@ export default function Home() {
       <SchoolValues />
       <PrincipalMessage />
       <AcademicAchievers />
+      <EventPreview />
       <NoticePreview />
       <GalleryPreview />
       <HomeCTA />

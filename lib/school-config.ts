@@ -120,6 +120,65 @@ export const schoolConfig = {
     boardResults: { value: 95, suffix: '%' },
   },
 
+  events: [
+    {
+      id: 1,
+      title: 'Annual Day Celebration',
+      date: '15 Dec 2025',
+      category: 'Annual Function',
+      description: 'Students presented cultural performances, music, dance, and drama before parents and distinguished guests. The event celebrated another successful academic year.',
+    },
+    {
+      id: 2,
+      title: 'Independence Day Celebration',
+      date: '15 Aug 2025',
+      category: 'Independence Day',
+      description: 'Students participated in the flag hoisting ceremony, sang patriotic songs, and presented speeches on the theme of freedom and national unity.',
+    },
+    {
+      id: 3,
+      title: 'Republic Day Ceremony',
+      date: '26 Jan 2026',
+      category: 'Republic Day',
+      description: 'The school celebrated Republic Day with a flag hoisting ceremony, cultural program, and a speech on the Constitution and democratic values.',
+    },
+    {
+      id: 4,
+      title: 'Annual Sports Meet',
+      date: '20 Nov 2025',
+      category: 'Sports Activities',
+      description: 'Students competed in athletics, team games, and track events. The sports meet encouraged teamwork, fitness, and school spirit.',
+    },
+    {
+      id: 5,
+      title: 'Cultural Fest',
+      date: '10 Oct 2025',
+      category: 'Cultural Programs',
+      description: 'Students showcased their talents in music, dance, drama, and traditional art forms. The event highlighted the cultural diversity and creativity of our students.',
+    },
+    {
+      id: 6,
+      title: 'Science Exhibition',
+      date: '28 Feb 2025',
+      category: 'Educational Activities',
+      description: 'Students presented working models and projects on scientific concepts. The exhibition encouraged curiosity, innovation, and practical learning.',
+    },
+    {
+      id: 7,
+      title: 'Inter-Class Quiz Competition',
+      date: '05 Sep 2025',
+      category: 'Competitions',
+      description: 'Students from different classes participated in a general knowledge and academic quiz. The competition promoted healthy academic rivalry and learning.',
+    },
+    {
+      id: 8,
+      title: 'Teachers\' Day Celebration',
+      date: '05 Sep 2025',
+      category: 'Special Celebrations',
+      description: 'Students organised a special assembly to honour teachers. Cultural performances, speeches, and heartfelt gestures expressed gratitude to the teaching staff.',
+    },
+  ],
+
   notices: [
     {
       id: 1,

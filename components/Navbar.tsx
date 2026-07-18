@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: '/admissions', label: 'Admissions' },
   { href: '/facilities', label: 'Facilities' },
   { href: '/notices', label: 'Notices' },
+  { href: '/events', label: 'Events' },
   { href: '/gallery', label: 'Gallery' },
   { href: '/contact', label: 'Contact' },
 ] as const
