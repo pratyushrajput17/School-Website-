@@ -5,6 +5,7 @@ import Hero from "@/components/Hero"
 import WhyChoose from "@/components/WhyChoose"
 import MaaSaraswati from "@/components/MaaSaraswati"
 import SchoolValues from "@/components/SchoolValues"
+import ParentTrust from "@/components/ParentTrust"
 import InspirationalQuotes from "@/components/InspirationalQuotes"
 import { schoolConfig } from "@/lib/school-config"
 
@@ -31,6 +32,7 @@ export default function Home() {
       <SchoolHighlights />
       <MaaSaraswati />
       <SchoolValues />
+      <ParentTrust />
       <InspirationalQuotes />
       <Facilities />
       <PrincipalMessage />

@@ -70,6 +70,15 @@ export const schoolConfig = {
     { title: 'Holistic Development', description: 'Equal emphasis on physical, mental, intellectual, and moral development of every child.' },
   ],
 
+  parentTrust: [
+    { title: 'Individual Attention', description: 'Every student receives personal guidance and support for academic and personal growth.' },
+    { title: 'Experienced Teachers', description: 'Our dedicated and experienced teachers help students build strong foundations for the future.' },
+    { title: 'Discipline & Character', description: 'We focus on discipline, responsibility and strong moral values alongside education.' },
+    { title: 'Safe & Caring Environment', description: 'We provide a secure, positive and supportive atmosphere for every child.' },
+    { title: 'Academic Excellence', description: 'We encourage students to achieve their highest potential through quality teaching and continuous learning.' },
+    { title: 'Cultural & Sports Activities', description: 'Students actively participate in cultural, social and sports activities for all-round development.' },
+  ],
+
   metadata: {
     siteName: 'Adarsh High School',
     titleTemplate: '%s | Adarsh High School',
