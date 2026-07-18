@@ -3,6 +3,10 @@ import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { verifyToken } from "@/lib/auth";
 import { getStudentCount, getStudentsPerClass } from "@/lib/students";
+import {
+  getTeacherCount,
+  getTeachersPerSubject,
+} from "@/lib/teachers";
 
 export async function GET() {
   try {
@@ -18,16 +22,29 @@ export async function GET() {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    const [notices, events, gallery, achievers, students, activeStudents, studentsPerClass] =
-      await Promise.all([
-        prisma.notice.count(),
-        prisma.event.count(),
-        prisma.gallery.count(),
-        prisma.achiever.count(),
-        prisma.student.count(),
-        getStudentCount({ status: "Active" }),
-        getStudentsPerClass(),
-      ]);
+    const [
+      notices,
+      events,
+      gallery,
+      achievers,
+      students,
+      activeStudents,
+      studentsPerClass,
+      teachers,
+      activeTeachers,
+      teachersPerSubject,
+    ] = await Promise.all([
+      prisma.notice.count(),
+      prisma.event.count(),
+      prisma.gallery.count(),
+      prisma.achiever.count(),
+      prisma.student.count(),
+      getStudentCount({ status: "Active" }),
+      getStudentsPerClass(),
+      getTeacherCount(),
+      getTeacherCount({ status: "Active" }),
+      getTeachersPerSubject(),
+    ]);
 
     return NextResponse.json({
       stats: {
@@ -38,6 +55,9 @@ export async function GET() {
         students,
         activeStudents,
         studentsPerClass,
+        teachers,
+        activeTeachers,
+        teachersPerSubject,
       },
     });
   } catch {

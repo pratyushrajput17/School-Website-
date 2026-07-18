@@ -71,6 +71,23 @@ model Achiever {
   @@map("achievers")
 }
 
+model Teacher {
+  id              String   @id @default(cuid())
+  employeeId      String   @unique
+  teacherName     String
+  email           String
+  phone           String
+  subject         String
+  assignedClasses String   @default("")
+  joiningDate     DateTime
+  qualification   String
+  address         String
+  photoUrl        String?
+  status          String   @default("Active")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 model Student {
   id               String     @id @default(cuid())
   admissionNumber  String     @unique

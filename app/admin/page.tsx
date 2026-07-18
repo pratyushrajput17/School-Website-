@@ -10,6 +10,7 @@ import {
   Users,
   ArrowRight,
   Shield,
+  BookOpen,
 } from "lucide-react";
 
 interface Stats {
@@ -20,6 +21,9 @@ interface Stats {
   students: number;
   activeStudents?: number;
   studentsPerClass?: { className: string; count: number }[];
+  teachers: number;
+  activeTeachers?: number;
+  teachersPerSubject?: { subject: string; count: number }[];
 }
 
 interface AdminInfo {
@@ -71,6 +75,13 @@ const navigationCards = [
     href: "/admin/achievers",
     color: "bg-amber-500",
   },
+  {
+    label: "Manage Teachers",
+    description: "Add, edit, or manage teacher records",
+    icon: BookOpen,
+    href: "/admin/teachers",
+    color: "bg-indigo-500",
+  },
 ];
 
 export default function AdminDashboard() {
@@ -105,6 +116,8 @@ export default function AdminDashboard() {
   const statCards: StatCard[] = [
     { label: "Total Students", value: stats?.students ?? 0, icon: Users, color: "bg-cyan-500", href: "/admin/students" },
     { label: "Active Students", value: stats?.activeStudents ?? 0, icon: Users, color: "bg-emerald-500", href: "/admin/students?status=Active" },
+    { label: "Total Teachers", value: stats?.teachers ?? 0, icon: BookOpen, color: "bg-indigo-500", href: "/admin/teachers" },
+    { label: "Active Teachers", value: stats?.activeTeachers ?? 0, icon: BookOpen, color: "bg-teal-500", href: "/admin/teachers?status=Active" },
     { label: "Total Notices", value: stats?.notices ?? 0, icon: Bell, color: "bg-blue-500", href: "/admin/notices" },
     { label: "Total Events", value: stats?.events ?? 0, icon: Calendar, color: "bg-green-500", href: "/admin/events" },
     { label: "Gallery Images", value: stats?.gallery ?? 0, icon: Image, color: "bg-purple-500", href: "/admin/gallery" },
@@ -160,6 +173,29 @@ export default function AdminDashboard() {
           );
         })}
       </div>
+
+      {stats?.teachersPerSubject && stats.teachersPerSubject.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Teachers By Subject
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+            {stats.teachersPerSubject.map((item) => (
+              <div
+                key={item.subject}
+                className="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition-shadow"
+              >
+                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                  {item.subject}
+                </p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">
+                  {item.count}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {stats?.studentsPerClass && stats.studentsPerClass.length > 0 && (
         <div className="mb-8">

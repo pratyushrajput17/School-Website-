@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   ChevronDown,
+  BookOpen,
 } from "lucide-react";
 import NextImage from "next/image";
 
@@ -53,6 +54,7 @@ export default function AdminLayout({
   const sidebarLinks = [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/students", label: "Students", icon: Users },
+    { href: "/admin/teachers", label: "Teachers", icon: BookOpen },
     ...(adminRole === "super_admin"
       ? [{ href: "/admin/admins", label: "Admins", icon: Shield }]
       : []),
