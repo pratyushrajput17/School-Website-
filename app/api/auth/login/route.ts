@@ -50,9 +50,10 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Login error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    const msg =
+      !process.env.DATABASE_URL
+        ? "Server not ready: database is not configured."
+        : "Internal server error. Please try again.";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
