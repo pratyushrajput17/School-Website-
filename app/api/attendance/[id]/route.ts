@@ -1,0 +1,39 @@
+import { NextResponse } from "next/server";
+import { getAttendanceById, deleteAttendance } from "@/lib/attendance";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+
+export const runtime = "nodejs";
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  try {
+    const record = await getAttendanceById(id);
+    if (!record) {
+      return NextResponse.json({ error: "Attendance record not found" }, { status: 404 });
+    }
+    return NextResponse.json({ record });
+  } catch (error) {
+    console.error("GET /api/attendance/[id] error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const unauthorized = requireAdmin(request);
+  if (unauthorized) return unauthorized;
+
+  const { id } = await params;
+  try {
+    await deleteAttendance(id);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("DELETE /api/attendance/[id] error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}

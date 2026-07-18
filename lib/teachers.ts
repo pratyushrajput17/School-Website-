@@ -1,4 +1,5 @@
 import { prisma } from "./prisma";
+import { hashTeacherPassword } from "./teacher-auth";
 
 export interface TeacherData {
   employeeId: string;
@@ -7,6 +8,7 @@ export interface TeacherData {
   phone: string;
   subject: string;
   assignedClasses?: string;
+  password?: string;
   joiningDate: string;
   qualification: string;
   address: string;
@@ -21,6 +23,7 @@ export interface UpdateTeacherData {
   phone?: string;
   subject?: string;
   assignedClasses?: string;
+  password?: string;
   joiningDate?: string;
   qualification?: string;
   address?: string;
@@ -85,6 +88,10 @@ export async function getTeacherById(id: string) {
 }
 
 export async function createTeacher(data: TeacherData) {
+  const passwordHash = data.password
+    ? await hashTeacherPassword(data.password)
+    : undefined;
+
   const teacher = await prisma.teacher.create({
     data: {
       employeeId: data.employeeId,
@@ -93,6 +100,7 @@ export async function createTeacher(data: TeacherData) {
       phone: data.phone,
       subject: data.subject,
       assignedClasses: data.assignedClasses ?? "",
+      password: passwordHash,
       joiningDate: new Date(data.joiningDate),
       qualification: data.qualification,
       address: data.address,
@@ -116,6 +124,7 @@ export async function updateTeacher(id: string, data: UpdateTeacherData) {
   if (data.phone !== undefined) updateData.phone = data.phone;
   if (data.subject !== undefined) updateData.subject = data.subject;
   if (data.assignedClasses !== undefined) updateData.assignedClasses = data.assignedClasses;
+  if (data.password !== undefined) updateData.password = await hashTeacherPassword(data.password);
   if (data.joiningDate !== undefined) updateData.joiningDate = new Date(data.joiningDate);
   if (data.qualification !== undefined) updateData.qualification = data.qualification;
   if (data.address !== undefined) updateData.address = data.address;

@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Shield,
   BookOpen,
+  ClipboardCheck,
 } from "lucide-react";
 
 interface Stats {
@@ -24,6 +25,15 @@ interface Stats {
   teachers: number;
   activeTeachers?: number;
   teachersPerSubject?: { subject: string; count: number }[];
+  attendance?: {
+    total: number;
+    present: number;
+    absent: number;
+    late: number;
+    halfDay: number;
+    leave: number;
+    percentage: number;
+  };
 }
 
 interface AdminInfo {
@@ -82,6 +92,13 @@ const navigationCards = [
     href: "/admin/teachers",
     color: "bg-indigo-500",
   },
+  {
+    label: "View Attendance",
+    description: "View and export daily attendance records",
+    icon: ClipboardCheck,
+    href: "/admin/attendance",
+    color: "bg-emerald-500",
+  },
 ];
 
 export default function AdminDashboard() {
@@ -118,6 +135,8 @@ export default function AdminDashboard() {
     { label: "Active Students", value: stats?.activeStudents ?? 0, icon: Users, color: "bg-emerald-500", href: "/admin/students?status=Active" },
     { label: "Total Teachers", value: stats?.teachers ?? 0, icon: BookOpen, color: "bg-indigo-500", href: "/admin/teachers" },
     { label: "Active Teachers", value: stats?.activeTeachers ?? 0, icon: BookOpen, color: "bg-teal-500", href: "/admin/teachers?status=Active" },
+    { label: "Today Present", value: stats?.attendance?.present ?? 0, icon: ClipboardCheck, color: "bg-emerald-500", href: "/admin/attendance" },
+    { label: "Today Absent", value: stats?.attendance?.absent ?? 0, icon: ClipboardCheck, color: "bg-red-500", href: "/admin/attendance?status=Absent" },
     { label: "Total Notices", value: stats?.notices ?? 0, icon: Bell, color: "bg-blue-500", href: "/admin/notices" },
     { label: "Total Events", value: stats?.events ?? 0, icon: Calendar, color: "bg-green-500", href: "/admin/events" },
     { label: "Gallery Images", value: stats?.gallery ?? 0, icon: Image, color: "bg-purple-500", href: "/admin/gallery" },

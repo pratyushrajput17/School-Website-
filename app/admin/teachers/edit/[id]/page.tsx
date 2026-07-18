@@ -50,6 +50,7 @@ export default function EditTeacherPage() {
   const [qualification, setQualification] = useState("");
   const [address, setAddress] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
+  const [password, setPassword] = useState("");
   const [status, setStatus] = useState("Active");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -130,6 +131,7 @@ export default function EditTeacherPage() {
           phone: phone.trim(),
           subject,
           assignedClasses: assignedClasses.join(","),
+          password: password || undefined,
           joiningDate,
           qualification: qualification.trim(),
           address: address.trim(),
@@ -383,6 +385,22 @@ export default function EditTeacherPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1.5"
+            >
+              Login Password
+            </label>
+            <input
+              id="password"
+              type="text"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Leave blank to keep current"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+            />
+          </div>
           <div>
             <label
               htmlFor="photoUrl"

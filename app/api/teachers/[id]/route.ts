@@ -56,6 +56,7 @@ export async function PUT(
       phone: body.phone,
       subject: body.subject,
       assignedClasses: body.assignedClasses,
+      password: body.password,
       joiningDate: body.joiningDate,
       qualification: body.qualification,
       address: body.address,

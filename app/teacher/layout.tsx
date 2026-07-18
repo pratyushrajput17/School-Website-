@@ -4,23 +4,16 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
-  LayoutDashboard,
-  Bell,
-  Calendar,
-  Image,
-  Award,
-  Users,
-  Shield,
+  ClipboardCheck,
   LogOut,
   Menu,
   X,
   ChevronDown,
-  BookOpen,
-  ClipboardCheck,
+  GraduationCap,
 } from "lucide-react";
 import NextImage from "next/image";
 
-export default function AdminLayout({
+export default function TeacherLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -28,23 +21,21 @@ export default function AdminLayout({
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [adminName, setAdminName] = useState<string | null>(null);
-  const [adminRole, setAdminRole] = useState<string | null>(null);
+  const [teacherName, setTeacherName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch("/api/auth/me");
+        const res = await fetch("/api/auth/teacher/me");
         if (!res.ok) {
-          router.push("/login");
+          router.push("/teacher/login");
           return;
         }
         const data = await res.json();
-        setAdminName(data.admin.name);
-        setAdminRole(data.admin.role);
+        setTeacherName(data.teacher.teacherName);
       } catch {
-        router.push("/login");
+        router.push("/teacher/login");
       } finally {
         setLoading(false);
       }
@@ -53,22 +44,12 @@ export default function AdminLayout({
   }, [router]);
 
   const sidebarLinks = [
-    { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/admin/students", label: "Students", icon: Users },
-    { href: "/admin/teachers", label: "Teachers", icon: BookOpen },
-    { href: "/admin/attendance", label: "Attendance", icon: ClipboardCheck },
-    ...(adminRole === "super_admin"
-      ? [{ href: "/admin/admins", label: "Admins", icon: Shield }]
-      : []),
-    { href: "/admin/notices", label: "Notices", icon: Bell },
-    { href: "/admin/events", label: "Events", icon: Calendar },
-    { href: "/admin/gallery", label: "Gallery", icon: Image },
-    { href: "/admin/achievers", label: "Achievers", icon: Award },
+    { href: "/teacher/attendance", label: "Mark Attendance", icon: ClipboardCheck },
   ];
 
   async function handleLogout() {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    await fetch("/api/auth/teacher/logout", { method: "POST" });
+    router.push("/teacher/login");
   }
 
   if (loading) {
@@ -97,8 +78,8 @@ export default function AdminLayout({
                 className="w-8 h-8 rounded-full object-contain"
               />
               <div>
-                <h2 className="font-semibold text-sm">Adarsh High School</h2>
-                <p className="text-xs text-white/60">Admin Panel</p>
+                <h2 className="font-semibold text-sm">Teacher Portal</h2>
+                <p className="text-xs text-white/60">Attendance System</p>
               </div>
             </div>
           </div>
@@ -152,20 +133,18 @@ export default function AdminLayout({
             </button>
 
             <div className="flex items-center gap-3 ml-auto">
-                <div className="flex items-center gap-3">
-                  <div className="text-right hidden sm:block">
-                    <p className="text-sm font-medium text-gray-700 leading-tight">
-                      {adminName || "Admin"}
-                    </p>
-                    <p className="text-xs text-gray-400 capitalize">
-                      {adminRole?.replace("_", " ")}
-                    </p>
-                  </div>
-                  <div className="w-8 h-8 bg-[#FF9933] rounded-full flex items-center justify-center text-white text-sm font-medium">
-                    {adminName?.charAt(0) || "A"}
-                  </div>
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
+              <div className="flex items-center gap-3">
+                <div className="text-right hidden sm:block">
+                  <p className="text-sm font-medium text-gray-700 leading-tight">
+                    {teacherName || "Teacher"}
+                  </p>
+                  <p className="text-xs text-gray-400">Teacher</p>
                 </div>
+                <div className="w-8 h-8 bg-[#FF9933] rounded-full flex items-center justify-center text-white text-sm font-medium">
+                  <GraduationCap className="w-4 h-4" />
+                </div>
+                <ChevronDown className="w-4 h-4 text-gray-400" />
+              </div>
             </div>
           </div>
         </header>

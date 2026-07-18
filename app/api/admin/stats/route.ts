@@ -7,6 +7,7 @@ import {
   getTeacherCount,
   getTeachersPerSubject,
 } from "@/lib/teachers";
+import { getTodaysAttendanceSummary } from "@/lib/attendance";
 
 export async function GET() {
   try {
@@ -33,6 +34,7 @@ export async function GET() {
       teachers,
       activeTeachers,
       teachersPerSubject,
+      attendanceSummary,
     ] = await Promise.all([
       prisma.notice.count(),
       prisma.event.count(),
@@ -44,6 +46,7 @@ export async function GET() {
       getTeacherCount(),
       getTeacherCount({ status: "Active" }),
       getTeachersPerSubject(),
+      getTodaysAttendanceSummary(),
     ]);
 
     return NextResponse.json({
@@ -58,6 +61,7 @@ export async function GET() {
         teachers,
         activeTeachers,
         teachersPerSubject,
+        attendance: attendanceSummary,
       },
     });
   } catch {
