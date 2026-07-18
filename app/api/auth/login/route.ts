@@ -50,17 +50,9 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Login error:", error);
-    let message = "Internal server error";
-    if (error instanceof Error) {
-      if (error.message?.includes("database") || error.message?.includes("connect")) {
-        message = "Database connection failed. Check DATABASE_URL.";
-      } else if (error.message?.includes("cookies")) {
-        message = "Auth cookie error.";
-      }
-    }
-    if (!process.env.DATABASE_URL) {
-      message = "Database not configured. Set DATABASE_URL in environment variables.";
-    }
-    return NextResponse.json({ error: message, detail: error instanceof Error ? error.message : String(error) }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
