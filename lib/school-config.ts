@@ -119,4 +119,49 @@ export const schoolConfig = {
     years: { value: 15, suffix: '+' },
     boardResults: { value: 95, suffix: '%' },
   },
+
+  notices: [
+    {
+      id: 1,
+      title: 'Admissions Open for Session 2026–27',
+      date: '01 Jan 2026',
+      category: 'Admissions',
+      description: 'Applications are now open for Nursery to Class 9 for the upcoming academic session. Visit the school office or contact us for more details.',
+    },
+    {
+      id: 2,
+      title: 'Parent-Teacher Meeting',
+      date: '15 Jan 2026',
+      category: 'Academic',
+      description: 'The first Parent-Teacher Meeting of the session will be held in the school auditorium. Parents are requested to attend and discuss their child\'s progress.',
+    },
+    {
+      id: 3,
+      title: 'Winter Break Notice',
+      date: '20 Dec 2025',
+      category: 'Holiday',
+      description: 'School will remain closed for winter break from 25 December to 5 January. Regular classes will resume on 6 January.',
+    },
+    {
+      id: 4,
+      title: 'Half-Yearly Examination Schedule',
+      date: '10 Sep 2025',
+      category: 'Examination',
+      description: 'Half-yearly examinations for Classes I–X will begin from 1 October. Detailed schedule has been shared with students in class.',
+    },
+    {
+      id: 5,
+      title: 'Annual Sports Day',
+      date: '05 Nov 2025',
+      category: 'Events',
+      description: 'Annual Sports Day will be held on 20 November. Students participating in events should report to their class teachers for practice schedules.',
+    },
+    {
+      id: 6,
+      title: 'Republic Day Celebration',
+      date: '15 Jan 2026',
+      category: 'Events',
+      description: 'Republic Day will be celebrated in the school premises on 26 January. All students are expected to attend in formal uniform.',
+    },
+  ],
 } as const
