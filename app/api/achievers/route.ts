@@ -3,9 +3,11 @@ import {
   getAchievers,
   createAchiever,
   getAchieverCount,
+  getAchieverSessions,
+  getAchieverClasses,
 } from "@/lib/achievers";
 import { uploadPhoto } from "@/lib/cloudinary";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 
 export const runtime = "nodejs";
 
@@ -13,17 +15,42 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search") || undefined;
-    const year = searchParams.get("year")
-      ? Number(searchParams.get("year"))
+    const academicSession = searchParams.get("academicSession")
+      ? Number(searchParams.get("academicSession"))
       : undefined;
+    const className = searchParams.get("className") || undefined;
     const limit = searchParams.get("limit")
       ? Number(searchParams.get("limit"))
       : undefined;
+    const publishedOnly = searchParams.get("publishedOnly") === "true";
+    const isAdminRequest =
+      searchParams.get("admin") === "true" || !publishedOnly;
 
-    const achievers = await getAchievers({ search, year, limit });
-    const total = await getAchieverCount();
+    const admin = getAdminFromRequest(request);
+    const showAll = !!admin && isAdminRequest;
 
-    return NextResponse.json({ achievers, total });
+    const achievers = await getAchievers({
+      search,
+      academicSession,
+      className,
+      limit,
+      publishedOnly: !showAll,
+    });
+
+    const total = showAll
+      ? await getAchieverCount()
+      : await getAchievers({ publishedOnly: true, academicSession, className, search }).then(
+          (a) => a.length
+        );
+
+    let sessions: number[] = [];
+    let classes: string[] = [];
+    if (showAll) {
+      sessions = await getAchieverSessions();
+      classes = await getAchieverClasses();
+    }
+
+    return NextResponse.json({ achievers, total, sessions, classes });
   } catch (error) {
     console.error("GET /api/achievers error:", error);
     return NextResponse.json(
@@ -37,23 +64,31 @@ export async function POST(request: Request) {
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
 
+  const admin = getAdminFromRequest(request);
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const formData = await request.formData();
-    const name = formData.get("name") as string | null;
+    const studentName = formData.get("studentName") as string | null;
     const className = formData.get("className") as string | null;
     const percentageStr = formData.get("percentage") as string | null;
-    const yearStr = formData.get("year") as string | null;
-    const file = formData.get("photo") as File | null;
+    const academicSessionStr = formData.get("academicSession") as string | null;
+    const rankStr = formData.get("rank") as string | null;
+    const achievementTitle = formData.get("achievementTitle") as string | null;
+    const isPublished = formData.get("isPublished") === "true";
+    const file = formData.get("photoUrl") as File | null;
 
-    if (!name || !className || !percentageStr || !yearStr) {
+    if (!studentName || !className || !percentageStr || !academicSessionStr) {
       return NextResponse.json(
-        { error: "Name, class, percentage, and year are required" },
+        { error: "Student name, class, percentage, and academic session are required" },
         { status: 400 }
       );
     }
 
     const percentage = parseFloat(percentageStr);
-    const year = parseInt(yearStr, 10);
+    const academicSession = parseInt(academicSessionStr, 10);
 
     if (isNaN(percentage) || percentage < 0 || percentage > 100) {
       return NextResponse.json(
@@ -62,9 +97,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (isNaN(year) || year < 2000 || year > 2100) {
+    if (isNaN(academicSession) || academicSession < 2000 || academicSession > 2100) {
       return NextResponse.json(
-        { error: "Invalid academic year" },
+        { error: "Invalid academic session" },
         { status: 400 }
       );
     }
@@ -97,11 +132,15 @@ export async function POST(request: Request) {
     }
 
     const achiever = await createAchiever({
-      name,
+      studentName,
       className,
       percentage,
-      year,
-      photo: photoUrl,
+      academicSession,
+      rank: rankStr ? parseInt(rankStr, 10) : 0,
+      photoUrl,
+      achievementTitle: achievementTitle || "",
+      isPublished,
+      createdBy: admin.name,
     });
 
     return NextResponse.json({ achiever }, { status: 201 });

@@ -5,7 +5,7 @@ import {
   deleteAchiever,
 } from "@/lib/achievers";
 import { uploadPhoto, deleteImage, getPublicIdFromUrl } from "@/lib/cloudinary";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 
 export const runtime = "nodejs";
 
@@ -41,6 +41,11 @@ export async function PUT(
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
 
+  const admin = getAdminFromRequest(request);
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
 
@@ -53,21 +58,24 @@ export async function PUT(
     }
 
     const formData = await request.formData();
-    const name = formData.get("name") as string | null;
+    const studentName = formData.get("studentName") as string | null;
     const className = formData.get("className") as string | null;
     const percentageStr = formData.get("percentage") as string | null;
-    const yearStr = formData.get("year") as string | null;
-    const file = formData.get("photo") as File | null;
+    const academicSessionStr = formData.get("academicSession") as string | null;
+    const rankStr = formData.get("rank") as string | null;
+    const achievementTitle = formData.get("achievementTitle") as string | null;
+    const isPublished = formData.get("isPublished") === "true";
+    const file = formData.get("photoUrl") as File | null;
 
-    if (!name || !className || !percentageStr || !yearStr) {
+    if (!studentName || !className || !percentageStr || !academicSessionStr) {
       return NextResponse.json(
-        { error: "Name, class, percentage, and year are required" },
+        { error: "Student name, class, percentage, and academic session are required" },
         { status: 400 }
       );
     }
 
     const percentage = parseFloat(percentageStr);
-    const year = parseInt(yearStr, 10);
+    const academicSession = parseInt(academicSessionStr, 10);
 
     if (isNaN(percentage) || percentage < 0 || percentage > 100) {
       return NextResponse.json(
@@ -76,14 +84,14 @@ export async function PUT(
       );
     }
 
-    if (isNaN(year) || year < 2000 || year > 2100) {
+    if (isNaN(academicSession) || academicSession < 2000 || academicSession > 2100) {
       return NextResponse.json(
-        { error: "Invalid academic year" },
+        { error: "Invalid academic session" },
         { status: 400 }
       );
     }
 
-    let photoUrl = existing.photo || undefined;
+    let photoUrl = existing.photoUrl || undefined;
 
     if (file && file.size > 0) {
       if (!file.type.startsWith("image/")) {
@@ -101,8 +109,8 @@ export async function PUT(
       }
 
       try {
-        if (existing.photo) {
-          const publicId = getPublicIdFromUrl(existing.photo);
+        if (existing.photoUrl) {
+          const publicId = getPublicIdFromUrl(existing.photoUrl);
           if (publicId) {
             await deleteImage(publicId).catch(() => {});
           }
@@ -117,11 +125,15 @@ export async function PUT(
     }
 
     const achiever = await updateAchiever(id, {
-      name,
+      studentName,
       className,
       percentage,
-      year,
-      photo: photoUrl,
+      academicSession,
+      rank: rankStr ? parseInt(rankStr, 10) : undefined,
+      photoUrl,
+      achievementTitle: achievementTitle ?? undefined,
+      isPublished,
+      updatedBy: admin.name,
     });
 
     return NextResponse.json({ achiever });
@@ -152,8 +164,8 @@ export async function DELETE(
       );
     }
 
-    if (existing.photo) {
-      const publicId = getPublicIdFromUrl(existing.photo);
+    if (existing.photoUrl) {
+      const publicId = getPublicIdFromUrl(existing.photoUrl);
       if (publicId) {
         await deleteImage(publicId).catch(() => {});
       }

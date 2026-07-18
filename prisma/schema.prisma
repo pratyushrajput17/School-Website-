@@ -54,13 +54,21 @@ model Gallery {
 }
 
 model Achiever {
-  id         String   @id @default(cuid())
-  name       String
-  className  String
-  percentage Float
-  photo      String?
-  year       Int
-  createdAt  DateTime @default(now())
+  id               String   @id @default(cuid())
+  studentName      String   @map("name")
+  className        String
+  percentage       Float
+  academicSession  Int      @map("year")
+  rank             Int      @default(0)
+  photoUrl         String?  @map("photo")
+  achievementTitle String   @default("")
+  isPublished      Boolean  @default(false)
+  createdBy        String   @default("")
+  updatedBy        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("achievers")
 }
 
 model Student {

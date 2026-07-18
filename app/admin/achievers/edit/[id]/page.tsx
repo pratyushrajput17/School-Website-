@@ -11,10 +11,13 @@ export default function EditAchieverPage() {
   const id = params.id as string;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [name, setName] = useState("");
+  const [studentName, setStudentName] = useState("");
   const [className, setClassName] = useState("");
   const [percentage, setPercentage] = useState("");
-  const [year, setYear] = useState("");
+  const [academicSession, setAcademicSession] = useState("");
+  const [rank, setRank] = useState("");
+  const [achievementTitle, setAchievementTitle] = useState("");
+  const [isPublished, setIsPublished] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [existingPhoto, setExistingPhoto] = useState<string | null>(null);
@@ -34,13 +37,16 @@ export default function EditAchieverPage() {
         }
         const data = await res.json();
         const a = data.achiever;
-        setName(a.name);
+        setStudentName(a.studentName);
         setClassName(a.className);
         setPercentage(a.percentage.toString());
-        setYear(a.year.toString());
-        if (a.photo) {
-          setExistingPhoto(a.photo);
-          setPreview(a.photo);
+        setAcademicSession(a.academicSession.toString());
+        setRank(a.rank > 0 ? a.rank.toString() : "");
+        setAchievementTitle(a.achievementTitle || "");
+        setIsPublished(a.isPublished ?? false);
+        if (a.photoUrl) {
+          setExistingPhoto(a.photoUrl);
+          setPreview(a.photoUrl);
         }
       } catch {
         router.push("/admin/achievers");
@@ -82,7 +88,7 @@ export default function EditAchieverPage() {
     e.preventDefault();
     setError("");
 
-    if (!name.trim()) {
+    if (!studentName.trim()) {
       setError("Student name is required");
       return;
     }
@@ -98,20 +104,24 @@ export default function EditAchieverPage() {
       return;
     }
 
-    const yr = parseInt(year, 10);
+    const yr = parseInt(academicSession, 10);
     if (isNaN(yr) || yr < 2000 || yr > 2100) {
-      setError("Invalid academic year");
+      setError("Invalid academic session");
       return;
     }
 
     setSaving(true);
     try {
       const formData = new FormData();
-      formData.append("name", name.trim());
+      formData.append("studentName", studentName.trim());
       formData.append("className", className.trim());
       formData.append("percentage", pct.toString());
-      formData.append("year", yr.toString());
-      if (file) formData.append("photo", file);
+      formData.append("academicSession", yr.toString());
+      if (rank.trim()) formData.append("rank", rank.trim());
+      if (achievementTitle.trim())
+        formData.append("achievementTitle", achievementTitle.trim());
+      formData.append("isPublished", String(isPublished));
+      if (file) formData.append("photoUrl", file);
 
       const res = await fetch(`/api/achievers/${id}`, {
         method: "PUT",
@@ -143,7 +153,9 @@ export default function EditAchieverPage() {
   if (notFound) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-xl font-bold text-gray-900">Achiever not found</h2>
+        <h2 className="text-xl font-bold text-gray-900">
+          Achiever not found
+        </h2>
         <p className="text-gray-500 mt-2">
           The achiever you are looking for does not exist.
         </p>
@@ -168,7 +180,9 @@ export default function EditAchieverPage() {
           Back to Achievers
         </Link>
         <h1 className="text-2xl font-bold text-gray-900">Edit Achiever</h1>
-        <p className="text-gray-500 text-sm mt-1">Update achiever details</p>
+        <p className="text-gray-500 text-sm mt-1">
+          Update achiever details
+        </p>
       </div>
 
       <form
@@ -198,7 +212,8 @@ export default function EditAchieverPage() {
               </button>
             </div>
             <p className="text-xs text-gray-400 mt-1">
-              Click the upload icon to replace the photo. Leave unchanged to keep current.
+              Click the upload icon to replace the photo. Leave unchanged to
+              keep current.
             </p>
           </div>
           <input
@@ -212,16 +227,16 @@ export default function EditAchieverPage() {
 
         <div>
           <label
-            htmlFor="name"
+            htmlFor="studentName"
             className="block text-sm font-medium text-gray-700 mb-1.5"
           >
             Student Name <span className="text-red-500">*</span>
           </label>
           <input
-            id="name"
+            id="studentName"
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
           />
         </div>
@@ -263,16 +278,19 @@ export default function EditAchieverPage() {
           </div>
 
           <div>
-            <label htmlFor="year" className="block text-sm font-medium text-gray-700 mb-1.5">
+            <label
+              htmlFor="academicSession"
+              className="block text-sm font-medium text-gray-700 mb-1.5"
+            >
               Session <span className="text-red-500">*</span>
             </label>
             <select
-              id="year"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
+              id="academicSession"
+              value={academicSession}
+              onChange={(e) => setAcademicSession(e.target.value)}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
             >
-              {[0, 1, 2, 3, 4].map((offset) => {
+              {[0, 1, 2, 3, 4, 5].map((offset) => {
                 const y = currentYear - offset;
                 return (
                   <option key={y} value={y}>
@@ -282,6 +300,60 @@ export default function EditAchieverPage() {
               })}
             </select>
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label
+              htmlFor="rank"
+              className="block text-sm font-medium text-gray-700 mb-1.5"
+            >
+              Rank
+            </label>
+            <input
+              id="rank"
+              type="number"
+              min="1"
+              value={rank}
+              onChange={(e) => setRank(e.target.value)}
+              placeholder="e.g. 1"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+            />
+            <p className="text-xs text-gray-400 mt-1">Optional.</p>
+          </div>
+
+          <div>
+            <label
+              htmlFor="achievementTitle"
+              className="block text-sm font-medium text-gray-700 mb-1.5"
+            >
+              Achievement Title
+            </label>
+            <input
+              id="achievementTitle"
+              type="text"
+              value={achievementTitle}
+              onChange={(e) => setAchievementTitle(e.target.value)}
+              placeholder="e.g. Class Topper"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+            />
+            <p className="text-xs text-gray-400 mt-1">Optional.</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isPublished}
+              onChange={(e) => setIsPublished(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div className="w-9 h-5 bg-gray-200 peer-focus:ring-2 peer-focus:ring-[#FF9933] rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#FF9933]" />
+          </label>
+          <span className="text-sm text-gray-700 font-medium">
+            {isPublished ? "Published" : "Draft — not visible to public"}
+          </span>
         </div>
 
         {error && (

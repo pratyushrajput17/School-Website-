@@ -11,16 +11,34 @@ import {
   Award,
   X,
   GraduationCap,
+  CheckCircle2,
+  XCircle,
+  Loader2,
 } from "lucide-react";
 
 interface Achiever {
   id: string;
-  name: string;
+  studentName: string;
   className: string;
   percentage: number;
-  photo: string | null;
-  year: number;
+  academicSession: number;
+  rank: number;
+  photoUrl: string | null;
+  achievementTitle: string;
+  isPublished: boolean;
+  createdBy: string;
   createdAt: string;
+}
+
+function formatSession(year: number) {
+  return `${year}-${String(year + 1).slice(-2)}`;
+}
+
+function getGrade(percentage: number) {
+  if (percentage >= 90) return { label: "A+", color: "text-emerald-600" };
+  if (percentage >= 75) return { label: "A", color: "text-blue-600" };
+  if (percentage >= 60) return { label: "B+", color: "text-amber-600" };
+  return { label: "B", color: "text-gray-600" };
 }
 
 export default function AdminAchieversPage() {
@@ -28,16 +46,21 @@ export default function AdminAchieversPage() {
   const [achievers, setAchievers] = useState<Achiever[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [yearFilter, setYearFilter] = useState("");
-  const [years, setYears] = useState<number[]>([]);
+  const [sessionFilter, setSessionFilter] = useState("");
+  const [classFilter, setClassFilter] = useState("");
+  const [sessions, setSessions] = useState<number[]>([]);
+  const [classes, setClasses] = useState<string[]>([]);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const fetchAchievers = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (search) params.set("search", search);
-      if (yearFilter) params.set("year", yearFilter);
+      if (sessionFilter) params.set("academicSession", sessionFilter);
+      if (classFilter) params.set("className", classFilter);
+      params.set("admin", "true");
 
       const res = await fetch(`/api/achievers?${params}`);
       if (!res.ok) {
@@ -46,33 +69,25 @@ export default function AdminAchieversPage() {
       }
       const data = await res.json();
       setAchievers(data.achievers);
+      setSessions(data.sessions || []);
+      setClasses(data.classes || []);
     } catch {
       /* silent */
     } finally {
       setLoading(false);
     }
-  }, [search, yearFilter, router]);
+  }, [search, sessionFilter, classFilter, router]);
 
   useEffect(() => {
     fetchAchievers();
   }, [fetchAchievers]);
 
-  useEffect(() => {
-    async function fetchYears() {
-      try {
-        const ys = new Set(achievers.map((a) => a.year));
-        setYears(Array.from(ys).sort((a, b) => b - a));
-      } catch {
-        /* silent */
-      }
-    }
-    fetchYears();
-  }, [achievers]);
-
   async function handleDelete(id: string) {
     setDeleting(true);
     try {
-      const res = await fetch(`/api/achievers/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/achievers/${id}`, {
+        method: "DELETE",
+      });
       if (res.ok) {
         setAchievers((prev) => prev.filter((a) => a.id !== id));
       }
@@ -84,11 +99,28 @@ export default function AdminAchieversPage() {
     }
   }
 
-  function getGrade(percentage: number) {
-    if (percentage >= 90) return { label: "A+", color: "text-emerald-600" };
-    if (percentage >= 75) return { label: "A", color: "text-blue-600" };
-    if (percentage >= 60) return { label: "B+", color: "text-amber-600" };
-    return { label: "B", color: "text-gray-600" };
+  async function handleTogglePublish(id: string, current: boolean) {
+    setTogglingId(id);
+    try {
+      const formData = new FormData();
+      formData.append("isPublished", String(!current));
+
+      const res = await fetch(`/api/achievers/${id}`, {
+        method: "PUT",
+        body: formData,
+      });
+      if (res.ok) {
+        setAchievers((prev) =>
+          prev.map((a) =>
+            a.id === id ? { ...a, isPublished: !current } : a
+          )
+        );
+      }
+    } catch {
+      /* silent */
+    } finally {
+      setTogglingId(null);
+    }
   }
 
   return (
@@ -118,7 +150,7 @@ export default function AdminAchieversPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search by name or class..."
+                placeholder="Search by name, class, or achievement..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
@@ -126,14 +158,28 @@ export default function AdminAchieversPage() {
             </div>
             <div className="relative">
               <select
-                value={yearFilter}
-                onChange={(e) => setYearFilter(e.target.value)}
+                value={sessionFilter}
+                onChange={(e) => setSessionFilter(e.target.value)}
                 className="w-full sm:w-40 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
               >
-                <option value="">All Years</option>
-                {years.map((y) => (
-                  <option key={y} value={y}>
-                    {y}-{String(y + 1).slice(-2)}
+                <option value="">All Sessions</option>
+                {sessions.map((s) => (
+                  <option key={s} value={s}>
+                    {formatSession(s)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="relative">
+              <select
+                value={classFilter}
+                onChange={(e) => setClassFilter(e.target.value)}
+                className="w-full sm:w-36 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
+              >
+                <option value="">All Classes</option>
+                {classes.map((c) => (
+                  <option key={c} value={c}>
+                    Class {c}
                   </option>
                 ))}
               </select>
@@ -152,7 +198,7 @@ export default function AdminAchieversPage() {
               No achievers found
             </h3>
             <p className="text-gray-500 text-sm">
-              {search || yearFilter
+              {search || sessionFilter || classFilter
                 ? "Try a different search or filter"
                 : "Add your first achiever to get started"}
             </p>
@@ -168,10 +214,10 @@ export default function AdminAchieversPage() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 rounded-full bg-saffron-light flex items-center justify-center flex-shrink-0 overflow-hidden">
-                      {achiever.photo ? (
+                      {achiever.photoUrl ? (
                         <img
-                          src={achiever.photo}
-                          alt={achiever.name}
+                          src={achiever.photoUrl}
+                          alt={achiever.studentName}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -182,28 +228,70 @@ export default function AdminAchieversPage() {
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <h3 className="font-medium text-gray-900 truncate">
-                            {achiever.name}
+                            {achiever.studentName}
                           </h3>
                           <p className="text-xs text-gray-500 mt-0.5">
                             Class {achiever.className}
                           </p>
                         </div>
-                        <span
-                          className={`text-lg font-bold ${grade.color}`}
-                        >
+                        <span className={`text-lg font-bold ${grade.color}`}>
                           {grade.label}
                         </span>
                       </div>
                       <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
-                        <span>
-                          {achiever.percentage}%
-                        </span>
-                        <span>
-                          {achiever.year}-{String(achiever.year + 1).slice(-2)}
-                        </span>
+                        <span>{achiever.percentage}%</span>
+                        {achiever.rank > 0 && (
+                          <span>Rank #{achiever.rank}</span>
+                        )}
+                        <span>{formatSession(achiever.academicSession)}</span>
+                      </div>
+                      {achiever.achievementTitle && (
+                        <p className="text-xs text-saffron mt-1 truncate">
+                          {achiever.achievementTitle}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-2 mt-2">
+                        {achiever.isPublished ? (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700 flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" />
+                            Published
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 flex items-center gap-1">
+                            <XCircle className="w-3 h-3" />
+                            Draft
+                          </span>
+                        )}
+                        {achiever.createdBy && (
+                          <span className="text-[11px] text-gray-400">
+                            by {achiever.createdBy}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() =>
+                          handleTogglePublish(achiever.id, achiever.isPublished)
+                        }
+                        disabled={togglingId === achiever.id}
+                        className={`p-1.5 rounded-lg transition-colors ${
+                          togglingId === achiever.id
+                            ? "opacity-50 cursor-not-allowed"
+                            : achiever.isPublished
+                            ? "text-green-600 hover:bg-green-50"
+                            : "text-gray-400 hover:bg-gray-100"
+                        }`}
+                        title={achiever.isPublished ? "Unpublish" : "Publish"}
+                      >
+                        {togglingId === achiever.id ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : achiever.isPublished ? (
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                        ) : (
+                          <XCircle className="w-3.5 h-3.5" />
+                        )}
+                      </button>
                       <Link
                         href={`/admin/achievers/edit/${achiever.id}`}
                         className="p-1.5 text-gray-400 hover:text-[#FF9933] hover:bg-amber-50 rounded-lg"
