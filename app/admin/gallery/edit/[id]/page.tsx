@@ -46,8 +46,8 @@ export default function EditGalleryImagePage() {
         const img = data.image;
         setTitle(img.title);
         setCategory(img.category);
-        setExistingImage(img.image);
-        setPreview(img.image);
+        setExistingImage(img.imageUrl);
+        setPreview(img.imageUrl);
       } catch {
         router.push("/admin/gallery");
       } finally {

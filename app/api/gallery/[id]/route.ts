@@ -5,7 +5,7 @@ import {
   deleteGalleryImage,
 } from "@/lib/gallery";
 import { uploadImage, deleteImage, getPublicIdFromUrl } from "@/lib/cloudinary";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 
 export const runtime = "nodejs";
 
@@ -38,6 +38,11 @@ export async function PUT(
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
 
+  const admin = getAdminFromRequest(request);
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
 
@@ -58,7 +63,7 @@ export async function PUT(
       );
     }
 
-    let imageUrl = existing.image;
+    let imageUrl = existing.imageUrl;
 
     if (file && file.size > 0) {
       if (!file.type.startsWith("image/")) {
@@ -76,7 +81,7 @@ export async function PUT(
       }
 
       try {
-        const publicId = getPublicIdFromUrl(existing.image);
+        const publicId = getPublicIdFromUrl(existing.imageUrl);
         if (publicId) {
           await deleteImage(publicId).catch(() => {});
         }
@@ -91,8 +96,9 @@ export async function PUT(
 
     const image = await updateGalleryImage(id, {
       title,
-      image: imageUrl,
+      imageUrl,
       category,
+      updatedBy: admin.name,
     });
 
     return NextResponse.json({ image });
@@ -120,7 +126,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Image not found" }, { status: 404 });
     }
 
-    const publicId = getPublicIdFromUrl(existing.image);
+    const publicId = getPublicIdFromUrl(existing.imageUrl);
     if (publicId) {
       await deleteImage(publicId).catch(() => {});
     }

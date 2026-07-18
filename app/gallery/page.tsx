@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import { schoolConfig } from "@/lib/school-config"
 import { getGalleryImages } from "@/lib/gallery"
+import GalleryGrid from "@/components/GalleryGrid"
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -53,61 +54,8 @@ export default async function GalleryPage() {
             <div className="text-center py-12">
               <p className="text-gray-500">No images in gallery yet.</p>
             </div>
-          ) : grouped.length === 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {images.map((img) => (
-                <div
-                  key={img.id}
-                  className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div className="aspect-[4/3] overflow-hidden bg-gray-100">
-                    <img
-                      src={img.image}
-                      alt={img.title}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
-                    <h3 className="text-sm font-semibold text-white">
-                      {img.title}
-                    </h3>
-                  </div>
-                </div>
-              ))}
-            </div>
           ) : (
-            <div className="space-y-16">
-              {grouped.map(({ category, items }) => (
-                <div key={category}>
-                  <h2 className="text-2xl font-bold text-deep-blue mb-6">
-                    {category}
-                  </h2>
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {items.map((img) => (
-                      <div
-                        key={img.id}
-                        className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-                      >
-                        <div className="aspect-[4/3] overflow-hidden bg-gray-100">
-                          <img
-                            src={img.image}
-                            alt={img.title}
-                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
-                          <h3 className="text-sm font-semibold text-white">
-                            {img.title}
-                          </h3>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <GalleryGrid grouped={grouped} images={images} />
           )}
         </div>
       </section>

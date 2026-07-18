@@ -5,7 +5,7 @@ import {
   getGalleryCount,
 } from "@/lib/gallery";
 import { uploadImage } from "@/lib/cloudinary";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 
 export const runtime = "nodejs";
 
@@ -34,6 +34,11 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
+
+  const admin = getAdminFromRequest(request);
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   try {
     const formData = await request.formData();
@@ -75,8 +80,9 @@ export async function POST(request: Request) {
 
     const image = await createGalleryImage({
       title,
-      image: imageUrl,
+      imageUrl,
       category,
+      createdBy: admin.name,
     });
 
     return NextResponse.json({ image }, { status: 201 });
