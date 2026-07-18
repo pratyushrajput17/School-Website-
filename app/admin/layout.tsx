@@ -10,21 +10,13 @@ import {
   Image,
   Award,
   Users,
+  Shield,
   LogOut,
   Menu,
   X,
   School,
   ChevronDown,
 } from "lucide-react";
-
-const sidebarLinks = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/students", label: "Students", icon: Users },
-  { href: "/admin/notices", label: "Notices", icon: Bell },
-  { href: "/admin/events", label: "Events", icon: Calendar },
-  { href: "/admin/gallery", label: "Gallery", icon: Image },
-  { href: "/admin/achievers", label: "Achievers", icon: Award },
-];
 
 export default function AdminLayout({
   children,
@@ -35,6 +27,7 @@ export default function AdminLayout({
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [adminName, setAdminName] = useState<string | null>(null);
+  const [adminRole, setAdminRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -47,6 +40,7 @@ export default function AdminLayout({
         }
         const data = await res.json();
         setAdminName(data.admin.name);
+        setAdminRole(data.admin.role);
       } catch {
         router.push("/login");
       } finally {
@@ -55,6 +49,18 @@ export default function AdminLayout({
     }
     checkAuth();
   }, [router]);
+
+  const sidebarLinks = [
+    { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/admin/students", label: "Students", icon: Users },
+    ...(adminRole === "super_admin"
+      ? [{ href: "/admin/admins", label: "Admins", icon: Shield }]
+      : []),
+    { href: "/admin/notices", label: "Notices", icon: Bell },
+    { href: "/admin/events", label: "Events", icon: Calendar },
+    { href: "/admin/gallery", label: "Gallery", icon: Image },
+    { href: "/admin/achievers", label: "Achievers", icon: Award },
+  ];
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -136,15 +142,20 @@ export default function AdminLayout({
             </button>
 
             <div className="flex items-center gap-3 ml-auto">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-[#FF9933] rounded-full flex items-center justify-center text-white text-sm font-medium">
-                  {adminName?.charAt(0) || "A"}
+                <div className="flex items-center gap-3">
+                  <div className="text-right hidden sm:block">
+                    <p className="text-sm font-medium text-gray-700 leading-tight">
+                      {adminName || "Admin"}
+                    </p>
+                    <p className="text-xs text-gray-400 capitalize">
+                      {adminRole?.replace("_", " ")}
+                    </p>
+                  </div>
+                  <div className="w-8 h-8 bg-[#FF9933] rounded-full flex items-center justify-center text-white text-sm font-medium">
+                    {adminName?.charAt(0) || "A"}
+                  </div>
+                  <ChevronDown className="w-4 h-4 text-gray-400" />
                 </div>
-                <span className="text-sm font-medium text-gray-700 hidden sm:block">
-                  {adminName || "Admin"}
-                </span>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
-              </div>
             </div>
           </div>
         </header>

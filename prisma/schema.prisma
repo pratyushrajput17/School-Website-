@@ -11,7 +11,8 @@ model Admin {
   name      String
   email     String   @unique
   password  String
-  role      String   @default("super_admin")
+  role      String   @default("admin")
+  status    String   @default("Active")
   createdAt DateTime @default(now())
 }
 

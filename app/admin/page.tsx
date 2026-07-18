@@ -9,6 +9,7 @@ import {
   Award,
   Users,
   ArrowRight,
+  Shield,
 } from "lucide-react";
 
 interface Stats {
@@ -17,6 +18,11 @@ interface Stats {
   gallery: number;
   achievers: number;
   students: number;
+}
+
+interface AdminInfo {
+  name: string;
+  role: string;
 }
 
 interface StatCard {
@@ -67,15 +73,23 @@ const navigationCards = [
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
+  const [admin, setAdmin] = useState<AdminInfo | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchStats() {
+    async function fetchData() {
       try {
-        const res = await fetch("/api/admin/stats");
-        if (res.ok) {
-          const data = await res.json();
+        const [statsRes, meRes] = await Promise.all([
+          fetch("/api/admin/stats"),
+          fetch("/api/auth/me"),
+        ]);
+        if (statsRes.ok) {
+          const data = await statsRes.json();
           setStats(data.stats);
+        }
+        if (meRes.ok) {
+          const data = await meRes.json();
+          setAdmin(data.admin);
         }
       } catch {
         /* silent fail */
@@ -83,7 +97,7 @@ export default function AdminDashboard() {
         setLoading(false);
       }
     }
-    fetchStats();
+    fetchData();
   }, []);
 
   const statCards: StatCard[] = [
@@ -96,11 +110,23 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Welcome to Adarsh High School Admin Panel
-        </p>
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Welcome to Adarsh High School Admin Panel
+          </p>
+        </div>
+        {admin && (
+          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-4 py-2.5">
+            <Shield className={`w-4 h-4 ${admin.role === "super_admin" ? "text-purple-600" : "text-blue-600"}`} />
+            <span className={`text-xs font-semibold uppercase tracking-wider ${
+              admin.role === "super_admin" ? "text-purple-700" : "text-blue-700"
+            }`}>
+              {admin.role.replace("_", " ")}
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

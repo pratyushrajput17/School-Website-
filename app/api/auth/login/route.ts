@@ -31,6 +31,13 @@ export async function POST(request: Request) {
       );
     }
 
+    if (admin.status === "Inactive") {
+      return NextResponse.json(
+        { error: "Account deactivated. Contact super admin." },
+        { status: 403 }
+      );
+    }
+
     const token = generateToken({
       id: admin.id,
       email: admin.email,
