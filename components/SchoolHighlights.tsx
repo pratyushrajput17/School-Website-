@@ -1,10 +1,10 @@
 import { schoolConfig } from '@/lib/school-config'
 
 const highlights = [
-  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'विद्यार्थी', description: 'हमारे परिवार का हिस्सा' },
-  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'अनुभवी शिक्षक', description: 'समर्पित और योग्य' },
-  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'वर्षों का अनुभव', description: 'गुणवत्तापूर्ण शिक्षा में' },
-  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'बोर्ड परिणाम', description: 'उत्कृष्ट शैक्षणिक प्रदर्शन' },
+  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'Students', description: 'Part of our family' },
+  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'Qualified Teachers', description: 'Dedicated and experienced' },
+  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years of Excellence', description: 'In quality education' },
+  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Results', description: 'Outstanding academic performance' },
 ] as const
 
 export default function SchoolHighlights() {

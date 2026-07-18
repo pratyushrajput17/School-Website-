@@ -1,29 +1,29 @@
 export const schoolConfig = {
   name: 'Adarsh High School',
   nameHindi: 'आदर्श हाई स्कूल',
-  tagline: 'शिक्षा के साथ संस्कार, ज्ञान के साथ चरित्र',
-  taglineEnglish: 'Education with Values, Knowledge with Character',
+  tagline: 'Education with Values, Knowledge with Character',
   board: 'MP Board',
   establishedYear: 2010,
   logoPath: '/logo.svg',
 
   hero: {
     shloka: 'सा विद्या या विमुक्तये',
-    shlokaMeaning: '(वही शिक्षा श्रेष्ठ है जो मनुष्य को अज्ञान और बुराइयों से मुक्त करे।)',
-    heading: 'शिक्षा के साथ संस्कार, ज्ञान के साथ चरित्र',
-    subtitle: 'आदर्श हाई स्कूल में हम विद्यार्थियों को केवल परीक्षा के लिए नहीं, बल्कि जीवन में सफल और संस्कारी बनने के लिए तैयार करते हैं।',
+    shlokaMeaning: 'True education is that which liberates — from ignorance, from limitations, from darkness.',
+    heading: 'Education with Values, Knowledge with Character',
+    subtitle:
+      'At Adarsh High School, we prepare students not just for examinations, but for life. We nurture academic excellence, discipline, character, and moral values — shaping responsible citizens and future leaders.',
   },
 
   admission: {
     session: '2026–27',
-    badge: 'प्रवेश जारी 2026–27',
-    applyText: 'अभी आवेदन करें',
-    deadline: '31 मार्च',
-    seats: 'सीमित सीटें',
+    badge: 'Admissions Open 2026–27',
+    applyText: 'Apply Now',
+    deadline: '31 March',
+    seats: 'Limited Seats',
   },
 
   description:
-    'Adarsh High School is committed to providing quality education that nurtures academic excellence, character development, and holistic growth for every student.',
+    'Adarsh High School is committed to providing quality English-medium education that nurtures academic excellence, character, discipline, and holistic growth for every student.',
 
   url: 'https://adarshhighschool.edu',
 
@@ -32,7 +32,7 @@ export const schoolConfig = {
     phone: '+91 9893652202',
     altPhone: '+91 9993606232',
     email: 'adresh2111@gmail.com',
-    officeHours: 'सोम–शनि: सुबह 8:00 – शाम 4:00',
+    officeHours: 'Mon–Sat: 8:00 AM – 4:00 PM',
   },
 
   socialLinks: {
@@ -41,44 +41,40 @@ export const schoolConfig = {
     twitter: '#',
     youtube: '#',
     linkedin: '#',
-    facebookLabel: 'Facebook',
-    instagramLabel: 'Instagram',
-    youtubeLabel: 'YouTube',
-    linkedinLabel: 'LinkedIn',
   },
 
   principal: {
     name: 'Principal',
     title: 'Principal, Adarsh High School',
-    badge: 'प्रधानाचार्य का संदेश',
+    badge: 'From the Principal',
     experience: 20,
     quote:
       'At Adarsh High School, we believe every child has unique potential. Our mission is to create a nurturing environment where students grow academically, socially, and morally, preparing them to become responsible citizens and future leaders.',
   },
 
   schoolValues: [
-    { value: 'सत्य', meaning: 'सत्य के मार्ग पर चलना ही जीवन की सबसे बड़ी शिक्षा है।' },
-    { value: 'अनुशासन', meaning: 'अनुशासन सफलता की नींव है।' },
-    { value: 'सम्मान', meaning: 'माता-पिता और गुरुजनों का सम्मान करना हमारा परम कर्तव्य है।' },
-    { value: 'करुणा', meaning: 'दूसरों की मदद करना और दयालु होना हमें इंसान बनाता है।' },
-    { value: 'सेवा', meaning: 'समाज की सेवा ही सच्ची शिक्षा की पहचान है।' },
-    { value: 'राष्ट्रप्रेम', meaning: 'देशभक्ति और राष्ट्र के प्रति समर्पण हमारा गौरव है।' },
+    { value: 'Satya (Truth)', meaning: 'Walking the path of truth is the foundation of all learning. We instil honesty and integrity in every student.' },
+    { value: 'Anushasan (Discipline)', meaning: 'Discipline is the bridge between goals and achievement. We cultivate self-discipline and focus.' },
+    { value: 'Samman (Respect)', meaning: 'Respect for parents, teachers, and elders is a core value that shapes character and builds community.' },
+    { value: 'Karuna (Compassion)', meaning: 'Kindness and empathy towards others make us better human beings. We nurture compassionate hearts.' },
+    { value: 'Seva (Service)', meaning: 'Service to society is the highest form of education. We encourage students to contribute and give back.' },
+    { value: 'Rashtraprem (Patriotism)', meaning: 'Love for the nation and pride in our culture and heritage is instilled in every student.' },
   ],
 
   whyTrustUs: [
-    { title: 'बच्चों पर व्यक्तिगत ध्यान', description: 'हर छात्र को व्यक्तिगत देखभाल और मार्गदर्शन मिलता है।' },
-    { title: 'अनुभवी शिक्षक', description: '40+ अनुभवी और समर्पित शिक्षकों की टीम।' },
-    { title: 'अनुशासित वातावरण', description: 'अनुशासन और संस्कार पर आधारित शिक्षा व्यवस्था।' },
-    { title: 'सुरक्षित परिसर', description: 'पूर्णतः सुरक्षित और निगरानी युक्त कैंपस।' },
-    { title: 'संस्कारयुक्त शिक्षा', description: 'शिक्षा के साथ संस्कार, ज्ञान के साथ चरित्र।' },
-    { title: 'समग्र विकास', description: 'शारीरिक, मानसिक और नैतिक विकास पर समान ध्यान।' },
+    { title: 'Personal Attention to Every Child', description: 'Each student receives individual care, guidance, and mentoring to reach their full potential.' },
+    { title: 'Experienced & Dedicated Teachers', description: 'Our team of 40+ qualified and committed educators ensures high-quality instruction.' },
+    { title: 'Disciplined & Nurturing Environment', description: 'A structured environment that balances academic rigour with moral and cultural values.' },
+    { title: 'Safe & Secure Campus', description: 'Fully secured campus with round-the-clock monitoring for complete peace of mind.' },
+    { title: 'Value-Based Education', description: 'Education that goes beyond textbooks — building character, values, and life skills.' },
+    { title: 'Holistic Development', description: 'Equal emphasis on physical, mental, intellectual, and moral development of every child.' },
   ],
 
   metadata: {
     siteName: 'Adarsh High School',
     titleTemplate: '%s | Adarsh High School',
-    defaultTitle: 'Adarsh High School | शिक्षा के साथ संस्कार, ज्ञान के साथ चरित्र',
-    locale: 'hi_IN',
+    defaultTitle: 'Adarsh High School | Best English Medium School in Sainkheda, MP',
+    locale: 'en_IN',
     country: 'IN',
     themeColor: '#1B3A5C',
     category: 'education',

@@ -3,16 +3,16 @@ import { ArrowRight, MapPin, Calendar, Clock, CheckCircle } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 const quickFacts = [
-  { icon: CheckCircle, label: 'प्रवेश जारी', color: 'text-emerald-600', bg: 'bg-emerald-50' },
-  { icon: Clock, label: 'सीमित सीटें', color: 'text-amber-600', bg: 'bg-amber-50' },
-  { icon: Calendar, label: 'आवेदन करें', color: 'text-saffron-dark', bg: 'bg-saffron-light' },
+  { icon: CheckCircle, label: 'Admissions Open', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  { icon: Clock, label: 'Limited Seats', color: 'text-amber-600', bg: 'bg-amber-50' },
+  { icon: Calendar, label: 'Apply Now', color: 'text-saffron-dark', bg: 'bg-saffron-light' },
 ] as const
 
 const heroStats = [
-  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'विद्यार्थी' },
-  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'शिक्षक' },
-  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'वर्षों का अनुभव' },
-  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'बोर्ड परिणाम' },
+  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'Students' },
+  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'Teachers' },
+  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years of Legacy' },
+  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Result' },
 ] as const
 
 export default function AdmissionsHero() {
@@ -25,21 +25,21 @@ export default function AdmissionsHero() {
         <div className="flex min-h-[85vh] flex-col items-center justify-center py-20 text-center lg:py-32">
           <div className="mx-auto max-w-4xl">
             <div className="flex justify-center gap-3">
-              <span className="badge-pill">प्रवेश खुले हैं</span>
+              <span className="badge-pill">Admissions Open</span>
               <span className="inline-block rounded-full border border-saffron/30 bg-saffron-light px-4 py-1.5 text-sm font-medium text-saffron-dark">
-                सत्र {schoolConfig.admission.session}
+                Session {schoolConfig.admission.session}
               </span>
             </div>
 
             <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-deep-blue sm:text-5xl lg:text-6xl xl:text-7xl">
-              अपने बच्चे का भविष्य{' '}
-              <span className="text-saffron">संवारें</span>
+              Give Your Child the{' '}
+              <span className="text-saffron">Best Start</span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl hindi-text">
-              {schoolConfig.name} में अपने बच्चे को गुणवत्तापूर्ण शिक्षा और संस्कारयुक्त
-              वातावरण दें। यहाँ हर विद्यार्थी को उनकी क्षमता पहचानने और जीवन में
-              सफल होने का अवसर मिलता है।
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+              Enrol your child at {schoolConfig.name} — where every student is
+              encouraged to discover their potential in a nurturing environment
+              built on values, knowledge, and discipline.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -47,7 +47,7 @@ export default function AdmissionsHero() {
                 href={`tel:${schoolConfig.contact.phone.replace(/\s/g, '')}`}
                 className="inline-flex items-center gap-2 rounded-full bg-deep-blue px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               >
-                प्रवेश के लिए संपर्क करें
+                Contact for Admission
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <span className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-5 py-3 text-sm font-medium text-deep-blue">

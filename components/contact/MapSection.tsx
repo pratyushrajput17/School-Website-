@@ -7,12 +7,12 @@ export default function MapSection() {
     <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28" id="map">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="badge-pill">हमारा स्थान</span>
+          <span className="badge-pill">Our Location</span>
           <h2 className="heading-xl mt-6">
-            हमसे मिलें
+            Visit Our Campus
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Gadarwara Road, Sainkheda में स्थित हमारा कैंपस मुख्य मार्ग से आसानी से पहुँचा जा सकता है।
+            Located on Gadarwara Road, Sainkheda — easily accessible from the main highway.
           </p>
         </div>
 
@@ -35,9 +35,9 @@ export default function MapSection() {
               </p>
 
               <div className="mt-6 space-y-2 text-sm text-muted-foreground">
-                <p>📍 Gadarwara Road, Sainkheda के पास</p>
-                <p>🚌 Sainkheda बस स्टैंड से निकट</p>
-                <p>🛣️ NH 44 से आसान पहुँच</p>
+                <p>📍 Near Gadarwara Road, Sainkheda</p>
+                <p>🚌 Close to Sainkheda bus stand</p>
+                <p>🛣️ Easy access from NH 44</p>
               </div>
 
               <Link
@@ -47,7 +47,7 @@ export default function MapSection() {
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-deep-blue px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               >
                 <Navigation className="h-4 w-4" />
-                दिशा-निर्देश प्राप्त करें
+                Get Directions
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

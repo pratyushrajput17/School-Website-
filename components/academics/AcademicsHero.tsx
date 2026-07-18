@@ -3,10 +3,10 @@ import { ArrowRight, BookOpen } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 const heroStats = [
-  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'वर्षों का अनुभव' },
-  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'विद्यार्थी' },
-  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'शिक्षक' },
-  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'बोर्ड परिणाम' },
+  { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years of Legacy' },
+  { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'Students' },
+  { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'Teachers' },
+  { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Result' },
 ] as const
 
 export default function AcademicsHero() {
@@ -18,16 +18,17 @@ export default function AcademicsHero() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex min-h-[85vh] flex-col items-center justify-center py-20 text-center lg:py-32">
           <div className="mx-auto max-w-4xl">
-            <span className="badge-pill">{schoolConfig.board} पाठ्यक्रम</span>
+            <span className="badge-pill">{schoolConfig.board} Curriculum</span>
 
             <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-deep-blue sm:text-5xl lg:text-6xl xl:text-7xl">
-              शैक्षणिक उत्कृष्टता{' '}
-              <span className="text-saffron">हमारी पहचान</span>
+              Academic Excellence{' '}
+              <span className="text-saffron">is Our Identity</span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl hindi-text">
-              हम MP Board पाठ्यक्रम के माध्यम से विद्यार्थियों को गुणवत्तापूर्ण शिक्षा प्रदान करते हैं।
-              हमारा उद्देश्य केवल परीक्षा में सफलता नहीं, बल्कि जीवन में सफल और संस्कारी नागरिक तैयार करना है।
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+              We deliver quality education through the MP Board curriculum,
+              preparing students not just for exams but for life. Our goal is to
+              nurture successful, value-driven citizens.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -35,7 +36,7 @@ export default function AcademicsHero() {
                 href="/admissions"
                 className="inline-flex items-center gap-2 rounded-full bg-deep-blue px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2"
               >
-                प्रवेश के लिए संपर्क करें
+                Apply for Admission
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
@@ -43,7 +44,7 @@ export default function AcademicsHero() {
                 className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-7 py-3 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-300 hover:bg-saffron-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2"
               >
                 <BookOpen className="h-4 w-4" />
-                हमारे बारे में जानें
+                Learn About Us
               </Link>
             </div>
 

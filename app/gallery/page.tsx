@@ -7,12 +7,12 @@ import { schoolConfig } from "@/lib/school-config"
 const Footer = dynamic(() => import("@/components/Footer"))
 
 export const metadata: Metadata = {
-  title: "गैलरी",
-  description: `Adarsh High School के कैंपस, कार्यक्रम, खेल और स्कूली जीवन की झलकियाँ।`,
+  title: "Gallery",
+  description: `Browse photos of Adarsh High School — campus, programmes, sports, and student life.`,
   alternates: { canonical: `${schoolConfig.url}/gallery` },
 }
 
-const categories = ["कैंपस", "कार्यक्रम", "खेलकूद", "गतिविधियाँ"]
+const categories = ["Campus", "Programmes", "Sports", "Activities"]
 const colors = ["bg-blue-100 text-blue-700", "bg-emerald-100 text-emerald-700", "bg-amber-100 text-amber-700", "bg-violet-100 text-violet-700"]
 
 const galleryItems = Array.from({ length: 8 }, (_, i) => ({
@@ -27,10 +27,10 @@ export default function GalleryPage() {
     <>
       <Navbar />
       <PageBanner
-        badge="गैलरी"
-        title="हमारे स्कूल की"
-        highlight="झलकियाँ"
-        description="Adarsh High School में शैक्षणिक गतिविधियों, खेलकूद, कार्यक्रमों और विशेष पलों की एक झलक।"
+        badge="Gallery"
+        title="Moments from"
+        highlight="Our School"
+        description="A glimpse into life at Adarsh High School — academics, sports, events, and special moments."
         minHeight="min-h-[50vh]"
       />
       <section className="relative overflow-hidden py-24 lg:py-28">
@@ -51,7 +51,7 @@ export default function GalleryPage() {
                 key={item.id}
                 className="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
               >
-                <div className={`aspect-[4/3] w-full bg-gradient-to-br from-saffron/20 via-white to-deep-blue/10`}>
+                <div className="aspect-[4/3] w-full bg-gradient-to-br from-saffron/20 via-white to-deep-blue/10">
                   <div className="flex h-full items-center justify-center">
                     <span className={`rounded-full px-4 py-1.5 text-xs font-medium ${item.color}`}>
                       {item.category}

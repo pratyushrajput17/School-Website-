@@ -7,12 +7,11 @@ export default function Hero() {
     <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-b from-saffron-light/30 via-white to-white">
       <div className="absolute -top-48 right-0 h-[600px] w-[600px] rounded-full bg-saffron/5 blur-3xl" />
       <div className="absolute -bottom-48 left-0 h-[500px] w-[500px] rounded-full bg-deep-blue/5 blur-3xl" />
-
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex min-h-[90vh] flex-col items-center justify-center py-20 text-center lg:py-32">
           <div className="mx-auto max-w-4xl">
             <span className="badge-pill">
-              {schoolConfig.name} | {schoolConfig.board}
+              {schoolConfig.name} | {schoolConfig.board} | English Medium
             </span>
 
             <div className="mt-12 space-y-2">
@@ -24,34 +23,34 @@ export default function Hero() {
               {schoolConfig.hero.heading}
             </h1>
 
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl hindi-text">
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
               {schoolConfig.hero.subtitle}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/admissions"
-                className="inline-flex items-center gap-2 rounded-full bg-deep-blue px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full bg-deep-blue px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               >
                 <GraduationCap className="h-4 w-4" />
-                प्रवेश के लिए आवेदन करें
+                Apply for Admission
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href={`tel:${schoolConfig.contact.phone.replace(/\s/g, '')}`}
-                className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-7 py-3.5 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-300 hover:bg-saffron-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-7 py-3.5 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-300 hover:bg-saffron-light"
               >
                 <Phone className="h-4 w-4" />
-                संपर्क करें: {schoolConfig.contact.phone}
+                Call: {schoolConfig.contact.phone}
               </Link>
             </div>
 
             <div className="mt-16 grid grid-cols-2 gap-8 border-t border-deep-blue/10 pt-12 sm:grid-cols-4">
               {[
-                { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'विद्यार्थी' },
-                { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'शिक्षक' },
-                { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'वर्षों का अनुभव' },
-                { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'बोर्ड परिणाम' },
+                { value: `${schoolConfig.stats.students.value}${schoolConfig.stats.students.suffix}`, label: 'Students' },
+                { value: `${schoolConfig.stats.teachers.value}${schoolConfig.stats.teachers.suffix}`, label: 'Teachers' },
+                { value: `${schoolConfig.stats.years.value}${schoolConfig.stats.years.suffix}`, label: 'Years of Excellence' },
+                { value: `${schoolConfig.stats.boardResults.value}${schoolConfig.stats.boardResults.suffix}`, label: 'Board Results' },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p className="text-3xl font-bold tracking-tight text-saffron sm:text-4xl">

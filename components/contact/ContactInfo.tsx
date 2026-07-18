@@ -2,10 +2,10 @@ import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 const contactDetails = [
-  { icon: Phone, title: 'फ़ोन', detail: schoolConfig.contact.phone, subtitle: schoolConfig.contact.altPhone, bg: 'bg-saffron-light', color: 'text-saffron-dark', href: `tel:${schoolConfig.contact.phone}` },
-  { icon: Mail, title: 'ईमेल', detail: schoolConfig.contact.email, subtitle: 'हम 24 घंटे में उत्तर देते हैं', bg: 'bg-saffron-light', color: 'text-saffron-dark', href: `mailto:${schoolConfig.contact.email}` },
-  { icon: MapPin, title: 'पता', detail: schoolConfig.contact.address, subtitle: 'Gadarwara Road, Sainkheda', bg: 'bg-saffron-light', color: 'text-saffron-dark', href: '#map' },
-  { icon: Clock, title: 'कार्य के घंटे', detail: schoolConfig.contact.officeHours, subtitle: 'रविवार बंद', bg: 'bg-saffron-light', color: 'text-saffron-dark', href: '#' },
+  { icon: Phone, title: 'Phone', detail: schoolConfig.contact.phone, subtitle: schoolConfig.contact.altPhone, bg: 'bg-saffron-light', color: 'text-saffron-dark', href: `tel:${schoolConfig.contact.phone}` },
+  { icon: Mail, title: 'Email', detail: schoolConfig.contact.email, subtitle: 'We reply within 24 hours', bg: 'bg-saffron-light', color: 'text-saffron-dark', href: `mailto:${schoolConfig.contact.email}` },
+  { icon: MapPin, title: 'Address', detail: schoolConfig.contact.address, subtitle: 'Gadarwara Road, Sainkheda', bg: 'bg-saffron-light', color: 'text-saffron-dark', href: '#map' },
+  { icon: Clock, title: 'Office Hours', detail: schoolConfig.contact.officeHours, subtitle: 'Sunday Closed', bg: 'bg-saffron-light', color: 'text-saffron-dark', href: '#' },
 ] as const
 
 export default function ContactInfo() {
@@ -13,12 +13,12 @@ export default function ContactInfo() {
     <section className="relative overflow-hidden py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="badge-pill">संपर्क जानकारी</span>
+          <span className="badge-pill">Contact Information</span>
           <h2 className="heading-xl mt-6">
-            हमसे जुड़ने के तरीके
+            Ways to Reach Us
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            अपनी सुविधा के अनुसार हमसे संपर्क करें। हम आपकी सहायता के लिए हमेशा तैयार हैं।
+            Choose the method most convenient for you. We are always here to assist.
           </p>
         </div>
 

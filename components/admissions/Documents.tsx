@@ -1,12 +1,12 @@
 import { FileText, Image, FileCheck, Fingerprint, ScrollText, HeartPulse } from 'lucide-react'
 
 const documents = [
-  { icon: FileText, title: 'जन्म प्रमाण पत्र', description: 'नगर निगम या जन्म रजिस्ट्रार से जारी मूल प्रमाण पत्र और प्रति।' },
-  { icon: Image, title: 'पासपोर्ट फोटो', description: 'बच्चे के 4 हालिया पासपोर्ट साइज़ फोटो और माता-पिता के 2-2 फोटो।' },
-  { icon: FileCheck, title: 'स्थानांतरण प्रमाण पत्र', description: 'पिछले स्कूल से टीसी (कक्षा I एवं उससे ऊपर के लिए)।' },
-  { icon: Fingerprint, title: 'आधार कार्ड', description: 'बच्चे और माता-पिता का आधार कार्ड।' },
-  { icon: ScrollText, title: 'पिछली रिपोर्ट कार्ड', description: 'पिछले दो शैक्षणिक वर्षों की रिपोर्ट कार्ड की प्रति।' },
-  { icon: HeartPulse, title: 'मेडिकल प्रमाण पत्र', description: 'रजिस्टर्ड डॉक्टर से स्वास्थ्य प्रमाण पत्र और टीकाकरण रिकॉर्ड।' },
+  { icon: FileText, title: 'Birth Certificate', description: 'Original certificate and copy issued by municipal corporation or birth registrar.' },
+  { icon: Image, title: 'Passport Photos', description: '4 recent passport-size photos of the child and 2 each of parents.' },
+  { icon: FileCheck, title: 'Transfer Certificate', description: 'TC from previous school (for Class I and above).' },
+  { icon: Fingerprint, title: 'Aadhaar Card', description: 'Aadhaar card of the child and both parents.' },
+  { icon: ScrollText, title: 'Previous Report Cards', description: 'Copies of report cards from the last two academic years.' },
+  { icon: HeartPulse, title: 'Medical Certificate', description: 'Health certificate from a registered doctor and immunisation records.' },
 ] as const
 
 export default function Documents() {
@@ -14,12 +14,12 @@ export default function Documents() {
     <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="badge-pill">आवश्यक दस्तावेज</span>
+          <span className="badge-pill">Required Documents</span>
           <h2 className="heading-xl mt-6">
-            प्रवेश के लिए आवश्यक दस्तावेज
+            Documents Needed for Admission
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            प्रवेश प्रक्रिया को सुचारू बनाने के लिए ये दस्तावेज तैयार रखें।
+            Keep these documents ready to ensure a smooth admission process.
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export default function Documents() {
               </div>
               <div>
                 <h3 className="text-sm font-bold text-deep-blue">{doc.title}</h3>
-                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground hindi-text">
+                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
                   {doc.description}
                 </p>
               </div>

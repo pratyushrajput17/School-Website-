@@ -116,39 +116,15 @@
     @apply text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl;
   }
 
-  .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-md;
-  }
-
   .badge-pill {
     @apply inline-block rounded-full border border-saffron/30 bg-saffron-light px-4 py-1.5 text-sm font-medium text-saffron-dark;
   }
 
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
-  }
-
-  .gradient-text {
-    @apply bg-gradient-to-r from-saffron to-deep-blue bg-clip-text text-transparent;
-  }
-
-  .glass {
-    @apply border border-white/40 bg-white/80 backdrop-blur-md;
-  }
-
-  .glass-strong {
-    @apply border border-white/60 bg-white/90 shadow-sm backdrop-blur-md;
-  }
-
   .shloka {
-    @apply text-2xl font-bold leading-relaxed text-deep-blue sm:text-3xl lg:text-4xl;
+    @apply text-xl font-bold leading-relaxed text-deep-blue sm:text-2xl lg:text-3xl;
   }
 
   .shloka-meaning {
-    @apply text-base italic text-muted-foreground sm:text-lg;
-  }
-
-  .hindi-text {
-    @apply leading-loose;
+    @apply text-sm italic text-muted-foreground sm:text-base;
   }
 }

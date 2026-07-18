@@ -6,12 +6,12 @@ import { Menu, X, GraduationCap } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 const NAV_LINKS = [
-  { href: '/', label: 'होम' },
-  { href: '/about', label: 'हमारे बारे में' },
-  { href: '/academics', label: 'शैक्षणिक' },
-  { href: '/admissions', label: 'प्रवेश' },
-  { href: '/gallery', label: 'गैलरी' },
-  { href: '/contact', label: 'संपर्क' },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/academics', label: 'Academics' },
+  { href: '/admissions', label: 'Admissions' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/contact', label: 'Contact' },
 ] as const
 
 export default function Navbar() {
@@ -81,25 +81,24 @@ export default function Navbar() {
             <Link
               key={href}
               href={href}
-              className="group relative px-3 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-primary"
+              className="group relative px-3 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-deep-blue"
             >
               {label}
-              <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-primary transition-all duration-300 group-hover:w-4/5" />
+              <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-deep-blue transition-all duration-300 group-hover:w-4/5" />
             </Link>
           ))}
         </nav>
 
         <Link
           href="/admissions"
-          className="hidden shrink-0 rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 lg:inline-block"
-          aria-label="प्रवेश के लिए आवेदन करें"
+          className="hidden shrink-0 rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light lg:inline-block"
         >
-          प्रवेश
+          Apply Now
         </Link>
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:text-primary lg:hidden"
+          className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:text-deep-blue lg:hidden"
           onClick={() => setMobileOpen(true)}
           aria-label="Open navigation menu"
           aria-expanded={mobileOpen}
@@ -130,7 +129,7 @@ export default function Navbar() {
             <span className="text-lg font-bold text-deep-blue">{schoolConfig.name}</span>
             <button
               type="button"
-              className="rounded-md p-2 text-muted-foreground transition-colors hover:text-primary"
+              className="rounded-md p-2 text-muted-foreground transition-colors hover:text-deep-blue"
               onClick={closeMobile}
               aria-label="Close navigation menu"
             >
@@ -146,7 +145,7 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className="text-2xl font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="text-2xl font-medium text-muted-foreground transition-colors hover:text-deep-blue"
                 onClick={closeMobile}
               >
                 {label}
@@ -156,9 +155,8 @@ export default function Navbar() {
               href="/admissions"
               className="mt-4 rounded-full bg-deep-blue px-8 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               onClick={closeMobile}
-              aria-label="प्रवेश के लिए आवेदन करें"
             >
-              प्रवेश
+              Apply Now
             </Link>
           </nav>
         </div>

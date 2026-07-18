@@ -13,15 +13,15 @@ export default function ContactHero() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex min-h-[70vh] flex-col items-center justify-center py-20 text-center lg:py-28">
           <div className="mx-auto max-w-3xl">
-            <span className="badge-pill">संपर्क करें</span>
+            <span className="badge-pill">Get in Touch</span>
 
             <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-deep-blue sm:text-5xl lg:text-6xl">
-              हमसे <span className="text-saffron">जुड़ें</span>
+              We&apos;d Love to <span className="text-saffron">Hear From You</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              प्रवेश, शैक्षणिक या कैंपस भ्रमण के बारे में कोई भी प्रश्न हो —
-              हमारी टीम आपकी सहायता के लिए यहाँ है।
+              Whether you have a question about admissions, academics, or want to
+              schedule a campus visit — our team is here to help.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -37,14 +37,14 @@ export default function ContactHero() {
                 className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-7 py-3.5 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-300 hover:bg-saffron-light"
               >
                 <Mail className="h-4 w-4" />
-                ईमेल करें
+                Send an Email
               </Link>
               <Link
                 href="#map"
                 className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-7 py-3.5 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-300 hover:bg-saffron-light"
               >
                 <MapPin className="h-4 w-4" />
-                हमारा स्थान
+                Our Location
               </Link>
             </div>
           </div>

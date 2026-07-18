@@ -9,16 +9,16 @@ const CoCurricular = dynamic(() => import("@/components/academics/CoCurricular")
 const FinalCTA = dynamic(() => import("@/components/FinalCTA"))
 const Footer = dynamic(() => import("@/components/Footer"))
 
-const title = 'शैक्षणिक'
+const title = 'Academics'
 const description =
-  "Adarsh High School में MP Board पाठ्यक्रम का परिचय — गुणवत्तापूर्ण शिक्षा, अनुभवी शिक्षक और संस्कारयुक्त वातावरण।"
+  "Explore the MP Board curriculum at Adarsh High School. Quality English-medium education, experienced faculty, and a value-based learning environment."
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${schoolConfig.url}/academics` },
   openGraph: {
-    title: `${schoolConfig.metadata.siteName} | शैक्षणिक`,
+    title: `${schoolConfig.metadata.siteName} | Academics`,
     description,
     url: `${schoolConfig.url}/academics`,
     siteName: schoolConfig.metadata.siteName,
