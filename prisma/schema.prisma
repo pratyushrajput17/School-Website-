@@ -50,3 +50,19 @@ model Achiever {
   year       Int
   createdAt  DateTime @default(now())
 }
+
+model Student {
+  id               String   @id @default(cuid())
+  admissionNumber  String   @unique
+  studentName      String
+  fatherName       String
+  motherName       String
+  mobileNumber     String
+  className        String
+  section          String
+  dateOfBirth      DateTime
+  address          String
+  status           String   @default("Active")
+  admissionDate    DateTime
+  createdAt        DateTime @default(now())
+}

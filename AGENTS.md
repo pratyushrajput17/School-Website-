@@ -4,55 +4,65 @@
 ## Live URL
 https://school-website-xi-rust.vercel.app
 
-## Pages (7)
-- Home, About, Academics, Admissions, Facilities, Gallery, Contact
+## Objective
+Production-ready Adarsh High School website with full Admin CMS backend. Admin manages Notices, Events, Gallery (Cloudinary), and Achievers without touching code.
 
-## Content State
-- ~80% English, ~15% Hindi (SchoolValues section), ~5% Sanskrit (shlokas)
-- All content follows AGENTS.md content rules — no fake claims, no corporate buzzwords
-- Only confirmed facilities listed (Classrooms, Library, Computer Lab, Science Lab, CCTV, Transport, Green Campus, Smart Lab Coming Soon)
-- School info verified: Adarsh High School, Gadarwara Road, Sainkheda, MP 484661, MP Board, English Medium, 900+ students, 40+ teachers, Ph: 9893652202 / 9993606232 / 9993794981, Email: adresh2111@gmail.com
+## Stack
+- Next.js 16.2.10, App Router, React 19, TypeScript 5, Tailwind v4
+- Prisma 7.8 (adapter-pg), PostgreSQL, bcrypt, JWT, HttpOnly cookies
+- Cloudinary SDK (gallery + achiever photos), Framer Motion, Lucide React
+- Design: Deep Blue (#1B3A5C) + Saffron (#FF9933) + White
 
-## Homepage Flow (8 sections)
-Hero → SchoolValues (Hindi) → ParentTrust (8 cards) → SchoolDayTimeline → Facilities → PrincipalMessage → InspirationalQuotes → HomeCTA
-- Removed WhyChoose (merged into ParentTrust — 8 cards now include CCTV, transport, green campus, academic growth)
-- Removed SchoolHighlights (stats already in Hero)
-- MaaSaraswati moved to About page (goddess of knowledge — fits academics context)
+## School Info
+Adarsh High School, Gadarwara Road, Sainkheda, MP 484661, MP Board, English Medium, Nursery–Class 10, 900+ students, 40+ teachers, Ph: 9893652202 / 9993606232 / 9993794981, Email: adresh2111@gmail.com
 
-## All Pages (7)
-- **Home**: Hero, SchoolValues, ParentTrust, SchoolDayTimeline, Facilities, PrincipalMessage, InspirationalQuotes, HomeCTA
-- **About**: AboutHero, OurStory, VisionMission, MaaSaraswati, SchoolValues, Footer
-- **Academics**: AcademicsHero, CurriculumOverview, CoCurricular, FinalCTA, Footer
-- **Admissions**: AdmissionsHero, AdmissionJourney, Documents, FinalCTA, Footer
-- **Facilities**: 8 cards with icons + Coming Soon badge (Smart Lab) + dedicated page
-- **Gallery**: 5 categories, gradient photo-style cards (no numbered placeholders)
-- **Contact**: Hero, Contact Info, Quick Cards, ContactForm (client comp, with submit handler), Embedded Google Maps iframe, Final CTA
+## Content Rules
+All AGENTS.md content rules enforced — no exaggeration, buzzwords, or fake claims.
+Only confirmed facilities: Classrooms, Library, Computer Lab, Science Lab, CCTV, Transport, Green Campus, Smart Lab (Coming Soon).
 
-## Removed Dead Code
-- WhyChoose.tsx, SchoolHighlights.tsx, AcademicPrograms.tsx, contact/*.tsx (4 files), ui/cta-section.tsx, ui/faq.tsx
-- hooks/useScrollAnimation.ts, lib/utils.ts, types/index.ts
-- Empty config/, data/ directories
-- Unused import (schoolConfig) in Facilities.tsx
+## Homepage Flow (9 sections)
+Hero → SchoolAtAGlance → ParentTrust (8 cards) → SchoolValues (Hindi) → PrincipalMessage → AcademicAchievers (DB) → EventPreview (DB) → NoticePreview/GalleryPreview (DB) → HomeCTA
 
-## Production Polish Applied
-- Duplicate sections consolidated (no repetitive content)
-- All obvious placeholders replaced: Gallery uses styled cards with category labels, Principal shows GraduationCap silhouette instead of generic User icon, Maps section has real Google embed
-- Contact form has working submit handler (client component)
-- Social links retained as decorative (# hrefs — no fake social accounts)
-- ParentTrust expanded to 8 cards covering all trust factors (education, discipline, teachers, safety, transport, campus, academic growth, cultural/sports)
+## All Public Pages (11)
+- **Home**: Hero, SchoolAtAGlance, ParentTrust, SchoolValues, PrincipalMessage, AcademicAchievers, EventPreview, NoticePreview, GalleryPreview, HomeCTA
+- **About**: AboutHero, OurStory, VisionMission, MaaSaraswati, SchoolValues
+- **Academics**: AcademicsHero, CurriculumOverview, CoCurricular, FinalCTA
+- **Admissions**: AdmissionsHero, AdmissionJourney, Documents, FinalCTA
+- **Facilities**: 8 cards with icons + Coming Soon (Smart Lab)
+- **Gallery**: Category-grouped grid fetching from DB
+- **Events**: Events list fetching from DB
+- **Notices**: Notices list fetching from DB
+- **Contact**: Hero, Contact Info, Quick Cards, ContactForm, Google Maps, Final CTA
+- **/login**: Admin login page
+
+## Backend — 5 CMS Modules (Complete)
+| Module | Model | Admin Pages | API Routes | Public Integration |
+|--------|-------|-------------|------------|-------------------|
+| **Auth** | Admin | login, dashboard, logout | POST /login, POST /logout, GET /me | Proxy protects /admin/* |
+| **Notices** | Notice | list+search/filter, create, edit | GET/POST /api/notices, GET/PUT/DELETE /api/notices/[id] | /notices page + homepage NoticePreview |
+| **Events** | Event | list+search/filter, create, edit | GET/POST /api/events, GET/PUT/DELETE /api/events/[id] | /events page + homepage EventPreview |
+| **Gallery** | Gallery | grid+thumbnails+search/filter, create (drag/click upload), edit (replace) | GET/POST /api/gallery, GET/PUT/DELETE /api/gallery/[id] | /gallery page + homepage GalleryPreview |
+| **Achievers** | Achiever | list+search/filter+year, create (photo), edit (replace) | GET/POST /api/achievers, GET/PUT/DELETE /api/achievers/[id] | AcademicAchievers section on homepage |
+
+## Prisma Schema (5 models)
+Admin, Notice, Event, Gallery, Achiever — all in `prisma/schema.prisma`
+Prisma 7: datasource config in `prisma.config.ts` (defineConfig), client uses PrismaPg adapter
+
+## Key Files
+- `lib/auth.ts`: JWT+bcrypt+cookies
+- `lib/prisma.ts`: Singleton with PrismaPg adapter
+- `lib/cloudinary.ts`: uploadImage (gallery 1200×900), uploadPhoto (achievers 400×500), deleteImage, getPublicIdFromUrl
+- `lib/api-auth.ts`: getAdminFromRequest / requireAdmin
+- `lib/notices.ts`, `lib/events.ts`, `lib/gallery.ts`, `lib/achievers.ts`: Shared DB CRUD per module
+- `proxy.ts`: Next.js 16 proxy protecting `/admin/*`
+- `prisma/seed.ts`: Seeds 6 notices + 8 events
 
 ## Build
-15 static routes, 0 errors. Auto-deployed on every change.
+35 routes, 0 errors. Auto-deployed on every change from main branch.
 
-## Design System
-- Colors: Deep Blue (#1B3A5C), Saffron (#FF9933), White
-- Tailwind v4, Framer Motion 12.42.2, Lucide React icons
-- No gradients/flashy elements; clean, trustworthy school aesthetic
-
-## Development Rules
-- Auto-deploy after every task (git add/commit/push, vercel --prod)
-- Content rules enforced; no exaggeration or fake claims
-- Next.js 16.2.10 docs in node_modules/next/dist/docs/
+## Blocked
+- PostgreSQL `DATABASE_URL` and `JWT_SECRET` not set as Vercel env vars — DB API routes will fail at runtime until provisioned
+- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` not set on Vercel — image uploads fail until configured
 <!-- END:session-summary -->
 
 <!-- BEGIN:nextjs-agent-rules -->

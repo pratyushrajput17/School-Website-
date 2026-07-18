@@ -7,6 +7,7 @@ import {
   Calendar,
   Image,
   Award,
+  Users,
   ArrowRight,
 } from "lucide-react";
 
@@ -15,6 +16,7 @@ interface Stats {
   events: number;
   gallery: number;
   achievers: number;
+  students: number;
 }
 
 interface StatCard {
@@ -26,6 +28,13 @@ interface StatCard {
 }
 
 const navigationCards = [
+  {
+    label: "Manage Students",
+    description: "Add, edit, or manage student records",
+    icon: Users,
+    href: "/admin/students",
+    color: "bg-cyan-500",
+  },
   {
     label: "Manage Notices",
     description: "Add, edit, or remove notices",
@@ -78,6 +87,7 @@ export default function AdminDashboard() {
   }, []);
 
   const statCards: StatCard[] = [
+    { label: "Total Students", value: stats?.students ?? 0, icon: Users, color: "bg-cyan-500", href: "/admin/students" },
     { label: "Total Notices", value: stats?.notices ?? 0, icon: Bell, color: "bg-blue-500", href: "/admin/notices" },
     { label: "Total Events", value: stats?.events ?? 0, icon: Calendar, color: "bg-green-500", href: "/admin/events" },
     { label: "Gallery Images", value: stats?.gallery ?? 0, icon: Image, color: "bg-purple-500", href: "/admin/gallery" },

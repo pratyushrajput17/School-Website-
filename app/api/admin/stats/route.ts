@@ -17,11 +17,12 @@ export async function GET() {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    const [notices, events, gallery, achievers] = await Promise.all([
+    const [notices, events, gallery, achievers, students] = await Promise.all([
       prisma.notice.count(),
       prisma.event.count(),
       prisma.gallery.count(),
       prisma.achiever.count(),
+      prisma.student.count(),
     ]);
 
     return NextResponse.json({
@@ -30,6 +31,7 @@ export async function GET() {
         events,
         gallery,
         achievers,
+        students,
       },
     });
   } catch {

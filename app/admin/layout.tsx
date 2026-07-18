@@ -9,6 +9,7 @@ import {
   Calendar,
   Image,
   Award,
+  Users,
   LogOut,
   Menu,
   X,
@@ -18,6 +19,7 @@ import {
 
 const sidebarLinks = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/students", label: "Students", icon: Users },
   { href: "/admin/notices", label: "Notices", icon: Bell },
   { href: "/admin/events", label: "Events", icon: Calendar },
   { href: "/admin/gallery", label: "Gallery", icon: Image },
