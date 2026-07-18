@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
+import SchoolAtAGlance from "@/components/SchoolAtAGlance"
 import SchoolValues from "@/components/SchoolValues"
 import ParentTrust from "@/components/ParentTrust"
 import SchoolDayTimeline from "@/components/SchoolDayTimeline"
@@ -25,6 +26,7 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
+      <SchoolAtAGlance />
       <SchoolValues />
       <ParentTrust />
       <SchoolDayTimeline />
