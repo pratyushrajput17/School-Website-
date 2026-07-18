@@ -1,31 +1,31 @@
 import Link from 'next/link'
 import { ArrowRight, Calendar } from 'lucide-react'
-import { schoolConfig } from '@/lib/school-config'
-
-const categoryIcons: Record<string, string> = {
-  'Annual Function': '🎭',
-  'Independence Day': '🇮🇳',
-  'Republic Day': '🇮🇳',
-  'Sports Activities': '🏃',
-  'Cultural Programs': '🎵',
-  'Educational Activities': '🔬',
-  'Competitions': '🏆',
-  'Special Celebrations': '🎉',
-}
+import { getEvents } from '@/lib/events'
 
 const categoryColors: Record<string, string> = {
+  'Academic Activities': 'from-cyan-100 to-cyan-50',
   'Annual Function': 'from-rose-100 to-rose-50',
-  'Independence Day': 'from-orange-100 to-orange-50',
-  'Republic Day': 'from-blue-100 to-blue-50',
-  'Sports Activities': 'from-emerald-100 to-emerald-50',
   'Cultural Programs': 'from-violet-100 to-violet-50',
-  'Educational Activities': 'from-cyan-100 to-cyan-50',
+  'Sports Activities': 'from-emerald-100 to-emerald-50',
+  'National Celebrations': 'from-orange-100 to-orange-50',
   'Competitions': 'from-amber-100 to-amber-50',
-  'Special Celebrations': 'from-pink-100 to-pink-50',
+  'Parent Meetings': 'from-blue-100 to-blue-50',
+  'General Events': 'from-gray-100 to-gray-50',
 }
 
-export default function EventPreview() {
-  const latest = schoolConfig.events.slice(0, 3)
+function formatDate(iso: string) {
+  const d = new Date(iso)
+  return d.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
+}
+
+export default async function EventPreview() {
+  const latest = await getEvents({ limit: 3 }).catch(() => [])
+
+  if (latest.length === 0) return null
 
   return (
     <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28">
@@ -46,15 +46,21 @@ export default function EventPreview() {
               key={event.id}
               className="group overflow-hidden rounded-2xl border border-deep-blue/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-saffron/20 hover:shadow-md"
             >
-              <div className={`aspect-[16/9] w-full bg-gradient-to-br ${categoryColors[event.category] || 'from-gray-100 to-gray-50'} flex items-center justify-center`}>
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/60 backdrop-blur-sm">
-                  <span className="text-3xl">{categoryIcons[event.category] || '📅'}</span>
-                </div>
+              <div className={`aspect-[16/9] w-full bg-gradient-to-br ${categoryColors[event.category] || 'from-gray-100 to-gray-50'} flex items-center justify-center overflow-hidden`}>
+                {event.image ? (
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <Calendar className="h-12 w-12 text-white/40" />
+                )}
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Calendar className="h-3.5 w-3.5" />
-                  <span>{event.date}</span>
+                  <span>{formatDate(event.eventDate)}</span>
                 </div>
                 <h3 className="mt-2 text-base font-bold text-deep-blue leading-snug">
                   {event.title}
