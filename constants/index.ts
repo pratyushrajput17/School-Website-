@@ -70,7 +70,7 @@ export const academicPrograms = [
   { title: 'Pre-Primary', subtitle: 'Age: 3–5 Years', description: 'Activity-based learning, creativity, communication and confidence.', icon: Puzzle, gradient: 'from-blue-600 to-blue-400', bg: 'bg-blue-50', color: 'text-blue-600' },
   { title: 'Primary School', subtitle: 'Classes I–V', description: 'Strong fundamentals in Mathematics, Science, Languages and Creativity.', icon: BookOpen, gradient: 'from-emerald-600 to-emerald-400', bg: 'bg-emerald-50', color: 'text-emerald-600' },
   { title: 'Middle School', subtitle: 'Classes VI–VIII', description: 'Critical thinking, practical learning, digital education and leadership.', icon: Lightbulb, gradient: 'from-violet-600 to-violet-400', bg: 'bg-violet-50', color: 'text-violet-600' },
-  { title: 'Senior Secondary', subtitle: 'Classes IX–XII', description: 'Board preparation, career guidance and competitive exam foundation.', icon: GraduationCap, gradient: 'from-amber-600 to-amber-400', bg: 'bg-amber-50', color: 'text-amber-600' },
+  { title: 'Secondary', subtitle: 'Classes IX–X', description: 'Board preparation, academic excellence and career awareness.', icon: GraduationCap, gradient: 'from-amber-600 to-amber-400', bg: 'bg-amber-50', color: 'text-amber-600' },
 ]
 
 export const trustIndicators = [

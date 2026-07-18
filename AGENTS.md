@@ -13,20 +13,33 @@ https://school-website-xi-rust.vercel.app
 - Only confirmed facilities listed (Classrooms, Library, Computer Lab, Science Lab, CCTV, Transport, Green Campus, Smart Lab Coming Soon)
 - School info verified: Adarsh High School, Gadarwara Road, Sainkheda, MP 484661, MP Board, English Medium, 900+ students, 40+ teachers, Ph: 9893652202 / 9993606232 / 9993794981, Email: adresh2111@gmail.com
 
-## Key Components
-- Navbar: Home, About, Academics, Admissions, Facilities, Gallery, Contact (responsive)
-- Footer: Address, 3 phones, email, quick links, social icons
-- Home: Hero, SchoolValues (Hindi), ParentTrust (6 cards), WhyChoose (6+Future Growth), PrincipalMessage, SchoolDayTimeline, Academics overview, SchoolStats, HomeCTA (Get in Touch + Call Now)
-- About: 10+ components with authentic content
-- Academics: Curriculum, Co-Curricular, Teaching methodology, etc.
-- Admissions: Journey, Eligibility, Documents, Fee, FAQs, FinalCTA
-- Facilities: 8 facility cards with icons + dedicated /facilities page
-- Gallery: 5 categories (Campus Life, Classroom, Academic, Cultural, Annual Functions)
-- Contact: 6 inline sections (Hero, Info, Quick Cards, Form, Map, CTA)
+## Homepage Flow (8 sections)
+Hero → SchoolValues (Hindi) → ParentTrust (8 cards) → SchoolDayTimeline → Facilities → PrincipalMessage → InspirationalQuotes → HomeCTA
+- Removed WhyChoose (merged into ParentTrust — 8 cards now include CCTV, transport, green campus, academic growth)
+- Removed SchoolHighlights (stats already in Hero)
+- MaaSaraswati moved to About page (goddess of knowledge — fits academics context)
+
+## All Pages (7)
+- **Home**: Hero, SchoolValues, ParentTrust, SchoolDayTimeline, Facilities, PrincipalMessage, InspirationalQuotes, HomeCTA
+- **About**: AboutHero, OurStory, VisionMission, MaaSaraswati, SchoolValues, Footer
+- **Academics**: AcademicsHero, CurriculumOverview, CoCurricular, FinalCTA, Footer
+- **Admissions**: AdmissionsHero, AdmissionJourney, Documents, FinalCTA, Footer
+- **Facilities**: 8 cards with icons + Coming Soon badge (Smart Lab) + dedicated page
+- **Gallery**: 5 categories, gradient photo-style cards (no numbered placeholders)
+- **Contact**: Hero, Contact Info, Quick Cards, ContactForm (client comp, with submit handler), Embedded Google Maps iframe, Final CTA
 
 ## Removed Dead Code
-- AcademicPrograms.tsx, contact/*.tsx (4 files), ui/cta-section.tsx, ui/faq.tsx
-- section-header.tsx restored (still imported by OurStory, CoCurricular, CurriculumOverview)
+- WhyChoose.tsx, SchoolHighlights.tsx, AcademicPrograms.tsx, contact/*.tsx (4 files), ui/cta-section.tsx, ui/faq.tsx
+- hooks/useScrollAnimation.ts, lib/utils.ts, types/index.ts
+- Empty config/, data/ directories
+- Unused import (schoolConfig) in Facilities.tsx
+
+## Production Polish Applied
+- Duplicate sections consolidated (no repetitive content)
+- All obvious placeholders replaced: Gallery uses styled cards with category labels, Principal shows GraduationCap silhouette instead of generic User icon, Maps section has real Google embed
+- Contact form has working submit handler (client component)
+- Social links retained as decorative (# hrefs — no fake social accounts)
+- ParentTrust expanded to 8 cards covering all trust factors (education, discipline, teachers, safety, transport, campus, academic growth, cultural/sports)
 
 ## Build
 15 static routes, 0 errors. Auto-deployed on every change.

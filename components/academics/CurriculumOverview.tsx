@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Baby, BookOpen, Layers, GraduationCap, Award } from 'lucide-react'
+import { Baby, BookOpen, Layers, GraduationCap } from 'lucide-react'
 import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, revealLeft } from '@/lib/animations'
 
@@ -42,15 +42,6 @@ const stages = [
     color: 'text-amber-600',
     bg: 'bg-amber-50',
   },
-  {
-    icon: Award,
-    title: 'Senior Secondary',
-    subtitle: 'Classes XI–XII',
-    description: 'Stream-based learning with Science, Commerce, and Humanities pathways, coupled with competitive exam preparation.',
-    year: 'Ages 16–17',
-    color: 'text-rose-600',
-    bg: 'bg-rose-50',
-  },
 ] as const
 
 export default function CurriculumOverview() {
@@ -63,7 +54,7 @@ export default function CurriculumOverview() {
         <SectionHeader
           badge="Curriculum Overview"
           title="A Curriculum Designed for Growth"
-          description="Our curriculum progresses through five carefully structured stages, each building on the last to create a seamless learning journey."
+          description="Our curriculum progresses through four carefully structured stages, each building on the last to create a seamless learning journey."
         />
 
         <div className="relative mt-16">
