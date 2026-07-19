@@ -13,7 +13,7 @@ interface Notice {
 
 function getCategoryIcon(category: string) {
   const cat = category.toLowerCase();
-  if (cat.includes("holiday") || cat.includes("holiday")) return { icon: Calendar, color: "text-green-500 bg-green-50" };
+  if (cat.includes("holiday")) return { icon: Calendar, color: "text-green-500 bg-green-50" };
   if (cat.includes("exam") || cat.includes("test")) return { icon: AlertTriangle, color: "text-red-500 bg-red-50" };
   return { icon: Info, color: "text-blue-500 bg-blue-50" };
 }

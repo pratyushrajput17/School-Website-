@@ -4,26 +4,37 @@ import {
   createHomework,
   getHomeworkCount,
 } from "@/lib/homework";
-import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  const teacher = getTeacherFromRequest(request);
+  const admin = getAdminFromRequest(request);
+  if (!teacher && !admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const teacherId = teacher?.id || undefined;
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("search") || undefined;
   const classId = searchParams.get("classId") || undefined;
   const sectionId = searchParams.get("sectionId") || undefined;
   const subjectId = searchParams.get("subjectId") || undefined;
-  const teacherId = searchParams.get("teacherId") || undefined;
+  const requestedTeacherId = searchParams.get("teacherId") || undefined;
   const status = searchParams.get("status") || undefined;
   const limit = searchParams.get("limit")
     ? Number(searchParams.get("limit"))
     : undefined;
 
+  const effectiveTeacherId = admin ? requestedTeacherId : teacherId;
+
   try {
     const homework = await getHomework({
-      search, classId, sectionId, subjectId, teacherId, status, limit,
+      search, classId, sectionId, subjectId,
+      teacherId: effectiveTeacherId,
+      status, limit,
     });
     const total = await getHomeworkCount();
 

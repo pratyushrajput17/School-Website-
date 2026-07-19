@@ -1,11 +1,17 @@
 import { NextResponse } from "next/server";
 import { getAttendance, bulkMarkAttendance } from "@/lib/attendance";
-import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  const teacher = getTeacherFromRequest(request);
+  const admin = getAdminFromRequest(request);
+  if (!teacher && !admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const date = searchParams.get("date") || undefined;
   const startDate = searchParams.get("startDate") || undefined;
@@ -13,7 +19,6 @@ export async function GET(request: Request) {
   const className = searchParams.get("className") || undefined;
   const section = searchParams.get("section") || undefined;
   const studentId = searchParams.get("studentId") || undefined;
-  const teacherId = searchParams.get("teacherId") || undefined;
   const status = searchParams.get("status") || undefined;
   const limit = searchParams.get("limit")
     ? Number(searchParams.get("limit"))
@@ -22,7 +27,7 @@ export async function GET(request: Request) {
   try {
     const records = await getAttendance({
       date, startDate, endDate, className, section,
-      studentId, teacherId, status, limit,
+      studentId, status, limit,
     });
     return NextResponse.json({ records });
   } catch (error) {
@@ -39,7 +44,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const teacherId = admin ? "" : teacher!.id;
+  const recordedBy = admin ? "admin" : teacher!.id;
   const { className, section, attendanceDate, records } = await request.json();
 
   if (!className || !section || !attendanceDate || !records || !Array.isArray(records)) {
@@ -61,7 +66,7 @@ export async function POST(request: Request) {
 
   try {
     const results = await bulkMarkAttendance(
-      teacherId || "admin",
+      recordedBy,
       className,
       section,
       attendanceDate,

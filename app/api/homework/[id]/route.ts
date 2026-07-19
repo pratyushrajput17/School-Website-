@@ -1,14 +1,20 @@
 import { NextResponse } from "next/server";
 import { getHomeworkById, updateHomework, deleteHomework } from "@/lib/homework";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
 
 export const runtime = "nodejs";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const teacher = getTeacherFromRequest(request);
+  const admin = getAdminFromRequest(request);
+  if (!teacher && !admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { id } = await params;
   try {
     const homework = await getHomeworkById(id);
@@ -26,8 +32,9 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const admin = getTeacherFromRequest(request) || requireAdmin(request);
-  if (!admin) {
+  const teacher = getTeacherFromRequest(request);
+  const admin = getAdminFromRequest(request);
+  if (!teacher && !admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -62,8 +69,9 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const admin = getTeacherFromRequest(request) || requireAdmin(request);
-  if (!admin) {
+  const teacher = getTeacherFromRequest(request);
+  const admin = getAdminFromRequest(request);
+  if (!teacher && !admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

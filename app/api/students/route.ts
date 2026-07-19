@@ -8,10 +8,17 @@ import {
   getStudentsPerClass,
 } from "@/lib/students";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { getTeacherFromRequest } from "@/lib/teacher-auth";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  const teacher = getTeacherFromRequest(request);
+  const admin = getAdminFromRequest(request);
+  if (!teacher && !admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search") || undefined;

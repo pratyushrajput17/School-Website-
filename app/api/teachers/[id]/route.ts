@@ -5,9 +5,12 @@ import { requireAdmin } from "@/lib/api-auth";
 export const runtime = "nodejs";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const unauthorized = requireAdmin(request);
+  if (unauthorized) return unauthorized;
+
   try {
     const { id } = await params;
     const teacher = await getTeacherById(id);

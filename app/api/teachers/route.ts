@@ -11,6 +11,9 @@ import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  const unauthorized = requireAdmin(request);
+  if (unauthorized) return unauthorized;
+
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search") || undefined;
