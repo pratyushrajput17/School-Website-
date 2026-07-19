@@ -305,3 +305,48 @@ model Notification {
   @@index([classId, sectionId])
   @@index([createdAt])
 }
+
+model AcademicSession {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  startYear Int      @unique
+  endYear   Int
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive])
+}
+
+model SystemSetting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String?
+  adminId   String?
+  adminName String   @default("")
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, createdAt])
+  @@index([adminId])
+  @@index([createdAt])
+}
+
+model Promotion {
+  id              String   @id @default(cuid())
+  fromClass       String
+  toClass         String
+  academicSession Int
+  studentCount    Int
+  details         String   @default("")
+  createdBy       String   @default("")
+  createdAt       DateTime @default(now())
+}
