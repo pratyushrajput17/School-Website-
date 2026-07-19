@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { bulkUpsertResults } from "@/lib/results";
 import { getAdminFromRequest } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
+import { createAuditLog } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -50,6 +51,18 @@ export async function POST(request: Request) {
     }
 
     const results = await bulkUpsertResults(records);
+
+    const actingAdmin = admin || (teacher ? { id: teacher.id, name: teacher.teacherName } : null);
+    if (actingAdmin) {
+      await createAuditLog({
+        action: "UPDATE",
+        entity: "Result",
+        adminId: actingAdmin.id,
+        adminName: actingAdmin.name,
+        details: JSON.stringify({ count: results.length }),
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
 
     return NextResponse.json({ results, count: results.length }, { status: 201 });
   } catch (error) {

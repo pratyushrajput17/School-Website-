@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createStudent } from "@/lib/students";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { createAuditLog } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -159,6 +160,18 @@ export async function POST(request: Request) {
           error: message,
         });
       }
+    }
+
+    const admin = getAdminFromRequest(request);
+    if (admin && createdCount > 0) {
+      await createAuditLog({
+        action: "CREATE",
+        entity: "Student",
+        adminId: admin.id,
+        adminName: admin.name,
+        details: JSON.stringify({ imported: createdCount, errors: errorCount, filename: file.name }),
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
     }
 
     return NextResponse.json({

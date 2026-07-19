@@ -10,6 +10,7 @@ import {
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 import { isValidMobile } from "@/lib/validation";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
+import { createAuditLog } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -124,6 +125,19 @@ export async function POST(request: Request) {
       admissionDate,
       photoUrl,
     });
+
+    const admin = getAdminFromRequest(request);
+    if (admin) {
+      await createAuditLog({
+        action: "CREATE",
+        entity: "Student",
+        entityId: student.id,
+        adminId: admin.id,
+        adminName: admin.name,
+        details: JSON.stringify({ admissionNumber, studentName, className, section }),
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
 
     return NextResponse.json({ student }, { status: 201 });
   } catch (error: unknown) {

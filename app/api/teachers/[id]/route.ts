@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getTeacherById, updateTeacher, deleteTeacher } from "@/lib/teachers";
-import { requireAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 import { isValidEmail, isValidMobile } from "@/lib/validation";
+import { createAuditLog } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -82,6 +83,18 @@ export async function PUT(
       status: body.status,
     });
 
+    const admin = getAdminFromRequest(request);
+    if (admin) {
+      await createAuditLog({
+        action: "UPDATE",
+        entity: "Teacher",
+        entityId: id,
+        adminId: admin.id,
+        adminName: admin.name,
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
+
     return NextResponse.json({ teacher });
   } catch (error: unknown) {
     console.error("PUT /api/teachers/[id] error:", error);
@@ -122,6 +135,18 @@ export async function DELETE(
     }
 
     await deleteTeacher(id);
+
+    const admin = getAdminFromRequest(request);
+    if (admin) {
+      await createAuditLog({
+        action: "DELETE",
+        entity: "Teacher",
+        entityId: id,
+        adminId: admin.id,
+        adminName: admin.name,
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAttendance, bulkMarkAttendance } from "@/lib/attendance";
 import { getAdminFromRequest } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
+import { createAuditLog } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -72,6 +73,18 @@ export async function POST(request: Request) {
       attendanceDate,
       records
     );
+
+    if (admin) {
+      await createAuditLog({
+        action: "UPDATE",
+        entity: "Attendance",
+        adminId: admin.id,
+        adminName: admin.name,
+        details: JSON.stringify({ className, section, date: attendanceDate, count: results.length }),
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
+
     return NextResponse.json({ records: results, count: results.length }, { status: 201 });
   } catch (error) {
     console.error("POST /api/attendance error:", error);

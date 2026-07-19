@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hashPassword } from "@/lib/auth";
-import { requireSuperAdmin } from "@/lib/api-auth";
+import { getAdminFromRequest, requireSuperAdmin } from "@/lib/api-auth";
+import { createAuditLog } from "@/lib/audit";
 
 export async function GET(request: Request) {
   const unauthorized = requireSuperAdmin(request);
@@ -90,6 +91,19 @@ export async function POST(request: Request) {
         createdAt: true,
       },
     });
+
+    const currentAdmin = getAdminFromRequest(request);
+    if (currentAdmin) {
+      await createAuditLog({
+        action: "CREATE",
+        entity: "Admin",
+        entityId: admin.id,
+        adminId: currentAdmin.id,
+        adminName: currentAdmin.name,
+        details: JSON.stringify({ name: admin.name, email: admin.email, role: admin.role }),
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
 
     return NextResponse.json({ admin }, { status: 201 });
   } catch {

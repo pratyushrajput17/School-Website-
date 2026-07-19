@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAttendanceById, deleteAttendance } from "@/lib/attendance";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
+import { createAuditLog } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -35,9 +36,22 @@ export async function DELETE(
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
 
+  const admin = getAdminFromRequest(request);
   const { id } = await params;
   try {
     await deleteAttendance(id);
+
+    if (admin) {
+      await createAuditLog({
+        action: "DELETE",
+        entity: "Attendance",
+        entityId: id,
+        adminId: admin.id,
+        adminName: admin.name,
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("DELETE /api/attendance/[id] error:", error);

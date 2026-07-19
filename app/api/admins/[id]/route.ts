@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hashPassword } from "@/lib/auth";
 import { getAdminFromRequest, requireSuperAdmin } from "@/lib/api-auth";
+import { createAuditLog } from "@/lib/audit";
 
 export async function GET(
   _request: Request,
@@ -102,6 +103,17 @@ export async function PUT(
       },
     });
 
+    if (currentAdmin) {
+      await createAuditLog({
+        action: "UPDATE",
+        entity: "Admin",
+        entityId: id,
+        adminId: currentAdmin.id,
+        adminName: currentAdmin.name,
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
+
     return NextResponse.json({ admin });
   } catch {
     return NextResponse.json(
@@ -138,6 +150,18 @@ export async function DELETE(
       where: { id },
       data: { status: "Inactive" },
     });
+
+    if (currentAdmin) {
+      await createAuditLog({
+        action: "DELETE",
+        entity: "Admin",
+        entityId: id,
+        adminId: currentAdmin.id,
+        adminName: currentAdmin.name,
+        details: JSON.stringify({ deactivated: existing.name }),
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+      });
+    }
 
     return NextResponse.json({ message: "Admin deactivated" });
   } catch {

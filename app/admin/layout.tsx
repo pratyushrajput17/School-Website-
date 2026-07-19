@@ -25,6 +25,11 @@ import {
   BookCheck,
   UserRound,
   MessageSquare,
+  FileBarChart,
+  Database,
+  GraduationCap,
+  Settings,
+  ScrollText,
 } from "lucide-react";
 import NextImage from "next/image";
 
@@ -81,6 +86,11 @@ export default function AdminLayout({
     { href: "/admin/exams", label: "Exams", icon: BookText },
     { href: "/admin/gallery", label: "Gallery", icon: Image },
     { href: "/admin/achievers", label: "Achievers", icon: Award },
+    { href: "/admin/reports", label: "Reports", icon: FileBarChart },
+    { href: "/admin/backups", label: "Backups", icon: Database },
+    { href: "/admin/promotions", label: "Promotions", icon: GraduationCap },
+    { href: "/admin/settings", label: "Settings", icon: Settings },
+    { href: "/admin/audit-logs", label: "Audit Logs", icon: ScrollText },
   ];
 
   async function handleLogout() {
