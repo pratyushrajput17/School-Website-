@@ -27,8 +27,8 @@ export async function GET(request: Request) {
     const section = searchParams.get("section") || undefined;
     const status = searchParams.get("status") || undefined;
     const limit = searchParams.get("limit")
-      ? Number(searchParams.get("limit"))
-      : undefined;
+      ? Math.min(Number(searchParams.get("limit")), 500)
+      : 200;
 
     const students = await getStudents({
       search,
