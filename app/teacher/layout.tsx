@@ -47,6 +47,7 @@ export default function TeacherLayout({
   const sidebarLinks = [
     { href: "/teacher/attendance", label: "Mark Attendance", icon: ClipboardCheck },
     { href: "/teacher/homework", label: "Homework", icon: BookText },
+    { href: "/teacher/results", label: "Results Entry", icon: ClipboardCheck },
   ];
 
   async function handleLogout() {

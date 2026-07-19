@@ -78,6 +78,7 @@ export default function AdminLayout({
     { href: "/admin/notifications", label: "Send Notification", icon: MessageSquare },
     { href: "/admin/notices", label: "Notices", icon: Bell },
     { href: "/admin/events", label: "Events", icon: Calendar },
+    { href: "/admin/exams", label: "Exams", icon: BookText },
     { href: "/admin/gallery", label: "Gallery", icon: Image },
     { href: "/admin/achievers", label: "Achievers", icon: Award },
   ];

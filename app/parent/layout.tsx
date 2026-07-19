@@ -17,6 +17,7 @@ import {
   GraduationCap,
   User,
   MessageSquare,
+  FileText,
 } from "lucide-react";
 import NextImage from "next/image";
 
@@ -46,6 +47,7 @@ export default function ParentLayout({ children }: { children: React.ReactNode }
     { href: "/parent/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/parent/attendance", label: "Attendance", icon: ClipboardCheck },
     { href: "/parent/homework", label: "Homework", icon: BookText },
+    { href: "/parent/results", label: "Results", icon: FileText },
     { href: "/parent/notices", label: "Notices", icon: Bell },
     { href: "/parent/events", label: "Events", icon: Calendar },
     { href: "/parent/achievers", label: "Achievers", icon: Award },
