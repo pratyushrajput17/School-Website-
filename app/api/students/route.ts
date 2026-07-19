@@ -8,6 +8,7 @@ import {
   getStudentsPerClass,
 } from "@/lib/students";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { isValidMobile } from "@/lib/validation";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
 
 export const runtime = "nodejs";
@@ -96,6 +97,13 @@ export async function POST(request: Request) {
     ) {
       return NextResponse.json(
         { error: "All required fields must be provided" },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidMobile(mobileNumber)) {
+      return NextResponse.json(
+        { error: "Invalid mobile number — must be 10 digits" },
         { status: 400 }
       );
     }

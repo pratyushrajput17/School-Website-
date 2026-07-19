@@ -17,40 +17,44 @@ model Admin {
 }
 
 model Notice {
-  id          String     @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   description String
   category    String
-  isPublished Boolean    @default(false)
-  createdBy   String     @default("")
+  isPublished Boolean  @default(false)
+  createdBy   String   @default("")
   updatedBy   String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished, createdAt])
 }
 
 model Event {
-  id          String     @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   description String
   image       String?
   eventDate   DateTime
   category    String
-  isPublished Boolean    @default(false)
-  createdBy   String     @default("")
+  isPublished Boolean  @default(false)
+  createdBy   String   @default("")
   updatedBy   String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished, eventDate])
 }
 
 model Gallery {
-  id        String     @id @default(cuid())
+  id        String   @id @default(cuid())
   title     String
   imageUrl  String
   category  String
-  createdBy String     @default("")
+  createdBy String   @default("")
   updatedBy String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Achiever {
@@ -68,6 +72,8 @@ model Achiever {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
+  @@index([academicSession, rank])
+  @@index([isPublished])
   @@map("achievers")
 }
 
@@ -75,7 +81,7 @@ model Teacher {
   id              String   @id @default(cuid())
   employeeId      String   @unique
   teacherName     String
-  email           String
+  email           String   @unique
   phone           String
   subject         String
   assignedClasses String   @default("")
@@ -88,43 +94,49 @@ model Teacher {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  homework             Homework[]
-  classTeachers        ClassTeacher[]
-  subjectAssignments   SubjectAssignment[]
+  homework           Homework[]
+  classTeachers      ClassTeacher[]
+  subjectAssignments SubjectAssignment[]
+
+  @@index([subject])
+  @@index([status])
 }
 
 model Student {
-  id               String       @id @default(cuid())
-  admissionNumber  String       @unique
-  studentName      String
-  fatherName       String
-  motherName       String
-  mobileNumber     String
-  alternateMobile  String       @default("")
-  dateOfBirth      DateTime
-  gender           String       @default("")
-  className        String
-  section          String
-  address          String
-  admissionDate    DateTime
-  status           String       @default("Active")
-  photoUrl         String?
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
-  attendance       Attendance[]
-  parent           Parent?
+  id              String       @id @default(cuid())
+  admissionNumber String       @unique
+  studentName     String
+  fatherName      String
+  motherName      String
+  mobileNumber    String
+  alternateMobile String       @default("")
+  dateOfBirth     DateTime
+  gender          String       @default("")
+  className       String
+  section         String
+  address         String
+  admissionDate   DateTime
+  status          String       @default("Active")
+  photoUrl        String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  attendance      Attendance[]
+  parent          Parent?
+
+  @@index([className, section])
+  @@index([status])
 }
 
 model Attendance {
-  id              String   @id @default(cuid())
-  studentId       String
-  teacherId       String
-  className       String
-  section         String
-  attendanceDate  DateTime
-  status          String
-  remarks         String   @default("")
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  studentId      String
+  teacherId      String
+  className      String
+  section        String
+  attendanceDate DateTime
+  status         String
+  remarks        String   @default("")
+  createdAt      DateTime @default(now())
 
   student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
@@ -140,9 +152,9 @@ model SchoolClass {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  homework             Homework[]
-  classTeachers        ClassTeacher[]
-  subjectAssignments   SubjectAssignment[]
+  homework           Homework[]
+  classTeachers      ClassTeacher[]
+  subjectAssignments SubjectAssignment[]
 }
 
 model Section {
@@ -150,9 +162,9 @@ model Section {
   sectionName String @unique
   status      String @default("Active")
 
-  homework             Homework[]
-  classTeachers        ClassTeacher[]
-  subjectAssignments   SubjectAssignment[]
+  homework           Homework[]
+  classTeachers      ClassTeacher[]
+  subjectAssignments SubjectAssignment[]
 }
 
 model Subject {
@@ -161,15 +173,15 @@ model Subject {
   subjectCode String @default("")
   status      String @default("Active")
 
-  homework             Homework[]
-  subjectAssignments   SubjectAssignment[]
+  homework           Homework[]
+  subjectAssignments SubjectAssignment[]
 }
 
 model ClassTeacher {
-  id        String   @id @default(cuid())
+  id        String @id @default(cuid())
   classId   String
   sectionId String
-  teacherId String   @unique
+  teacherId String @unique
 
   class   SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
   section Section     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
@@ -208,10 +220,10 @@ model Homework {
   status        String   @default("published")
   createdAt     DateTime @default(now())
 
-  subject Subject     @relation(fields: [subjectId], references: [id])
-  teacher Teacher     @relation(fields: [teacherId], references: [id])
-  class   SchoolClass @relation(fields: [classId], references: [id])
-  section Section     @relation(fields: [sectionId], references: [id])
+  subject Subject     @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  teacher Teacher     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  class   SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  section Section     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
 
   @@index([classId, sectionId])
   @@index([teacherId])
@@ -230,6 +242,8 @@ model Parent {
   studentId    String   @unique
   status       String   @default("Active")
   createdAt    DateTime @default(now())
+
+  @@index([mobileNumber])
 }
 
 model Notification {

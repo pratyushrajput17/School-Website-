@@ -7,6 +7,7 @@ import {
   getTeachersPerSubject,
 } from "@/lib/teachers";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { isValidEmail, isValidMobile } from "@/lib/validation";
 
 export const runtime = "nodejs";
 
@@ -85,6 +86,20 @@ export async function POST(request: Request) {
     ) {
       return NextResponse.json(
         { error: "All required fields must be provided" },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidMobile(phone)) {
+      return NextResponse.json(
+        { error: "Invalid phone number — must be 10 digits" },
         { status: 400 }
       );
     }

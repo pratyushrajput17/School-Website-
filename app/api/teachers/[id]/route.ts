@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getTeacherById, updateTeacher, deleteTeacher } from "@/lib/teachers";
 import { requireAdmin } from "@/lib/api-auth";
+import { isValidEmail, isValidMobile } from "@/lib/validation";
 
 export const runtime = "nodejs";
 
@@ -51,6 +52,20 @@ export async function PUT(
     }
 
     const body = await request.json();
+
+    if (body.email && !isValidEmail(body.email)) {
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
+    }
+
+    if (body.phone && !isValidMobile(body.phone)) {
+      return NextResponse.json(
+        { error: "Invalid phone number — must be 10 digits" },
+        { status: 400 }
+      );
+    }
 
     const teacher = await updateTeacher(id, {
       employeeId: body.employeeId,
