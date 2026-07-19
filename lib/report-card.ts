@@ -158,7 +158,7 @@ export async function getExamRankings(examId: string): Promise<{
 
   allEntries.sort((a, b) => b.percentage - a.percentage || a.studentName.localeCompare(b.studentName));
 
-  const school = allEntries.map((e, i) => ({ ...e, rank: i + 1 }));
+  const school: RankingEntry[] = allEntries.map((e, i) => ({ ...e, rank: i + 1 }));
 
   const classWise: Record<string, RankingEntry[]> = {};
   for (const e of school) {
