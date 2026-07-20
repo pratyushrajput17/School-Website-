@@ -152,6 +152,36 @@ async function main() {
   }
   console.log(`Seeded ${seedEvents.length} events`);
 
+  console.log("Seeding academic session...");
+  const existingSession = await prisma.academicSession.findFirst();
+  if (!existingSession) {
+    await prisma.academicSession.create({
+      data: { name: "2026-27", startYear: 2026, endYear: 2027, isActive: true },
+    });
+    console.log("Default academic session seeded");
+  } else {
+    console.log("Academic session already exists, skipping");
+  }
+
+  console.log("Seeding system settings...");
+  const defaults: Record<string, string> = {
+    schoolName: "Adarsh High School",
+    address: "Gadarwara Road, Sainkheda, MP 484661",
+    phoneNumbers: "9893652202, 9993606232, 9993794981",
+    email: "adresh2111@gmail.com",
+    principalName: "",
+    city: "Sainkheda",
+    pincode: "484661",
+  };
+  for (const [key, value] of Object.entries(defaults)) {
+    await prisma.systemSetting.upsert({
+      where: { key },
+      update: { value },
+      create: { key, value },
+    });
+  }
+  console.log(`Seeded ${Object.keys(defaults).length} system settings`);
+
   console.log("Seeding gallery...");
   const galleryCount = await prisma.gallery.count();
   console.log(`Gallery has ${galleryCount} existing images (seed uploads via admin UI)`);
