@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Upload, X } from "lucide-react";
 import Link from "next/link";
 
 const CLASSES = Array.from({ length: 12 }, (_, i) => String(i + 1));
@@ -32,7 +32,10 @@ export default function EditStudentPage() {
   const [section, setSection] = useState("");
   const [status, setStatus] = useState("Active");
   const [admissionDate, setAdmissionDate] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [existingPhotoUrl, setExistingPhotoUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -68,7 +71,8 @@ export default function EditStudentPage() {
         setSection(s.section);
         setStatus(s.status);
         setAdmissionDate(s.admissionDate.split("T")[0]);
-        setPhotoUrl(s.photoUrl || "");
+        setExistingPhotoUrl(s.photoUrl || null);
+        if (s.photoUrl) setPhotoPreview(s.photoUrl);
       } catch {
         router.push("/admin/students");
       } finally {
@@ -105,31 +109,34 @@ export default function EditStudentPage() {
 
     setSaving(true);
     try {
+      const formData = new FormData();
+      formData.append("admissionNumber", admissionNumber.trim());
+      formData.append("scholarNumber", scholarNumber.trim());
+      formData.append("category", category);
+      formData.append("caste", caste.trim());
+      formData.append("penNumber", penNumber.trim());
+      formData.append("aadhaarNumber", aadhaarNumber.trim());
+      formData.append("whatsappNumber", whatsappNumber.trim());
+      formData.append("studentName", studentName.trim());
+      formData.append("fatherName", fatherName.trim());
+      formData.append("motherName", motherName.trim());
+      formData.append("mobileNumber", mobileNumber.trim());
+      formData.append("alternateMobile", alternateMobile.trim());
+      formData.append("dateOfBirth", dateOfBirth);
+      formData.append("gender", gender);
+      formData.append("className", className);
+      formData.append("section", section);
+      formData.append("address", address.trim());
+      formData.append("status", status);
+      formData.append("admissionDate", admissionDate);
+      if (photoFile) {
+        formData.append("photo", photoFile);
+      }
+      formData.append("keepExistingPhoto", String(!photoFile && !!existingPhotoUrl));
+
       const res = await fetch(`/api/students/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          admissionNumber: admissionNumber.trim(),
-          scholarNumber: scholarNumber.trim(),
-          category,
-          caste: caste.trim(),
-          penNumber: penNumber.trim(),
-          aadhaarNumber: aadhaarNumber.trim(),
-          whatsappNumber: whatsappNumber.trim(),
-          studentName: studentName.trim(),
-          fatherName: fatherName.trim(),
-          motherName: motherName.trim(),
-          mobileNumber: mobileNumber.trim(),
-          alternateMobile: alternateMobile.trim(),
-          dateOfBirth,
-          gender,
-          className,
-          section,
-          address: address.trim(),
-          status,
-          admissionDate,
-          photoUrl: photoUrl.trim() || undefined,
-        }),
+        body: formData,
       });
 
       if (!res.ok) {
@@ -559,18 +566,65 @@ export default function EditStudentPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="photoUrl"
-              className="block text-sm font-medium text-gray-700 mb-1.5"
-            >
-              Photo URL
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              Photo
             </label>
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-[#FF9933] transition-colors"
+            >
+              {photoPreview ? (
+                <div className="relative">
+                  <img
+                    src={photoPreview}
+                    alt="Preview"
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPhotoFile(null);
+                      setPhotoPreview(existingPhotoUrl);
+                      if (fileInputRef.current) fileInputRef.current.value = "";
+                    }}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                  <p className="text-sm text-gray-500">
+                    Click to upload student photo
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Optional · JPG/PNG up to 2MB
+                  </p>
+                </>
+              )}
+            </div>
             <input
-              id="photoUrl"
-              type="text"
-              value={photoUrl}
-              onChange={(e) => setPhotoUrl(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                if (!file.type.startsWith("image/")) {
+                  setError("Please select an image file");
+                  return;
+                }
+                if (file.size > 2 * 1024 * 1024) {
+                  setError("Photo must be less than 2MB");
+                  return;
+                }
+                setError("");
+                setPhotoFile(file);
+                setPhotoPreview(URL.createObjectURL(file));
+              }}
+              className="hidden"
             />
           </div>
         </div>

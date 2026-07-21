@@ -51,6 +51,13 @@ export async function uploadPhoto(file: File): Promise<string> {
   });
 }
 
+export async function uploadStudentPhoto(file: File): Promise<string> {
+  return uploadToCloudinary(file, "adarsh-high-school/students", {
+    width: 400,
+    height: 500,
+  });
+}
+
 export async function deleteImage(publicId: string): Promise<void> {
   await cloudinary.uploader.destroy(publicId);
 }
