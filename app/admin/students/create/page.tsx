@@ -2,8 +2,13 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Loader2, Upload, X } from "lucide-react";
+import { ArrowLeft, Loader2, Upload, X, Printer, Download } from "lucide-react";
 import Link from "next/link";
+import {
+  downloadAdmissionPDF,
+  printAdmissionForm,
+  type AdmissionFormData,
+} from "@/lib/admission-pdf";
 
 const CLASSES = Array.from({ length: 12 }, (_, i) => String(i + 1));
 const SECTIONS = ["A", "B", "C"];
@@ -37,7 +42,10 @@ export default function CreateStudentPage() {
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(
+    e: React.FormEvent,
+    action: "save" | "save-print" | "save-pdf" = "save"
+  ) {
     e.preventDefault();
     setError("");
 
@@ -96,7 +104,46 @@ export default function CreateStudentPage() {
         return;
       }
 
-      router.push("/admin/students");
+      const { student } = await res.json();
+
+      if (action === "save") {
+        router.push("/admin/students");
+        return;
+      }
+
+      const admissionData: AdmissionFormData = {
+        admissionNumber: student.admissionNumber,
+        scholarNumber: student.scholarNumber || "",
+        studentName: student.studentName,
+        fatherName: student.fatherName,
+        motherName: student.motherName,
+        dateOfBirth: student.dateOfBirth,
+        gender: student.gender || "",
+        category: student.category || "General",
+        caste: student.caste || "",
+        penNumber: student.penNumber || "",
+        aadhaarNumber: student.aadhaarNumber || "",
+        mobileNumber: student.mobileNumber,
+        alternateMobile: student.alternateMobile || "",
+        whatsappNumber: student.whatsappNumber || "",
+        address: student.address,
+        className: student.className,
+        section: student.section,
+        admissionDate: student.admissionDate,
+        photoUrl: student.photoUrl,
+      };
+
+      if (action === "save-print") {
+        printAdmissionForm(admissionData);
+        router.push("/admin/students");
+        return;
+      }
+
+      if (action === "save-pdf") {
+        downloadAdmissionPDF(admissionData);
+        router.push("/admin/students");
+        return;
+      }
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -121,7 +168,7 @@ export default function CreateStudentPage() {
       </div>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e, "save")}
         className="bg-white rounded-xl border border-gray-200 p-6 space-y-5"
       >
         <div>
@@ -572,7 +619,7 @@ export default function CreateStudentPage() {
           </div>
         )}
 
-        <div className="flex items-center gap-3 pt-2">
+        <div className="flex flex-wrap items-center gap-3 pt-2">
           <button
             type="submit"
             disabled={saving}
@@ -580,6 +627,24 @@ export default function CreateStudentPage() {
           >
             {saving && <Loader2 className="w-4 h-4 animate-spin" />}
             {saving ? "Saving..." : "Save Student"}
+          </button>
+          <button
+            type="button"
+            disabled={saving}
+            onClick={(e) => handleSubmit(e, "save-print")}
+            className="inline-flex items-center gap-2 bg-[#1B3A5C] text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-[#15304d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Printer className="w-4 h-4" />
+            Save & Print
+          </button>
+          <button
+            type="button"
+            disabled={saving}
+            onClick={(e) => handleSubmit(e, "save-pdf")}
+            className="inline-flex items-center gap-2 bg-white border border-[#1B3A5C] text-[#1B3A5C] px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Download className="w-4 h-4" />
+            Save & Download PDF
           </button>
           <Link
             href="/admin/students"
