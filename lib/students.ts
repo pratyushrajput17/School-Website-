@@ -1,7 +1,13 @@
 import { prisma } from "./prisma";
 
 export interface StudentData {
-  admissionNumber: string;
+  admissionNumber?: string;
+  scholarNumber?: string;
+  category?: string;
+  caste?: string;
+  penNumber?: string;
+  aadhaarNumber?: string;
+  whatsappNumber?: string;
   studentName: string;
   fatherName: string;
   motherName: string;
@@ -19,6 +25,12 @@ export interface StudentData {
 
 export interface UpdateStudentData {
   admissionNumber?: string;
+  scholarNumber?: string;
+  category?: string;
+  caste?: string;
+  penNumber?: string;
+  aadhaarNumber?: string;
+  whatsappNumber?: string;
   studentName?: string;
   fatherName?: string;
   motherName?: string;
@@ -47,6 +59,9 @@ export async function getStudents(options?: {
     where.OR = [
       { studentName: { contains: options.search, mode: "insensitive" } },
       { admissionNumber: { contains: options.search, mode: "insensitive" } },
+      { scholarNumber: { contains: options.search, mode: "insensitive" } },
+      { penNumber: { contains: options.search, mode: "insensitive" } },
+      { aadhaarNumber: { contains: options.search, mode: "insensitive" } },
       { fatherName: { contains: options.search, mode: "insensitive" } },
       { motherName: { contains: options.search, mode: "insensitive" } },
       { mobileNumber: { contains: options.search, mode: "insensitive" } },
@@ -113,7 +128,13 @@ export async function getStudentByAdmissionNumber(admissionNumber: string) {
 export async function createStudent(data: StudentData) {
   const student = await prisma.student.create({
     data: {
-      admissionNumber: data.admissionNumber,
+      admissionNumber: data.admissionNumber || `SR-${Date.now()}`,
+      scholarNumber: data.scholarNumber ?? "",
+      category: data.category ?? "General",
+      caste: data.caste ?? "",
+      penNumber: data.penNumber ?? "",
+      aadhaarNumber: data.aadhaarNumber ?? "",
+      whatsappNumber: data.whatsappNumber ?? "",
       studentName: data.studentName,
       fatherName: data.fatherName,
       motherName: data.motherName,
@@ -141,6 +162,12 @@ export async function createStudent(data: StudentData) {
 export async function updateStudent(id: string, data: UpdateStudentData) {
   const updateData: Record<string, unknown> = {};
   if (data.admissionNumber !== undefined) updateData.admissionNumber = data.admissionNumber;
+  if (data.scholarNumber !== undefined) updateData.scholarNumber = data.scholarNumber;
+  if (data.category !== undefined) updateData.category = data.category;
+  if (data.caste !== undefined) updateData.caste = data.caste;
+  if (data.penNumber !== undefined) updateData.penNumber = data.penNumber;
+  if (data.aadhaarNumber !== undefined) updateData.aadhaarNumber = data.aadhaarNumber;
+  if (data.whatsappNumber !== undefined) updateData.whatsappNumber = data.whatsappNumber;
   if (data.studentName !== undefined) updateData.studentName = data.studentName;
   if (data.fatherName !== undefined) updateData.fatherName = data.fatherName;
   if (data.motherName !== undefined) updateData.motherName = data.motherName;

@@ -43,7 +43,6 @@ export async function POST(request: Request) {
       .map((h) => h.trim().replace(/^"|"$/g, ""));
 
     const requiredFields = [
-      "admissionNumber",
       "studentName",
       "fatherName",
       "motherName",
@@ -95,17 +94,6 @@ export async function POST(request: Request) {
       const row = lines[i].split(",").map((c) => c.trim());
       const admissionNumber = getValue(row, "admissionNumber");
 
-      if (!admissionNumber) {
-        results.push({
-          row: i + 1,
-          admissionNumber: "",
-          studentName: getValue(row, "studentName"),
-          status: "skipped",
-          error: "Empty admission number",
-        });
-        continue;
-      }
-
       const studentName = getValue(row, "studentName");
       if (!studentName) {
         results.push({
@@ -120,7 +108,13 @@ export async function POST(request: Request) {
 
       try {
         const student = await createStudent({
-          admissionNumber,
+          admissionNumber: admissionNumber || undefined,
+          scholarNumber: getValue(row, "scholarNumber"),
+          category: getValue(row, "category") || "General",
+          caste: getValue(row, "caste"),
+          penNumber: getValue(row, "penNumber"),
+          aadhaarNumber: getValue(row, "aadhaarNumber"),
+          whatsappNumber: getValue(row, "whatsappNumber"),
           studentName,
           fatherName: getValue(row, "fatherName"),
           motherName: getValue(row, "motherName"),

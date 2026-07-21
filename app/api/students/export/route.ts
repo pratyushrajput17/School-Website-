@@ -17,6 +17,12 @@ export async function GET(request: Request) {
 
     const headers = [
       "Admission Number",
+      "Scholar Number",
+      "Category",
+      "Caste",
+      "PEN Number",
+      "Aadhaar Number",
+      "WhatsApp Number",
       "Student Name",
       "Father Name",
       "Mother Name",
@@ -33,6 +39,12 @@ export async function GET(request: Request) {
 
     const rows = students.map((s) => [
       s.admissionNumber,
+      s.scholarNumber || "",
+      s.category || "General",
+      s.caste || "",
+      s.penNumber || "",
+      s.aadhaarNumber || "",
+      s.whatsappNumber || "",
       s.studentName,
       s.fatherName,
       s.motherName,

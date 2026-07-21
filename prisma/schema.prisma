@@ -105,6 +105,12 @@ model Teacher {
 model Student {
   id              String       @id @default(cuid())
   admissionNumber String       @unique
+  scholarNumber   String       @default("")
+  category        String       @default("General")
+  caste           String       @default("")
+  penNumber       String       @default("")
+  aadhaarNumber   String       @default("")
+  whatsappNumber  String       @default("")
   studentName     String
   fatherName      String
   motherName      String

@@ -29,6 +29,8 @@ function formatDate(iso: string) {
   })
 }
 
+export const revalidate = 30;
+
 export default async function EventsPage() {
   const events = await getEvents({ publishedOnly: true }).catch(() => [])
 

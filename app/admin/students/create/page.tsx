@@ -11,6 +11,12 @@ const SECTIONS = ["A", "B", "C"];
 export default function CreateStudentPage() {
   const router = useRouter();
   const [admissionNumber, setAdmissionNumber] = useState("");
+  const [scholarNumber, setScholarNumber] = useState("");
+  const [category, setCategory] = useState("General");
+  const [caste, setCaste] = useState("");
+  const [penNumber, setPenNumber] = useState("");
+  const [aadhaarNumber, setAadhaarNumber] = useState("");
+  const [whatsappNumber, setWhatsappNumber] = useState("");
   const [studentName, setStudentName] = useState("");
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
@@ -34,7 +40,6 @@ export default function CreateStudentPage() {
     setError("");
 
     if (
-      !admissionNumber.trim() ||
       !studentName.trim() ||
       !fatherName.trim() ||
       !motherName.trim() ||
@@ -60,7 +65,13 @@ export default function CreateStudentPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          admissionNumber: admissionNumber.trim(),
+          admissionNumber: admissionNumber.trim() || undefined,
+          scholarNumber: scholarNumber.trim(),
+          category,
+          caste: caste.trim(),
+          penNumber: penNumber.trim(),
+          aadhaarNumber: aadhaarNumber.trim(),
+          whatsappNumber: whatsappNumber.trim(),
           studentName: studentName.trim(),
           fatherName: fatherName.trim(),
           motherName: motherName.trim(),
@@ -111,25 +122,148 @@ export default function CreateStudentPage() {
         onSubmit={handleSubmit}
         className="bg-white rounded-xl border border-gray-200 p-6 space-y-5"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div>
-            <label
-              htmlFor="admissionNumber"
-              className="block text-sm font-medium text-gray-700 mb-1.5"
-            >
-              Admission Number <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="admissionNumber"
-              type="text"
-              value={admissionNumber}
-              onChange={(e) => setAdmissionNumber(e.target.value)}
-              placeholder="e.g. AHS-2026-001"
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
-            />
-          </div>
+        <div>
+          <label
+            htmlFor="admissionNumber"
+            className="block text-sm font-medium text-gray-700 mb-1.5"
+          >
+            Admission Number
+          </label>
+          <input
+            id="admissionNumber"
+            type="text"
+            value={admissionNumber}
+            onChange={(e) => setAdmissionNumber(e.target.value)}
+            placeholder="Auto-generated if left empty"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+          />
+          <p className="text-xs text-gray-400 mt-1">
+            Leave blank to auto-generate as SR-{`{timestamp}`}
+          </p>
+        </div>
 
-          <div>
+        <div className="border-t border-gray-100 pt-5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider">
+            Academic & Identity Details
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div>
+              <label
+                htmlFor="scholarNumber"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Scholar Number
+              </label>
+              <input
+                id="scholarNumber"
+                type="text"
+                value={scholarNumber}
+                onChange={(e) => setScholarNumber(e.target.value)}
+                placeholder="Optional"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="category"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Category
+              </label>
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent appearance-none bg-white"
+              >
+                <option value="General">General</option>
+                <option value="OBC">OBC</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="caste"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Caste
+              </label>
+              <input
+                id="caste"
+                type="text"
+                value={caste}
+                onChange={(e) => setCaste(e.target.value)}
+                placeholder="Optional"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-5">
+            <div>
+              <label
+                htmlFor="penNumber"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                PEN Number
+              </label>
+              <input
+                id="penNumber"
+                type="text"
+                value={penNumber}
+                onChange={(e) => setPenNumber(e.target.value)}
+                placeholder="Optional"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="aadhaarNumber"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Aadhaar Number
+              </label>
+              <input
+                id="aadhaarNumber"
+                type="text"
+                value={aadhaarNumber}
+                onChange={(e) => setAadhaarNumber(e.target.value)}
+                placeholder="Optional"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="whatsappNumber"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                WhatsApp Number
+              </label>
+              <input
+                id="whatsappNumber"
+                type="tel"
+                maxLength={10}
+                value={whatsappNumber}
+                onChange={(e) =>
+                  setWhatsappNumber(e.target.value.replace(/\D/g, ""))
+                }
+                placeholder="Optional"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-100 pt-5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider">
+            Status
+          </h3>
+          <div className="max-w-xs">
             <label
               htmlFor="status"
               className="block text-sm font-medium text-gray-700 mb-1.5"
@@ -148,6 +282,12 @@ export default function CreateStudentPage() {
               <option value="Left">Left</option>
             </select>
           </div>
+        </div>
+
+        <div className="border-t border-gray-100 pt-5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider">
+            Personal Details
+          </h3>
         </div>
 
         <div>

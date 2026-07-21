@@ -21,6 +21,12 @@ import {
 interface Student {
   id: string;
   admissionNumber: string;
+  scholarNumber: string;
+  category: string;
+  caste: string;
+  penNumber: string;
+  aadhaarNumber: string;
+  whatsappNumber: string;
   studentName: string;
   fatherName: string;
   motherName: string;
@@ -201,6 +207,12 @@ export default function AdminStudentsPage() {
   function downloadSampleCSV() {
     const headers = [
       "admissionNumber",
+      "scholarNumber",
+      "category",
+      "caste",
+      "penNumber",
+      "aadhaarNumber",
+      "whatsappNumber",
       "studentName",
       "fatherName",
       "motherName",
@@ -216,6 +228,12 @@ export default function AdminStudentsPage() {
     ];
     const sampleRow = [
       "AHS-2026-001",
+      "",
+      "General",
+      "",
+      "",
+      "",
+      "",
       "Rahul Kumar",
       "Suresh Kumar",
       "Sunita Devi",
@@ -506,6 +524,9 @@ export default function AdminStudentsPage() {
                     Admission No.
                   </th>
                   <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
+                    Scholar No.
+                  </th>
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
                     Student Name
                   </th>
                   <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
@@ -519,6 +540,9 @@ export default function AdminStudentsPage() {
                   </th>
                   <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
                     Section
+                  </th>
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
+                    Category
                   </th>
                   <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
                     Status
@@ -550,6 +574,9 @@ export default function AdminStudentsPage() {
                     <td className="px-4 py-3 text-sm font-mono text-gray-700">
                       {student.admissionNumber}
                     </td>
+                    <td className="px-4 py-3 text-sm text-gray-500 font-mono">
+                      {student.scholarNumber || "\u2014"}
+                    </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-gray-900">
@@ -573,6 +600,11 @@ export default function AdminStudentsPage() {
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-700">
                       {student.section}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="inline-flex text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">
+                        {student.category || "General"}
+                      </span>
                     </td>
                     <td className="px-4 py-3">
                       <span
