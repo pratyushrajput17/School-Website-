@@ -16,6 +16,7 @@ import {
   Eye,
   CheckCircle2,
   BookOpen,
+  Key,
 } from "lucide-react";
 
 interface Teacher {
@@ -31,6 +32,7 @@ interface Teacher {
   address: string;
   photoUrl: string | null;
   status: string;
+  hasPassword: boolean;
   createdAt: string;
 }
 
@@ -89,6 +91,11 @@ export default function AdminTeachersPage() {
     skipped: number;
   } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [passwordModalId, setPasswordModalId] = useState<string | null>(null);
+  const [passwordModalName, setPasswordModalName] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [settingPassword, setSettingPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   const fetchTeachers = useCallback(async () => {
     try {
@@ -191,6 +198,35 @@ export default function AdminTeachersPage() {
     }
   }
 
+  async function handleSetPassword() {
+    if (!passwordModalId || !newPassword.trim()) return;
+    setSettingPassword(true);
+    setPasswordError("");
+    try {
+      const res = await fetch(`/api/teachers/${passwordModalId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: newPassword.trim() }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setPasswordError(data.error || "Failed to set password");
+        return;
+      }
+      setTeachers((prev) =>
+        prev.map((t) =>
+          t.id === passwordModalId ? { ...t, hasPassword: true } : t
+        )
+      );
+      setPasswordModalId(null);
+      setNewPassword("");
+    } catch {
+      setPasswordError("Something went wrong");
+    } finally {
+      setSettingPassword(false);
+    }
+  }
+
   function downloadSampleCSV() {
     const headers = [
       "employeeId",
@@ -266,7 +302,57 @@ export default function AdminTeachersPage() {
               Export CSV
               <ChevronDown className="w-3.5 h-3.5" />
             </button>
-            {exportOpen && (
+      {passwordModalId && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-sm w-full p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Set Password
+              </h3>
+              <button
+                onClick={() => setPasswordModalId(null)}
+                className="p-1 hover:bg-gray-100 rounded-lg"
+              >
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              Set login password for <strong>{passwordModalName}</strong>
+            </p>
+            <input
+              type="text"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter password"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent mb-1"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSetPassword();
+              }}
+            />
+            {passwordError && (
+              <p className="text-xs text-red-600 mb-3">{passwordError}</p>
+            )}
+            <div className="flex gap-3 justify-end mt-4">
+              <button
+                onClick={() => setPasswordModalId(null)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSetPassword}
+                disabled={settingPassword || !newPassword.trim()}
+                className="px-4 py-2 text-sm font-medium text-white bg-[#FF9933] hover:bg-[#e8892e] rounded-lg transition-colors disabled:opacity-50"
+              >
+                {settingPassword ? "Saving..." : "Set Password"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {exportOpen && (
               <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-lg z-50 p-3">
                 <p className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
                   Export Options
@@ -504,6 +590,12 @@ export default function AdminTeachersPage() {
                       <p className="text-xs text-gray-400">
                         {teacher.qualification}
                       </p>
+                      {!teacher.hasPassword && (
+                        <span className="inline-flex items-center gap-1 text-xs text-amber-600 mt-0.5">
+                          <Key className="w-3 h-3" />
+                          No password set
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-600">
                       <p>{teacher.email}</p>
@@ -554,6 +646,20 @@ export default function AdminTeachersPage() {
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </Link>
+                        {!teacher.hasPassword && (
+                          <button
+                            onClick={() => {
+                              setPasswordModalId(teacher.id);
+                              setPasswordModalName(teacher.teacherName);
+                              setNewPassword("");
+                              setPasswordError("");
+                            }}
+                            className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                            title="Set login password"
+                          >
+                            <Key className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                         <button
                           onClick={() => setDeleteId(teacher.id)}
                           className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"

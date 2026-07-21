@@ -83,7 +83,8 @@ export async function POST(request: Request) {
       !subject ||
       !joiningDate ||
       !qualification ||
-      !address
+      !address ||
+      !password
     ) {
       return NextResponse.json(
         { error: "All required fields must be provided" },

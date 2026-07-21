@@ -70,7 +70,8 @@ export default function CreateTeacherPage() {
       !subject ||
       !joiningDate ||
       !qualification.trim() ||
-      !address.trim()
+      !address.trim() ||
+      !password.trim()
     ) {
       setError("All required fields must be filled");
       return;
@@ -334,7 +335,7 @@ export default function CreateTeacherPage() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 mb-1.5"
             >
-              Login Password
+              Login Password <span className="text-red-500">*</span>
             </label>
             <input
               id="password"

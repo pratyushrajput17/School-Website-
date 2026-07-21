@@ -70,6 +70,8 @@ export async function getTeachers(options?: {
 
   return teachers.map((t) => ({
     ...t,
+    password: undefined,
+    hasPassword: !!t.password,
     joiningDate: t.joiningDate.toISOString(),
     createdAt: t.createdAt.toISOString(),
     updatedAt: t.updatedAt.toISOString(),
@@ -81,6 +83,8 @@ export async function getTeacherById(id: string) {
   if (!teacher) return null;
   return {
     ...teacher,
+    password: undefined,
+    hasPassword: !!teacher.password,
     joiningDate: teacher.joiningDate.toISOString(),
     createdAt: teacher.createdAt.toISOString(),
     updatedAt: teacher.updatedAt.toISOString(),
@@ -137,6 +141,8 @@ export async function updateTeacher(id: string, data: UpdateTeacherData) {
   });
   return {
     ...teacher,
+    password: undefined,
+    hasPassword: !!teacher.password,
     joiningDate: teacher.joiningDate.toISOString(),
     createdAt: teacher.createdAt.toISOString(),
     updatedAt: teacher.updatedAt.toISOString(),
