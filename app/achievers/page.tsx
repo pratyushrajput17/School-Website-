@@ -23,7 +23,7 @@ function getGrade(percentage: number) {
   return { label: "B", color: "text-gray-600 bg-gray-50" }
 }
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 export default async function AchieversPage() {
   const achievers = await getAchievers({ publishedOnly: true }).catch(() => [])

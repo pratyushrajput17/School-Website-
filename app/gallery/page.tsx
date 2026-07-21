@@ -23,7 +23,7 @@ const GALLERY_CATEGORIES = [
   "Other",
 ] as const
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
   const images = await getGalleryImages().catch(() => [])

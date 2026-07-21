@@ -10,9 +10,9 @@ import NoticePreview from "@/components/NoticePreview"
 import GalleryPreview from "@/components/GalleryPreview"
 import HomeCTA from "@/components/HomeCTA"
 import { schoolConfig } from "@/lib/school-config"
-import dynamic from "next/dynamic"
+import nextDynamic from "next/dynamic"
 
-const PrincipalMessage = dynamic(() => import("@/components/PrincipalMessage"))
+const PrincipalMessage = nextDynamic(() => import("@/components/PrincipalMessage"))
 
 export const metadata: Metadata = {
   title: schoolConfig.metadata.defaultTitle,
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
 }
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (

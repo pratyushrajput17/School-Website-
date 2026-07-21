@@ -29,7 +29,7 @@ function formatDate(iso: string) {
   })
 }
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 export default async function EventsPage() {
   const events = await getEvents({ publishedOnly: true }).catch(() => [])
