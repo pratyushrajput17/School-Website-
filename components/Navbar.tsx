@@ -107,6 +107,12 @@ export default function Navbar() {
               Admin Login
             </Link>
             <Link
+              href="/teacher/login"
+              className="rounded-full border border-deep-blue/20 px-5 py-2 text-sm font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
+            >
+              Teacher Login
+            </Link>
+            <Link
               href="/admissions"
               className="rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
             >
@@ -262,6 +268,13 @@ export default function Navbar() {
                 onClick={closeMobile}
               >
                 Admin Login
+              </Link>
+              <Link
+                href="/teacher/login"
+                className="rounded-full border border-deep-blue/20 px-6 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:border-deep-blue/40 hover:text-deep-blue"
+                onClick={closeMobile}
+              >
+                Teacher Login
               </Link>
               <Link
                 href="/admissions"
