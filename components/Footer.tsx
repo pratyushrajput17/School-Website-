@@ -1,8 +1,6 @@
 import Link from 'next/link'
-import { GraduationCap, MapPin, Phone, Mail } from 'lucide-react'
+import { GraduationCap, MapPin, Mail } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
-
-const { contact } = schoolConfig
 
 const quickLinks = [
   { href: '/', label: 'Home' },
@@ -106,29 +104,11 @@ export default function Footer() {
               <li>
                 <span className="flex items-start gap-2 text-sm text-white/60">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-saffron" />
-                  Gadarwara Road, Sainkheda, MP 484661
+                  Gadarwara Road, Sainkheda, Madhya Pradesh 484661
                 </span>
               </li>
               <li>
-                <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
-                  <Phone className="h-4 w-4 shrink-0 text-saffron" />
-                  9893652202
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${contact.altPhone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
-                  <Phone className="h-4 w-4 shrink-0 text-saffron" />
-                  9993606232
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${contact.thirdPhone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
-                  <Phone className="h-4 w-4 shrink-0 text-saffron" />
-                  9993794981
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${contact.email}`} className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
+                <a href="mailto:adresh2111@gmail.com" className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-saffron">
                   <Mail className="h-4 w-4 shrink-0 text-saffron" />
                   adresh2111@gmail.com
                 </a>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { GraduationCap, ArrowRight, Phone } from 'lucide-react'
+import { GraduationCap, ArrowRight } from 'lucide-react'
 import { schoolConfig } from '@/lib/school-config'
 
 export default function Hero() {
@@ -37,11 +37,11 @@ export default function Hero() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href={`tel:${schoolConfig.contact.phone.replace(/\s/g, '')}`}
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-full border border-deep-blue/20 bg-white px-7 py-3.5 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-300 hover:bg-saffron-light"
               >
-                <Phone className="h-4 w-4" />
-                Call: {schoolConfig.contact.phone}
+                Contact Us
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Phone, Mail, MapPin, Navigation, ArrowRight } from "lucide-react"
+import { Mail, MapPin, Navigation, ArrowRight } from "lucide-react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import ContactForm from "@/components/ContactForm"
@@ -10,7 +10,7 @@ const { contact } = schoolConfig
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with Adarsh High School. Address, phone numbers, email, contact form, and directions on Gadarwara Road, Sainkheda, MP.",
+  description: "Get in touch with Adarsh High School. Address, email, contact form, and directions on Gadarwara Road, Sainkheda, MP.",
   alternates: { canonical: `${schoolConfig.url}/contact` },
   openGraph: {
     title: `${schoolConfig.metadata.siteName} | Contact Us`,
@@ -23,13 +23,10 @@ export const metadata: Metadata = {
 
 const contactMethods = [
   { icon: MapPin, label: "Address", detail: "Gadarwara Road, Sainkheda,\nMadhya Pradesh 484661" },
-  { icon: Phone, label: "Phone Numbers", detail: "9893652202\n9993606232\n9993794981" },
   { icon: Mail, label: "Email", detail: "adresh2111@gmail.com" },
 ] as const
 
 const quickCards = [
-  { title: "Call Admissions", icon: Phone, href: `tel:${contact.phone.replace(/\s/g, '')}`, detail: "+91 9893652202" },
-  { title: "Call School Office", icon: Phone, href: `tel:${contact.altPhone.replace(/\s/g, '')}`, detail: "+91 9993606232" },
   { title: "Email Us", icon: Mail, href: `mailto:${contact.email}`, detail: "adresh2111@gmail.com" },
   { title: "Get Directions", icon: Navigation, href: "https://maps.google.com/?q=Gadarwara+Road+Sainkheda+Madhya+Pradesh", detail: "Open in Google Maps" },
 ] as const
@@ -39,7 +36,6 @@ export default function ContactPage() {
     <>
       <Navbar />
 
-      {/* 1. Hero Section */}
       <section className="relative min-h-[60vh] overflow-hidden bg-gradient-to-b from-saffron-light/30 via-white to-white">
         <div className="absolute -top-48 right-0 h-[600px] w-[600px] rounded-full bg-saffron/5 blur-3xl" />
         <div className="absolute -bottom-48 left-0 h-[500px] w-[500px] rounded-full bg-deep-blue/5 blur-3xl" />
@@ -54,14 +50,13 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* 2. Contact Information */}
       <section className="relative overflow-hidden py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <span className="badge-pill">Contact Information</span>
             <h2 className="heading-xl mt-6">Adarsh High School</h2>
           </div>
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-16 grid gap-6 sm:grid-cols-2">
             {contactMethods.map((method) => (
               <div
                 key={method.label}
@@ -80,14 +75,13 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* 3. Quick Contact Cards */}
       <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <span className="badge-pill">Quick Contact</span>
             <h2 className="heading-xl mt-6">Reach Us Instantly</h2>
           </div>
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-2 max-w-2xl mx-auto">
             {quickCards.map((card) => (
               <a
                 key={card.title}
@@ -107,7 +101,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* 4. Contact Form */}
       <section className="relative overflow-hidden py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
@@ -123,7 +116,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* 5. Google Maps Placeholder */}
       <section className="relative overflow-hidden bg-saffron-light/20 py-24 lg:py-28" id="map">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
@@ -149,7 +141,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* 6. Final CTA */}
       <section className="relative overflow-hidden bg-gradient-to-br from-deep-blue via-deep-blue to-deep-blue/95 py-24 lg:py-28">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-saffron/5 via-transparent to-transparent" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -162,11 +153,11 @@ export default function ContactPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-saffron-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2"
               >
-                <Phone className="h-4 w-4" />
-                Call Now
+                <Mail className="h-4 w-4" />
+                Contact Us
               </Link>
               <Link
                 href="https://maps.google.com/?q=Gadarwara+Road+Sainkheda+Madhya+Pradesh"

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const { metadata: meta, contact } = schoolConfig
+const { metadata: meta } = schoolConfig
 
 export const metadata: Metadata = {
   metadataBase: new URL(schoolConfig.url),
@@ -129,9 +129,8 @@ export default function RootLayout({
                 },
                 contactPoint: {
                   "@type": "ContactPoint",
-                  telephone: contact.phone.replace(/\s/g, ''),
                   contactType: "admissions",
-                  email: contact.email,
+                  email: "adresh2111@gmail.com",
                   availableLanguage: ["Hindi", "English"],
                 },
                 sameAs: [

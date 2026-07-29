@@ -44,6 +44,7 @@ export default function AdminLayout({
   const [adminName, setAdminName] = useState<string | null>(null);
   const [adminRole, setAdminRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [enquiryUnread, setEnquiryUnread] = useState(0);
 
   useEffect(() => {
     async function checkAuth() {
@@ -56,6 +57,16 @@ export default function AdminLayout({
         const data = await res.json();
         setAdminName(data.admin.name);
         setAdminRole(data.admin.role);
+
+        if (data.admin.role === "super_admin") {
+          try {
+            const enqRes = await fetch("/api/admin/enquiries?limit=1");
+            if (enqRes.ok) {
+              const enqData = await enqRes.json();
+              setEnquiryUnread(enqData.stats?.unreadCount || 0);
+            }
+          } catch { /* silent */ }
+        }
       } catch {
         router.push("/login");
       } finally {
@@ -83,6 +94,9 @@ export default function AdminLayout({
     { href: "/admin/notifications", label: "Send Notification", icon: MessageSquare },
     { href: "/admin/notices", label: "Notices", icon: Bell },
     { href: "/admin/events", label: "Events", icon: Calendar },
+    ...(adminRole === "super_admin"
+      ? [{ href: "/admin/enquiries", label: `Enquiries (${enquiryUnread})`, icon: MessageSquare }]
+      : []),
     { href: "/admin/exams", label: "Exams", icon: BookText },
     { href: "/admin/gallery", label: "Gallery", icon: Image },
     { href: "/admin/achievers", label: "Achievers", icon: Award },

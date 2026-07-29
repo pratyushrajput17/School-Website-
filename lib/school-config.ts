@@ -29,9 +29,6 @@ export const schoolConfig = {
 
   contact: {
     address: 'Gadarwara Road, Sainkheda, Madhya Pradesh 484661',
-    phone: '+91 9893652202',
-    altPhone: '+91 9993606232',
-    thirdPhone: '+91 9993794981',
     email: 'adresh2111@gmail.com',
     officeHours: 'Mon–Sat: 8:00 AM – 4:00 PM',
   },

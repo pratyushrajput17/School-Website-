@@ -44,7 +44,7 @@ export default function AdmissionsHero() {
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href={`tel:${schoolConfig.contact.phone.replace(/\s/g, '')}`}
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-deep-blue px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
               >
                 Contact for Admission

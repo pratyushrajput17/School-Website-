@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Phone } from 'lucide-react'
-import { schoolConfig } from '@/lib/school-config'
+import { ArrowRight } from 'lucide-react'
 
 export default function HomeCTA() {
   return (
@@ -23,11 +22,11 @@ export default function HomeCTA() {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href={`tel:${schoolConfig.contact.phone.replace(/\s/g, '')}`}
+              href="/contact"
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
             >
-              <Phone className="h-4 w-4" />
-              Call Now
+              Contact Us
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

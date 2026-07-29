@@ -56,7 +56,7 @@ export function generateAdmissionPDF(data: AdmissionFormData) {
   doc.setFontSize(8);
   doc.text(schoolConfig.contact.address, pw / 2, 28, { align: "center" });
   doc.text(
-    `Ph: ${schoolConfig.contact.phone} | ${schoolConfig.contact.altPhone} | Email: ${schoolConfig.contact.email}`,
+    `Email: ${schoolConfig.contact.email}`,
     pw / 2,
     33,
     { align: "center" }
@@ -272,7 +272,7 @@ export function generateAdmissionPDF(data: AdmissionFormData) {
     { align: "center" }
   );
   doc.text(
-    `Ph: ${schoolConfig.contact.phone} · ${schoolConfig.contact.email}`,
+    `${schoolConfig.contact.email}`,
     pw / 2,
     291,
     { align: "center" }
@@ -338,7 +338,7 @@ export function printAdmissionForm(data: AdmissionFormData) {
 <div class="header">
   <h1>${schoolConfig.name}</h1>
   <div class="hindi">${schoolConfig.nameHindi}</div>
-  <div class="info">${schoolConfig.contact.address}<br>Ph: ${schoolConfig.contact.phone} | ${schoolConfig.contact.altPhone} | Email: ${schoolConfig.contact.email}</div>
+    <div class="info">${schoolConfig.contact.address}<br>Email: ${schoolConfig.contact.email}</div>
 </div>
 
 <div class="title-bar">STUDENT ADMISSION FORM</div>
@@ -396,7 +396,7 @@ ${data.alternateMobile ? `<div class="row"><div class="field"><div class="label"
 </div>
 
 <div class="footer">
-  ${schoolConfig.name} · ${schoolConfig.contact.address} · Ph: ${schoolConfig.contact.phone} · ${schoolConfig.contact.email}
+  ${schoolConfig.name} · ${schoolConfig.contact.address} · ${schoolConfig.contact.email}
 </div>
 
 </body></html>
