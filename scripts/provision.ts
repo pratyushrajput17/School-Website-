@@ -2,7 +2,7 @@
  * Production Database Provisioning Script
  *
  * Usage:
- *   DATABASE_URL="postgresql://..." npx tsx scripts/provision.ts
+ *   schoolwebsite_DATABASE_URL="postgresql://..." npx tsx scripts/provision.ts
  *
  * This script:
  *   1. Pushes the Prisma schema to the database
@@ -12,11 +12,11 @@
 import { execSync } from "child_process";
 
 async function main() {
-  const url = process.env.DATABASE_URL;
+  const url = process.env.schoolwebsite_DATABASE_URL || process.env.DATABASE_URL;
 
   if (!url) {
-    console.error("❌ DATABASE_URL environment variable is required");
-    console.error("   Usage: DATABASE_URL=\"postgresql://...\" npx tsx scripts/provision.ts");
+    console.error("❌ schoolwebsite_DATABASE_URL environment variable is required");
+    console.error("   Usage: schoolwebsite_DATABASE_URL=\"postgresql://...\" npx tsx scripts/provision.ts");
     process.exit(1);
   }
 
@@ -25,9 +25,9 @@ async function main() {
   // Step 1: Push schema
   console.log("📦 Pushing Prisma schema...");
   try {
-    execSync(`DATABASE_URL="${url}" npx prisma db push`, {
+    execSync(`schoolwebsite_DATABASE_URL="${url}" npx prisma db push`, {
       stdio: "inherit",
-      env: { ...process.env, DATABASE_URL: url },
+      env: { ...process.env, schoolwebsite_DATABASE_URL: url },
     });
     console.log("✅ Schema pushed successfully\n");
   } catch {
@@ -38,9 +38,9 @@ async function main() {
   // Step 2: Run seed
   console.log("🌱 Seeding database...");
   try {
-    execSync(`DATABASE_URL="${url}" npx tsx prisma/seed.ts`, {
+    execSync(`schoolwebsite_DATABASE_URL="${url}" npx tsx prisma/seed.ts`, {
       stdio: "inherit",
-      env: { ...process.env, DATABASE_URL: url },
+      env: { ...process.env, schoolwebsite_DATABASE_URL: url },
     });
     console.log("✅ Database seeded successfully\n");
   } catch {
@@ -52,7 +52,7 @@ async function main() {
   console.log("   Admin email: rajputpratyush33@gmail.com");
   console.log("   Admin password: [as set in seed script]");
   console.log("\n📌 Next steps:");
-  console.log("   1. Add DATABASE_URL to Vercel environment variables");
+  console.log("   1. Add schoolwebsite_DATABASE_URL to Vercel environment variables");
   console.log("   2. Add JWT_SECRET to Vercel environment variables");
   console.log("   3. Redeploy on Vercel");
 }

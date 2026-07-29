@@ -6,7 +6,7 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const url = process.env.DATABASE_URL || "postgresql://placeholder/placeholder";
+  const url = process.env.schoolwebsite_DATABASE_URL || "postgresql://placeholder/placeholder";
   const adapter = new PrismaPg({ connectionString: url });
   return new PrismaClient({ adapter });
 }

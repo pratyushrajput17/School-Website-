@@ -2,9 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcrypt";
 
-const url = process.env.DATABASE_URL;
+const url = process.env.schoolwebsite_DATABASE_URL || process.env.DATABASE_URL;
 if (!url) {
-  console.error("DATABASE_URL environment variable is required");
+  console.error("schoolwebsite_DATABASE_URL environment variable is required");
   process.exit(1);
 }
 const adapter = new PrismaPg({ connectionString: url });
