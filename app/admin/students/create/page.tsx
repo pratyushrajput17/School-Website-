@@ -69,6 +69,16 @@ export default function CreateStudentPage() {
       return;
     }
 
+    if (dateOfBirth && new Date(dateOfBirth) >= new Date()) {
+      setError("Date of birth must be in the past");
+      return;
+    }
+
+    if (admissionDate && new Date(admissionDate) > new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)) {
+      setError("Admission date seems too far in the future");
+      return;
+    }
+
     setSaving(true);
     try {
       const formData = new FormData();

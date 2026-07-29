@@ -106,6 +106,20 @@ export async function POST(request: Request) {
         continue;
       }
 
+      const statusValue = getValue(row, "status") || "Active";
+      const validStatuses = ["Active", "Inactive", "Transferred", "Left"];
+      if (!validStatuses.includes(statusValue)) {
+        results.push({
+          row: i + 1,
+          admissionNumber,
+          studentName,
+          status: "error",
+          error: `Invalid status "${statusValue}". Must be one of: ${validStatuses.join(", ")}`,
+        });
+        errorCount++;
+        continue;
+      }
+
       try {
         const student = await createStudent({
           admissionNumber: admissionNumber || undefined,
@@ -126,7 +140,7 @@ export async function POST(request: Request) {
           section: getValue(row, "section"),
           address: getValue(row, "address"),
           admissionDate: getValue(row, "admissionDate"),
-          status: getValue(row, "status") || "Active",
+          status: statusValue,
           photoUrl: getValue(row, "photoUrl"),
         });
 

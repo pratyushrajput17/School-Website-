@@ -4,6 +4,7 @@ import { uploadStudentPhoto } from "@/lib/cloudinary";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
 import { createAuditLog } from "@/lib/audit";
+import { isValidMobile } from "@/lib/validation";
 
 export const runtime = "nodejs";
 
@@ -76,6 +77,14 @@ export async function PUT(
     const penNumber = (formData.get("penNumber") as string) || "";
     const aadhaarNumber = (formData.get("aadhaarNumber") as string) || "";
     const whatsappNumber = (formData.get("whatsappNumber") as string) || "";
+
+    if (mobileNumber && !isValidMobile(mobileNumber)) {
+      return NextResponse.json(
+        { error: "Invalid mobile number (must be 10 digits)" },
+        { status: 400 }
+      );
+    }
+
     const photoFile = formData.get("photo") as File | null;
     const keepExistingPhoto = formData.get("keepExistingPhoto") === "true";
 

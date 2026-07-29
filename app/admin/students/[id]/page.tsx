@@ -19,6 +19,12 @@ import {
 interface StudentDetail {
   id: string;
   admissionNumber: string;
+  scholarNumber: string;
+  category: string;
+  caste: string;
+  penNumber: string;
+  aadhaarNumber: string;
+  whatsappNumber: string;
   studentName: string;
   fatherName: string;
   motherName: string;
@@ -130,6 +136,11 @@ export default function StudentDetailPage() {
       value: student.admissionNumber,
       icon: GraduationCap,
     },
+    {
+      label: "Scholar Number",
+      value: student.scholarNumber || "\u2014",
+      icon: GraduationCap,
+    },
     { label: "Full Name", value: student.studentName, icon: User },
     { label: "Gender", value: student.gender || "N/A", icon: User },
     {
@@ -139,6 +150,11 @@ export default function StudentDetailPage() {
     },
     { label: "Class", value: `Class ${student.className}`, icon: GraduationCap },
     { label: "Section", value: student.section, icon: GraduationCap },
+    { label: "Category", value: student.category || "General", icon: User },
+    { label: "Caste", value: student.caste || "\u2014", icon: User },
+    { label: "PEN Number", value: student.penNumber || "\u2014", icon: GraduationCap },
+    { label: "Aadhaar Number", value: student.aadhaarNumber || "\u2014", icon: GraduationCap },
+    { label: "WhatsApp No.", value: student.whatsappNumber || "\u2014", icon: Phone },
     { label: "Father Name", value: student.fatherName, icon: User },
     { label: "Mother Name", value: student.motherName, icon: User },
     {

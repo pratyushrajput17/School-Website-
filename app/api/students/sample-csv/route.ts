@@ -8,21 +8,35 @@ export async function GET(request: Request) {
   if (unauthorized) return unauthorized;
 
   const headers = [
-    "Admission Number",
-    "Student Name",
-    "Father Name",
-    "Mother Name",
-    "Mobile Number",
-    "Alternate Mobile",
-    "Date of Birth",
-    "Gender",
-    "Class",
-    "Section",
-    "Address",
+    "admissionNumber",
+    "scholarNumber",
+    "category",
+    "caste",
+    "penNumber",
+    "aadhaarNumber",
+    "whatsappNumber",
+    "studentName",
+    "fatherName",
+    "motherName",
+    "mobileNumber",
+    "alternateMobile",
+    "dateOfBirth",
+    "gender",
+    "className",
+    "section",
+    "address",
+    "admissionDate",
+    "status",
   ];
 
   const sampleRow = [
     "ADM001",
+    "SCH001",
+    "General",
+    "",
+    "",
+    "",
+    "",
     "Rahul Sharma",
     "Rajesh Sharma",
     "Sunita Sharma",
@@ -33,6 +47,8 @@ export async function GET(request: Request) {
     "6",
     "A",
     "123 Main Street, City",
+    "2025-04-01",
+    "Active",
   ];
 
   const csvContent = [

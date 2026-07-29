@@ -5,7 +5,7 @@ import { verifyTeacherToken } from "./lib/teacher-auth";
 
 const protectedPaths = ["/admin"];
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isProtected = protectedPaths.some(

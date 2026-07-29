@@ -66,6 +66,8 @@ function formatDate(iso: string) {
 export default function AdminStudentsPage() {
   const router = useRouter();
   const [students, setStudents] = useState<Student[]>([]);
+  const [total, setTotal] = useState(0);
+  const [activeCount, setActiveCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [classFilter, setClassFilter] = useState("");
@@ -104,6 +106,8 @@ export default function AdminStudentsPage() {
       }
       const data = await res.json();
       setStudents(data.students);
+      setTotal(data.total);
+      setActiveCount(data.activeCount);
     } catch {
       /* silent */
     } finally {
@@ -277,6 +281,13 @@ export default function AdminStudentsPage() {
             className="hidden"
           />
           <button
+            onClick={downloadSampleCSV}
+            className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            Sample CSV
+          </button>
+          <button
             onClick={() => fileInputRef.current?.click()}
             disabled={importing}
             className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
@@ -357,6 +368,25 @@ export default function AdminStudentsPage() {
             <Plus className="w-4 h-4" />
             Add Student
           </Link>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <p className="text-2xl font-bold text-gray-900">{total}</p>
+          <p className="text-xs text-gray-500 mt-0.5">Total Students</p>
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <p className="text-2xl font-bold text-emerald-600">{activeCount}</p>
+          <p className="text-xs text-gray-500 mt-0.5">Active</p>
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <p className="text-2xl font-bold text-amber-600">{total - activeCount}</p>
+          <p className="text-xs text-gray-500 mt-0.5">Inactive / Transferred / Left</p>
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <p className="text-2xl font-bold text-deep-blue">{students.length}</p>
+          <p className="text-xs text-gray-500 mt-0.5">Displayed</p>
         </div>
       </div>
 

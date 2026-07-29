@@ -25,9 +25,12 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
+  const [loginOpen, setLoginOpen] = useState(false)
   const raf = useRef<number | undefined>(undefined)
   const moreRef = useRef<HTMLDivElement>(null)
+  const loginRef = useRef<HTMLDivElement>(null)
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const loginDropdownTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +63,9 @@ export default function Navbar() {
     function handleClickOutside(e: MouseEvent) {
       if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
         setMoreOpen(false)
+      }
+      if (loginRef.current && !loginRef.current.contains(e.target as Node)) {
+        setLoginOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -100,18 +106,59 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden lg:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="rounded-full border border-deep-blue/20 px-5 py-2 text-sm font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
+            <div
+              ref={loginRef}
+              className="relative"
+              onMouseEnter={() => {
+                clearTimeout(loginDropdownTimeout.current)
+                setLoginOpen(true)
+              }}
+              onMouseLeave={() => {
+                loginDropdownTimeout.current = setTimeout(() => setLoginOpen(false), 150)
+              }}
             >
-              Admin Login
-            </Link>
-            <Link
-              href="/teacher/login"
-              className="rounded-full border border-deep-blue/20 px-5 py-2 text-sm font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
-            >
-              Teacher Login
-            </Link>
+              <button
+                type="button"
+                onClick={() => setLoginOpen((o) => !o)}
+                className="flex items-center gap-1.5 rounded-full border border-deep-blue/20 px-5 py-2 text-sm font-medium text-muted-foreground transition-all duration-300 hover:border-deep-blue/40 hover:text-deep-blue"
+              >
+                Login
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    loginOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+              <div
+                className={`absolute right-0 top-full mt-2 w-44 rounded-xl border border-gray-100 bg-white py-2 shadow-lg transition-all duration-200 ${
+                  loginOpen
+                    ? 'pointer-events-auto translate-y-0 opacity-100'
+                    : 'pointer-events-none -translate-y-1 opacity-0'
+                }`}
+              >
+                <Link
+                  href="/login"
+                  className="block px-5 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-gray-50 hover:text-deep-blue"
+                  onClick={() => setLoginOpen(false)}
+                >
+                  Admin Login
+                </Link>
+                <Link
+                  href="/teacher/login"
+                  className="block px-5 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-gray-50 hover:text-deep-blue"
+                  onClick={() => setLoginOpen(false)}
+                >
+                  Teacher Login
+                </Link>
+                <Link
+                  href="/parent/login"
+                  className="block px-5 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-gray-50 hover:text-deep-blue"
+                  onClick={() => setLoginOpen(false)}
+                >
+                  Parent Login
+                </Link>
+              </div>
+            </div>
             <Link
               href="/admissions"
               className="rounded-full bg-deep-blue px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-deep-blue-light"
@@ -275,6 +322,13 @@ export default function Navbar() {
                 onClick={closeMobile}
               >
                 Teacher Login
+              </Link>
+              <Link
+                href="/parent/login"
+                className="rounded-full border border-deep-blue/20 px-6 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:border-deep-blue/40 hover:text-deep-blue"
+                onClick={closeMobile}
+              >
+                Parent Login
               </Link>
               <Link
                 href="/admissions"

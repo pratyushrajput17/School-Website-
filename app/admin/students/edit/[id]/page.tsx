@@ -107,6 +107,16 @@ export default function EditStudentPage() {
       return;
     }
 
+    if (dateOfBirth && new Date(dateOfBirth) >= new Date()) {
+      setError("Date of birth must be in the past");
+      return;
+    }
+
+    if (admissionDate && new Date(admissionDate) > new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)) {
+      setError("Admission date seems too far in the future");
+      return;
+    }
+
     setSaving(true);
     try {
       const formData = new FormData();
@@ -592,6 +602,21 @@ export default function EditStudentPage() {
                   >
                     <X className="w-4 h-4" />
                   </button>
+                  {existingPhotoUrl && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPhotoFile(new File([], "remove"));
+                        setPhotoPreview(null);
+                        setExistingPhotoUrl(null);
+                        if (fileInputRef.current) fileInputRef.current.value = "";
+                      }}
+                      className="mt-2 w-full text-center text-xs font-medium text-red-600 hover:text-red-700"
+                    >
+                      Remove Photo
+                    </button>
+                  )}
                 </div>
               ) : (
                 <>
