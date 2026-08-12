@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import { schoolConfig } from "@/lib/school-config";
 
 const geistSans = Geist({
@@ -79,8 +80,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon",
-    apple: "/apple-icon",
+    icon: "/pwa-icon-192.png",
+    apple: "/pwa-icon-192.png",
   },
   appleWebApp: {
     title: schoolConfig.name,
@@ -149,6 +150,7 @@ export default function RootLayout({
         <ScrollProgress />
         {children}
         <BackToTop />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
