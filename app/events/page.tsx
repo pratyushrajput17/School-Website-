@@ -7,8 +7,20 @@ import { getEvents } from "@/lib/events"
 
 export const metadata: Metadata = {
   title: "Events & Activities",
-  description: "Explore events and activities at Adarsh High School — annual functions, celebrations, sports, cultural programs, competitions, and more.",
+  description: "Explore events and activities at Adarsh High School, Sainkheda — annual functions, celebrations, sports, cultural programs, competitions, and more.",
   alternates: { canonical: `${schoolConfig.url}/events` },
+  openGraph: {
+    title: `${schoolConfig.metadata.siteName} | Events & Activities`,
+    description: "Explore events and activities at Adarsh High School, Sainkheda — annual functions, celebrations, sports, cultural programs, and competitions.",
+    url: `${schoolConfig.url}/events`,
+    siteName: schoolConfig.metadata.siteName,
+    images: [{ url: schoolConfig.metadata.ogImage, width: 1200, height: 630, alt: schoolConfig.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${schoolConfig.metadata.siteName} | Events & Activities`,
+    description: "Explore events and activities at Adarsh High School, Sainkheda.",
+  },
 }
 
 const categoryColors: Record<string, string> = {

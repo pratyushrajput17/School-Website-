@@ -117,8 +117,8 @@ export default function RootLayout({
                 logo: `${schoolConfig.url}${schoolConfig.logoPath}`,
                 foundingDate: schoolConfig.establishedYear,
                 foundingYear: schoolConfig.establishedYear,
-                areaServed: "Sainkheda, Gadarwara, Madhya Pradesh",
-                knowsAbout: ["Education", "K-12 School", "MP Board"],
+                areaServed: "Sainkheda, Madhya Pradesh",
+                knowsAbout: ["Education", "School", "MP Board"],
                 address: {
                   "@type": "PostalAddress",
                   streetAddress: "Gadarwara Road",
@@ -133,12 +133,6 @@ export default function RootLayout({
                   email: "adresh2111@gmail.com",
                   availableLanguage: ["Hindi", "English"],
                 },
-                sameAs: [
-                  schoolConfig.socialLinks.facebook,
-                  schoolConfig.socialLinks.instagram,
-                  schoolConfig.socialLinks.youtube,
-                  schoolConfig.socialLinks.linkedin,
-                ],
               },
               {
                 "@context": "https://schema.org",

@@ -3,7 +3,7 @@ export const schoolConfig = {
   nameHindi: 'आदर्श हाई स्कूल',
   tagline: 'Education with Values, Knowledge with Character',
   board: 'MP Board',
-  establishedYear: 2010,
+  establishedYear: 2000,
   logoPath: '/school-logo.png',
 
   hero: {
@@ -23,9 +23,9 @@ export const schoolConfig = {
   },
 
   description:
-    'Adarsh High School is committed to providing quality English-medium education that nurtures academic excellence, character, discipline, and holistic growth for every student.',
+    'Adarsh High School in Sainkheda, Madhya Pradesh has been providing quality English-medium education since 2000. An MP Board school serving Nursery to Class 10 with dedicated teachers and a safe, green campus.',
 
-  url: 'https://adarshhighschool.edu',
+  url: 'https://www.avph.in',
 
   contact: {
     address: 'Gadarwara Road, Sainkheda, Madhya Pradesh 484661',
@@ -98,7 +98,7 @@ export const schoolConfig = {
   metadata: {
     siteName: 'Adarsh High School',
     titleTemplate: '%s | Adarsh High School',
-    defaultTitle: 'Adarsh High School | Best English Medium School in Sainkheda, MP',
+    defaultTitle: 'Adarsh High School | Sainkheda | MP Board School',
     locale: 'en_IN',
     country: 'IN',
     themeColor: '#1B3A5C',
@@ -113,7 +113,7 @@ export const schoolConfig = {
   stats: {
     students: { value: 900, suffix: '+' },
     teachers: { value: 40, suffix: '+' },
-    years: { value: 15, suffix: '+' },
+    years: { value: 25, suffix: '+' },
     boardResults: { value: 95, suffix: '%' },
   },
 

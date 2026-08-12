@@ -11,7 +11,7 @@ export default function Forbidden() {
           <div className="mb-6">
             <Link href="/">
               <img
-                src="/logo.png"
+                src="/school-logo.png"
                 alt="Adarsh High School"
                 className="h-20 mx-auto"
               />

@@ -15,10 +15,23 @@ import nextDynamic from "next/dynamic"
 const PrincipalMessage = nextDynamic(() => import("@/components/PrincipalMessage"))
 
 export const metadata: Metadata = {
-  title: schoolConfig.metadata.defaultTitle,
+  title: { absolute: schoolConfig.metadata.defaultTitle },
   description: schoolConfig.description,
   alternates: {
     canonical: schoolConfig.url,
+  },
+  openGraph: {
+    type: "website",
+    title: schoolConfig.metadata.defaultTitle,
+    description: schoolConfig.description,
+    url: schoolConfig.url,
+    siteName: schoolConfig.metadata.siteName,
+    images: [{ url: schoolConfig.metadata.ogImage, width: 1200, height: 630, alt: schoolConfig.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: schoolConfig.metadata.defaultTitle,
+    description: schoolConfig.description,
   },
 }
 

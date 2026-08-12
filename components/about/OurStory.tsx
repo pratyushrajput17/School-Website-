@@ -7,10 +7,10 @@ import SectionHeader from '@/components/ui/section-header'
 import { staggerContainer, cardVariant } from '@/lib/animations'
 
 const milestones = [
-  { year: 2010, title: 'Foundation', description: `${schoolConfig.name} was established with a vision to provide quality education to the children of Sainkheda and surrounding areas.` },
-  { year: 2015, title: 'Campus Growth', description: 'Expanded facilities with new classrooms, science labs, and a dedicated library to support holistic learning.' },
-  { year: 2020, title: 'Digital Integration', description: 'Introduced smart classrooms and digital learning tools to enhance teaching methods across all grades.' },
-  { year: 2025, title: 'Community Impact', description: 'Continuing our mission of providing accessible, quality education with strong board results and growing student community.' },
+  { year: 2000, title: 'Foundation', description: `${schoolConfig.name} was established with a vision to provide quality education to the children of Sainkheda and surrounding areas.` },
+  { year: 2010, title: 'A Decade of Trust', description: 'Completing ten years of educational service, the school grew into a trusted institution for families in the region.' },
+  { year: 2020, title: 'Two Decades of Growth', description: 'Marking twenty years of service, the school continued to expand its reach and strengthen its commitment to quality education.' },
+  { year: 2025, title: '25+ Years & Continuing', description: `Today the school serves ${schoolConfig.stats.students.value}+ students from Nursery to Class 10, with a Smart Learning Lab currently under development.` },
 ] as const
 
 const journeyHighlights = [

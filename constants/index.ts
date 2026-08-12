@@ -49,12 +49,11 @@ export interface FAQItem {
 }
 
 export const stats: Statistic[] = [
-  { value: 1500, suffix: '+', label: 'Students', icon: Users },
-  { value: 75, suffix: '+', label: 'Experienced Teachers', icon: GraduationCap },
-  { value: 20, suffix: '+', label: 'Years of Excellence', icon: Calendar },
-  { value: 100, suffix: '%', label: 'Board Exam Results', icon: Award },
-  { value: 30, suffix: '+', label: 'Smart Classrooms', icon: Monitor },
-  { value: 15, suffix: '+', label: 'State & National Awards', icon: Trophy },
+  { value: 900, suffix: '+', label: 'Students', icon: Users },
+  { value: 40, suffix: '+', label: 'Experienced Teachers', icon: GraduationCap },
+  { value: 25, suffix: '+', label: 'Years of Education', icon: Calendar },
+  { value: 100, suffix: '%', label: 'Commitment to Board Results', icon: Award },
+  { value: 10, suffix: '', label: 'Classes (Nursery to 10)', icon: Monitor },
 ]
 
 export const whyChooseFeatures: FeatureCard[] = [
