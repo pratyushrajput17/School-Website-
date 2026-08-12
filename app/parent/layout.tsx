@@ -45,6 +45,7 @@ export default function ParentLayout({ children }: { children: React.ReactNode }
 
   const sidebarLinks = [
     { href: "/parent/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/parent/student", label: "Profile", icon: User },
     { href: "/parent/attendance", label: "Attendance", icon: ClipboardCheck },
     { href: "/parent/homework", label: "Homework", icon: BookText },
     { href: "/parent/results", label: "Results", icon: FileText },
