@@ -74,29 +74,3 @@ export async function getAchieversForParent() {
     take: 20,
   });
 }
-
-export async function getNotificationsForParent(parentId: string) {
-  return prisma.notification.findMany({
-    where: {
-      OR: [
-        { parentId },
-        { parentId: null },
-      ],
-    },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
-}
-
-export async function getUnreadNotificationCount(parentId: string) {
-  return prisma.notification.count({
-    where: { parentId, isRead: false },
-  });
-}
-
-export async function markNotificationRead(id: string) {
-  return prisma.notification.update({
-    where: { id },
-    data: { isRead: true },
-  });
-}

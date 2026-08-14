@@ -32,6 +32,7 @@ import {
   ScrollText,
 } from "lucide-react";
 import NextImage from "next/image";
+import NotificationBell from "@/components/NotificationBell";
 
 export default function AdminLayout({
   children,
@@ -92,6 +93,7 @@ export default function AdminLayout({
     { href: "/admin/class-teachers", label: "Class Teachers", icon: UserCheck },
     { href: "/admin/subject-assignments", label: "Subject Assignments", icon: BookCheck },
     { href: "/admin/notifications", label: "Send Notification", icon: MessageSquare },
+    { href: "/admin/notification-center", label: "Notification Center", icon: Bell },
     { href: "/admin/notices", label: "Notices", icon: Bell },
     { href: "/admin/events", label: "Events", icon: Calendar },
     ...(adminRole === "super_admin"
@@ -193,6 +195,7 @@ export default function AdminLayout({
             </button>
 
             <div className="flex items-center gap-3 ml-auto">
+                <NotificationBell role="admin" />
                 <div className="flex items-center gap-3">
                   <div className="text-right hidden sm:block">
                     <p className="text-sm font-medium text-gray-700 leading-tight">

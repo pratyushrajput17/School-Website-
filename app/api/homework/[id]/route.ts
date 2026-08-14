@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getHomeworkById, updateHomework, deleteHomework } from "@/lib/homework";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
+import { prisma } from "@/lib/prisma";
+import { sendHomeworkNotification } from "@/lib/notifications";
 
 export const runtime = "nodejs";
 
@@ -57,6 +59,31 @@ export async function PUT(
       attachmentUrl: body.attachmentUrl,
       status: body.status,
     });
+
+    const wasPublished = existing.status === "published";
+    const nowPublished = homework.status === "published";
+
+    if (nowPublished && !wasPublished && homework.classId && homework.sectionId) {
+      const [classRec, sectionRec, subjectRec] = await Promise.all([
+        prisma.schoolClass.findUnique({ where: { id: homework.classId } }),
+        prisma.section.findUnique({ where: { id: homework.sectionId } }),
+        prisma.subject.findUnique({ where: { id: homework.subjectId } }),
+      ]);
+
+      if (classRec && sectionRec) {
+        const senderName = teacher?.teacherName || admin?.name || "School";
+        await sendHomeworkNotification({
+          title: `Homework: ${homework.title}`,
+          message: `${subjectRec?.subjectName || "Subject"} homework for Class ${classRec.className}-${sectionRec.sectionName}. Due by ${new Date(homework.dueDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
+          sentBy: `${senderName} (Teacher)`,
+          entityId: homework.id,
+          className: classRec.className,
+          sectionName: sectionRec.sectionName,
+          classId: homework.classId,
+          sectionId: homework.sectionId,
+        });
+      }
+    }
 
     return NextResponse.json({ homework });
   } catch (error) {

@@ -23,6 +23,8 @@ export default function EditNoticePage() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [isPublished, setIsPublished] = useState(false);
+  const [notifyParents, setNotifyParents] = useState(false);
+  const [notifyTeachers, setNotifyTeachers] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -70,6 +72,8 @@ export default function EditNoticePage() {
           category,
           description: description.trim(),
           isPublished,
+          notifyParents,
+          notifyTeachers,
         }),
       });
 
@@ -198,6 +202,38 @@ export default function EditNoticePage() {
             </span>
           </label>
         </div>
+
+        {isPublished && (
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-3">
+            <p className="text-sm font-medium text-gray-700">
+              Notify users on publish
+            </p>
+            <p className="text-xs text-gray-500">
+              If this notice is newly published, users selected below will
+              receive an in-app notification.
+            </p>
+            <div className="flex flex-wrap gap-6">
+              <label className="inline-flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={notifyParents}
+                  onChange={(e) => setNotifyParents(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-[#FF9933] focus:ring-[#FF9933]"
+                />
+                Notify Parents
+              </label>
+              <label className="inline-flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={notifyTeachers}
+                  onChange={(e) => setNotifyTeachers(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-[#FF9933] focus:ring-[#FF9933]"
+                />
+                Notify Teachers
+              </label>
+            </div>
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-50 text-red-600 text-sm px-4 py-2.5 rounded-lg border border-red-200">

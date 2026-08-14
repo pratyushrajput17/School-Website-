@@ -22,6 +22,8 @@ export default function CreateEventPage() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [isPublished, setIsPublished] = useState(false);
+  const [notifyParents, setNotifyParents] = useState(false);
+  const [notifyTeachers, setNotifyTeachers] = useState(false);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -46,6 +48,8 @@ export default function CreateEventPage() {
           description: description.trim(),
           image: image.trim() || undefined,
           isPublished,
+          notifyParents,
+          notifyTeachers,
         }),
       });
 
@@ -190,6 +194,35 @@ export default function CreateEventPage() {
             Publish immediately
           </span>
         </div>
+
+        {isPublished && (
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-3">
+            <p className="text-sm font-medium text-gray-700">Notify users</p>
+            <p className="text-xs text-gray-500">
+              Send an in-app notification when this event is published.
+            </p>
+            <div className="flex flex-wrap gap-6">
+              <label className="inline-flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={notifyParents}
+                  onChange={(e) => setNotifyParents(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-[#FF9933] focus:ring-[#FF9933]"
+                />
+                Notify Parents
+              </label>
+              <label className="inline-flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={notifyTeachers}
+                  onChange={(e) => setNotifyTeachers(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-[#FF9933] focus:ring-[#FF9933]"
+                />
+                Notify Teachers
+              </label>
+            </div>
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-50 text-red-600 text-sm px-4 py-2.5 rounded-lg border border-red-200">

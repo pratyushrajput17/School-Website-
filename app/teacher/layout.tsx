@@ -11,8 +11,10 @@ import {
   X,
   ChevronDown,
   GraduationCap,
+  Bell,
 } from "lucide-react";
 import NextImage from "next/image";
+import NotificationBell from "@/components/NotificationBell";
 
 export default function TeacherLayout({
   children,
@@ -47,6 +49,7 @@ export default function TeacherLayout({
   const sidebarLinks = [
     { href: "/teacher/attendance", label: "Mark Attendance", icon: ClipboardCheck },
     { href: "/teacher/homework", label: "Homework", icon: BookText },
+    { href: "/teacher/notifications", label: "Notifications", icon: Bell },
     { href: "/teacher/results", label: "Results Entry", icon: ClipboardCheck },
   ];
 
@@ -136,6 +139,7 @@ export default function TeacherLayout({
             </button>
 
             <div className="flex items-center gap-3 ml-auto">
+              <NotificationBell role="teacher" />
               <div className="flex items-center gap-3">
                 <div className="text-right hidden sm:block">
                   <p className="text-sm font-medium text-gray-700 leading-tight">

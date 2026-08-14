@@ -2,10 +2,10 @@
 
 import NotificationCenter from "@/components/NotificationCenter";
 
-export default function ParentNotificationsPage() {
+export default function AdminNotificationCenterPage() {
   return (
     <div>
-      <NotificationCenter role="parent" />
+      <NotificationCenter role="admin" />
     </div>
   );
 }

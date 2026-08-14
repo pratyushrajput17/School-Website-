@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getEventById, updateEvent, deleteEvent } from "@/lib/events";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { sendContentNotification } from "@/lib/notifications";
 
 export async function GET(
   _request: Request,
@@ -54,6 +55,29 @@ export async function PUT(
       isPublished: body.isPublished,
       updatedBy: admin.name,
     });
+
+    const wasPublished = existing.isPublished;
+    const nowPublished = event.isPublished;
+
+    if (
+      nowPublished &&
+      !wasPublished &&
+      (body.notifyParents || body.notifyTeachers)
+    ) {
+      const eventDate = new Date(event.eventDate);
+      await sendContentNotification({
+        type: "EVENT",
+        title: `Event: ${event.title}`,
+        message: `${event.description} Event date: ${eventDate.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}.`,
+        sentBy: `${admin.name} (Admin)`,
+        entityType: "EVENT",
+        entityId: event.id,
+        audience: {
+          notifyParents: !!body.notifyParents,
+          notifyTeachers: !!body.notifyTeachers,
+        },
+      });
+    }
 
     return NextResponse.json({ event });
   } catch (error) {

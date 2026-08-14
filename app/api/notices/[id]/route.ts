@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getNoticeById, updateNotice, deleteNotice } from "@/lib/notices";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { sendContentNotification } from "@/lib/notifications";
 
 export async function GET(
   _request: Request,
@@ -52,6 +53,28 @@ export async function PUT(
       isPublished: body.isPublished,
       updatedBy: admin.name,
     });
+
+    const wasPublished = existing.isPublished;
+    const nowPublished = notice.isPublished;
+
+    if (
+      nowPublished &&
+      !wasPublished &&
+      (body.notifyParents || body.notifyTeachers)
+    ) {
+      await sendContentNotification({
+        type: "NOTICE",
+        title: `Notice: ${notice.title}`,
+        message: notice.description,
+        sentBy: `${admin.name} (Admin)`,
+        entityType: "NOTICE",
+        entityId: notice.id,
+        audience: {
+          notifyParents: !!body.notifyParents,
+          notifyTeachers: !!body.notifyTeachers,
+        },
+      });
+    }
 
     return NextResponse.json({ notice });
   } catch (error) {

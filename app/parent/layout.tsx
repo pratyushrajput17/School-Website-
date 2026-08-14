@@ -20,6 +20,7 @@ import {
   FileText,
 } from "lucide-react";
 import NextImage from "next/image";
+import NotificationBell from "@/components/NotificationBell";
 
 export default function ParentLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -48,8 +49,9 @@ export default function ParentLayout({ children }: { children: React.ReactNode }
     { href: "/parent/student", label: "Profile", icon: User },
     { href: "/parent/attendance", label: "Attendance", icon: ClipboardCheck },
     { href: "/parent/homework", label: "Homework", icon: BookText },
+    { href: "/parent/notifications", label: "Notifications", icon: Bell },
     { href: "/parent/results", label: "Results", icon: FileText },
-    { href: "/parent/notices", label: "Notices", icon: Bell },
+    { href: "/parent/notices", label: "Notices", icon: MessageSquare },
     { href: "/parent/events", label: "Events", icon: Calendar },
     { href: "/parent/achievers", label: "Achievers", icon: Award },
   ];
@@ -107,6 +109,7 @@ export default function ParentLayout({ children }: { children: React.ReactNode }
               {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
             <div className="flex items-center gap-3 ml-auto">
+              <NotificationBell role="parent" />
               <div className="flex items-center gap-3">
                 <div className="text-right hidden sm:block">
                   <p className="text-sm font-medium text-gray-700 leading-tight">{parentName || "Parent"}</p>

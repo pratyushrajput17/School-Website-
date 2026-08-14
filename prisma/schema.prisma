@@ -294,21 +294,29 @@ model Result {
 }
 
 model Notification {
-  id        String   @id @default(cuid())
-  type      String
-  title     String
-  message   String
-  parentId  String?
-  studentId String?
-  classId   String?
-  sectionId String?
-  sentBy    String   @default("")
-  isRead    Boolean  @default(false)
-  createdAt DateTime @default(now())
+  id         String    @id @default(cuid())
+  type       String
+  title      String
+  message    String
+  parentId   String?
+  teacherId  String?
+  adminId    String?
+  studentId  String?
+  classId    String?
+  sectionId  String?
+  entityType String? // NOTICE | HOMEWORK | EVENT
+  entityId   String? // related record id
+  sentBy     String    @default("")
+  isRead     Boolean   @default(false)
+  readAt     DateTime?
+  createdAt  DateTime  @default(now())
 
-  @@index([parentId])
+  @@index([parentId, isRead])
+  @@index([teacherId, isRead])
+  @@index([adminId, isRead])
   @@index([studentId])
   @@index([classId, sectionId])
+  @@index([entityType, entityId])
   @@index([createdAt])
 }
 

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getTeacherFromRequest } from "@/lib/teacher-auth";
 import { getHomework, createHomework } from "@/lib/homework";
+import { sendHomeworkNotification } from "@/lib/notifications";
 
 export const runtime = "nodejs";
 
@@ -60,6 +61,27 @@ export async function POST(request: Request) {
       attachmentUrl: attachmentUrl || undefined,
       status: status || "published",
     });
+
+    if (homework.status === "published") {
+      const [classRec, sectionRec, subjectRec] = await Promise.all([
+        prisma.schoolClass.findUnique({ where: { id: classId } }),
+        prisma.section.findUnique({ where: { id: sectionId } }),
+        prisma.subject.findUnique({ where: { id: subjectId } }),
+      ]);
+
+      if (classRec && sectionRec) {
+        await sendHomeworkNotification({
+          title: `Homework: ${homework.title}`,
+          message: `${subjectRec?.subjectName || "Subject"} homework for Class ${classRec.className}-${sectionRec.sectionName}. Due by ${new Date(homework.dueDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
+          sentBy: `${teacher.teacherName} (Teacher)`,
+          entityId: homework.id,
+          className: classRec.className,
+          sectionName: sectionRec.sectionName,
+          classId,
+          sectionId,
+        });
+      }
+    }
 
     return NextResponse.json({ homework }, { status: 201 });
   } catch (error) {

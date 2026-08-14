@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getNotices, createNotice, getNoticeCount } from "@/lib/notices";
 import { getAdminFromRequest, requireAdmin } from "@/lib/api-auth";
+import { sendContentNotification } from "@/lib/notifications";
 
 export async function GET(request: Request) {
   try {
@@ -66,6 +67,24 @@ export async function POST(request: Request) {
       isPublished: body.isPublished ?? false,
       createdBy: admin.name,
     });
+
+    if (
+      notice.isPublished &&
+      (body.notifyParents || body.notifyTeachers)
+    ) {
+      await sendContentNotification({
+        type: "NOTICE",
+        title: `Notice: ${notice.title}`,
+        message: notice.description,
+        sentBy: `${admin.name} (Admin)`,
+        entityType: "NOTICE",
+        entityId: notice.id,
+        audience: {
+          notifyParents: !!body.notifyParents,
+          notifyTeachers: !!body.notifyTeachers,
+        },
+      });
+    }
 
     return NextResponse.json({ notice }, { status: 201 });
   } catch (error) {
